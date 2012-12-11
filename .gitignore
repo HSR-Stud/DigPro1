@@ -30,3 +30,5 @@
 *.vrb
 *.xdy
 *.tdo
+*.synctex*
+DigPro1.pdf
