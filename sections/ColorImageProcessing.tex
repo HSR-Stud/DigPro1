@@ -1,0 +1,66 @@
+\section{Color image processing}
+\subsection{Color fundamentals}
+\begin{itemize}
+	\item Humans can preceive thousands of colors but only about 20-30 shades of gray
+	\item Color is often a great feature of object detection and extraction
+	\item White light can be split into a spectrum of colors
+	\item The human visual system (HVS) is quite complex, but basically, the cones are responsible for the color vision
+	\begin{itemize}
+		\item There are about 7 million cones which can be put into three categories
+		\begin{itemize}
+			\item $65\% $ are sensitive to red
+			\item $33\% $ are sensitive to green
+			\item $2\% $ are sensitive to blue
+		\end{itemize}
+		\item while their numbers vary widely, their sensitivity is quite similar
+		\begin{itemize}
+			\item Therefore, the blue cones are the most sensitive
+			\item But the spatial resolution of red is much higher than that of blue
+		\end{itemize}
+	\end{itemize}
+	\item Red, Green and Blue are called additive primary colors
+	\item Magenta, Yellow and Cyan are called subtractive primary colors
+	\item Humans often describe color using
+	\begin{description}
+		\item[Brightness:] Chromatic notation of intensity
+		\item[Hue:] The dominant color
+		\item[Saturation:] How much white light is mixed in with the pure color
+	\end{description}
+	\item The very useful HIS (Hue, Saturation, Intensitiy) color space is based on the color perception of humans	
+\end{itemize}
+
+The amount of red(X), green (Y) and blue (Z) needed to form a given color are called the tristimulus values.
+A color can then be specified using its trichromatic coefficients x,y and z, which are normalized so that they sum to 1.
+For any wavelength of light in the visible spectrum, these values can be read from tables that are the results from extensive experimentation.
+
+\[
+	x = \frac{X}{X+Y+Z} \qquad
+	y = \frac{Y}{X+Y+Z} \qquad
+	z = \frac{Z}{X+Y+Z}
+\]
+
+
+
+\subsection{Color models}
+A color model is also called a color space or a color system. It allows colors to be represented in a well defined way, and depending on the task at hand, one model might be better suited than another.
+
+\subsubsection{RGB model}
+Based on the three primary colors of the HVS and the most used model as most color camera systems and monitors have these three channels.
+
+
+\subsubsection{CMY and CMYK model}
+These are models well suited for the primary colors of pigments, such as used in printig. The K stnads for black, which, in theory can be mixed by summing up all subtractive primary colors, but for printing, the result thends to be a bit muddy, hence black is its own color.
+
+
+
+\subsection{Pseudo color image processing}
+
+\subsection{Color transformations}
+
+\subsection{Smoothing and sharpening}
+
+\subsection{Image segmentation based on color}
+
+\subsection{Color edge detection}
+
+\subsection{Noise in color images}

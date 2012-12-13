@@ -1,0 +1,27 @@
+\section{Digital image fundamentals}
+\subsection{Image Interpolation}
+\begin{itemize}
+  \item Basic tool needed for zooming, shrinking, rotation, \ldots
+  \item Nearest Neighbor Interpolation: Simple but bad
+  \item Bilinear interpolation:
+  	\begin{itemize}
+  	  \item Not linear
+  	  \item uses the four nearst neighbors of a point $(x,y)$
+  	  \item $v(x,y) = ax + by + cxy + d$
+  	\end{itemize}
+  \item Bicubic interpolation
+	\begin{itemize}
+  	  \item Uses the 16 nearest neighbors of a point $(x,y)$
+  	  \item Note that if the sums go from 0 to 1, this reduces to the bilinear interpolation
+  	  \item $v(x,y) = \sum\limits_{i=0}^3\sum\limits_{j=0}^3 a_{ij}x^iy^j$
+  	\end{itemize}
+\end{itemize}
+
+\subsection{Relationships between pixels}
+Bilder einfügen?
+
+\subsection{Adjacency, connectivity, regions and boundaries}
+
+\subsection{Distance measures}
+
+\subsection{Math tools}
