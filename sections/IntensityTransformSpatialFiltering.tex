@@ -1,18 +1,27 @@
-\section{Intensity transformations and spatial filtering}
+\section{Intensity Transformations and Spatial Filtering \buch{Chapter 3}}
 
 \subsection{Basic intensity transformation functions}
+\begin{equation}
+s = T(r)
+\end{equation}
 
 \begin{itemize}
 	\item Image negatives
 	\item Log transformations
 	\item Inverse log transformations
 	\item Power-law (Gamma) transformations
+		\begin{equation}
+			s = c r^\gamma
+		\end{equation}
 	\item Piecewise-linear transformation functions
 	\item Bit-plane slicing
+		Split a image in slices for each intensity bit.  All resulting plane are binary images.
+		May be used for a simple compression.
 	
 \end{itemize}
 
 \subsection{Histogram processing}
+The histogram shows the number of occurrence of a particular intensity level relative to the total number of pixels (probability of the intensity value)
 \subsubsection{Histogram equalization}
 
 \subsection{Fundamentals of spatial filtering}

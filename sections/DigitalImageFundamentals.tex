@@ -1,11 +1,15 @@
-\section{Digital image fundamentals}
+\section{Digital image fundamentals \buch{Chapter 2}}
 \subsection{Image Interpolation}
 \begin{itemize}
   \item Basic tool needed for zooming, shrinking, rotation, \ldots
-  \item Nearest Neighbor Interpolation: Simple but bad
+  \item Nearest Neighbor Interpolation: 
+	  \begin{itemize}
+		  \item Each pixel in the new resolution gets the value of the nearest pixel in the old resolution.
+		  \item Simple but bad
+	\end{itemize}
   \item Bilinear interpolation:
   	\begin{itemize}
-  	  \item Not linear
+		\item \emph{Not} linear
   	  \item uses the four nearst neighbors of a point $(x,y)$
   	  \item $v(x,y) = ax + by + cxy + d$
   	\end{itemize}
@@ -22,6 +26,53 @@ Bilder einfügen?
 
 \subsection{Adjacency, connectivity, regions and boundaries}
 
-\subsection{Distance measures}
+\subsection{Distance measures / Neighbors}
+For pixels $p,q$  with coordinates $(x,y), (s,t)$
+\subsubsection{Euclidean}
+\begin{equation}
+D_e(p,q) = [(x-s)^2 + (y-t)^2]^{\frac{1}{2}}
+\end{equation}
+\subsubsection{City-block}
+\begin{equation}
+D_4(p,q) = |x-s| + |y-t|
+\end{equation}
+Pixels with a $D_4 = 1$ are the 4-neighbors of $(x,y)$
+\subsubsection{Chessboard}
+\begin{equation}
+D_8(p,q) = max(|x-s|, |y-t|)
+\end{equation}
+Pixels with a $D_8 = 1$ are the 8-neighbors of $(x,y)$
+
 
 \subsection{Math tools}
+\subsubsection{Denoising}
+Image with noise
+\begin{equation}
+g(x,y) = f(x,y) + \eta(x,y)
+\end{equation}
+Noise $\eta$ is uncorrelated and has zero average.  Averaging over $K$ different images reduces noise.
+\begin{eqnarray}
+\hat{g}(x,y)      =& \frac{1}{K} \sum_{i=1}^{K}g_i(x,y) \notag \\
+E{\hat{g}(x,y)}   =& f(x,y) \\
+\sigma_{g(x,y)}^2 =& \frac{1}{K} \sigma_{\eta(x,y)}^2 \notag
+\end{eqnarray}
+
+\subsubsection{Neighborhood operations}
+Averaging
+\begin{equation}
+g(x,y) = \frac{1}{mn} \sum_{(r,c)\in S_{xy}}f(r,c)
+\end{equation}
+
+\subsubsection{Geometric Transformations}
+\begin{eqnarray}
+(x,y) =& T{(v,w)} \notag \\
+ \left[ x~y~1 \right] =& [ v~w~q ] T = [ v~w~1 ] 
+ \left[ \begin{array}{ccc}
+t_{11} & t_{12} & 0 \\
+t_{21} & t_{22} & 0 \\
+t_{31} & t_{32} & 1 \end{array} \right]
+\end{eqnarray}
+\begin{itemize}
+\item Spatial transformation of coordinates
+\item Intensity interpolation for transformed pixels
+\end{itemize}
