@@ -31,4 +31,6 @@
 *.xdy
 *.tdo
 *.synctex*
+*.fls
 DigPro1.pdf
+revision.tex
