@@ -21,27 +21,64 @@
   	\end{itemize}
 \end{itemize}
 
-\subsection{Relationships between pixels}
-Bilder einfügen?
 
-\subsection{Adjacency, connectivity, regions and boundaries}
+\subsection{Some Basic Relationships between pixels}
+\subsubsection{Neighbors of a Pixel}
+A pixel p at coordinates (x,y) has four horizontal and vertical neighors whose coordinates are given by
+\[
+	(x+1, y), (x-1, y), (x, y+1), (x, y-1)
+\]
+This set of pixels, called the 4-neighbors of p, is denoted by $N_4(p)$
 
-\subsection{Distance measures / Neighbors}
+The four diagonal neighbors of p have the coordinates
+\[
+	(x+1, y+1), (x+1, y-1), (x-1, y+1), (x-1, y-1)
+\]
+and are denoted by $N_D(p)$. $N_D(p)$ and $N_4(p)$ together are called the 8-neighbors of p, denoted by $N_8(p)$.
+
+
+\subsubsection{Adjacency, connectivity, regions and boundaries}
+\begin{description}
+  \item[4-adjacency:] Two pixels p and q with values of V are 4-adjacency if q is in the set $N_4(p)$
+  \item[8-adjacency:] Two pixels p and q with values of V are 8-adjacency if q is in the set $N_8(p)$
+  \item[m-adjacency:] (mixed-adjancency) Two pixels p and q with values of V are m-adjacency if
+  	\begin{enumerate}
+  		\item q is in $N_4(p)$ or
+  		\item q is in $N_D(p)$ and the set $N_4(p) \cap N_4(q)$ has no pixel whose values are from V 
+	\end{enumerate}
+\end{description}
+
+\subsubsection{Distance measures / Neighbors}
 For pixels $p,q$  with coordinates $(x,y), (s,t)$
-\subsubsection{Euclidean}
+\paragraph{Euclidean}
 \begin{equation}
 D_e(p,q) = [(x-s)^2 + (y-t)^2]^{\frac{1}{2}}
 \end{equation}
-\subsubsection{City-block}
+\paragraph{City-block}
 \begin{equation}
 D_4(p,q) = |x-s| + |y-t|
 \end{equation}
 Pixels with a $D_4 = 1$ are the 4-neighbors of $(x,y)$
-\subsubsection{Chessboard}
+\paragraph{Chessboard}
 \begin{equation}
 D_8(p,q) = max(|x-s|, |y-t|)
 \end{equation}
 Pixels with a $D_8 = 1$ are the 8-neighbors of $(x,y)$
+
+\subsubsection{Set and Logical Operations}
+\begin{tabular}{|l|l|l|}
+	\hline
+	Subset			& $A \subseteq B$						& Every element of A is also in B
+	\\ \hline
+	Union			& $C = A \cup B$						& C contains all Elements in A, B or both
+	\\ \hline
+	Intersection	& $D = A \cap B$						& D contains all Elements wich are in A and B
+	\\ \hline
+	Complement		& $A^c = \{ \omega | \omega \in A\}$	& Set of elements that are not in A
+	\\ \hline
+	Difference		& $A-B = \{ \omega | \omega \in A, \omega \notin B\} = A \cap B^c$	&
+	\\ \hline
+\end{tabular}
 
 
 \subsection{Math tools}
@@ -75,4 +112,5 @@ t_{31} & t_{32} & 1 \end{array} \right]
 \begin{itemize}
 \item Spatial transformation of coordinates
 \item Intensity interpolation for transformed pixels
+\item See p.88 for examples of T!
 \end{itemize}
