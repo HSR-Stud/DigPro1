@@ -26,9 +26,73 @@ s = T(r)
 	
 \end{itemize}
 
+
 \subsection{Histogram processing}
 The histogram shows the number of occurrence of a particular intensity level relative to the total number of pixels (probability of the intensity value)
+
 \subsubsection{Histogram equalization}
+The intensity level in an image may be viewed as random variables in the interval $[0, L-1]$.
+
+\paragraph{For continous Values}
+\begin{equation}
+	s = T(r) = (L-1)\int_0^r p_r(\omega) d\omega
+\end{equation} 
+
+\paragraph{For discrete Values}
+\begin{equation}
+	s_k = T(r_k) = (L-1) \sum_{j=0}^k p_r(r_j) = \frac{L-1}{MN} \sum_{j=0}^k n_j \qquad k = 0,1,2,\ldots, L-1
+\end{equation}
+where $MN$ is the total number of pixels, $n_k$ is the number of pixels that have the intensity $r_k$ and $L$ is the number of possible intensity levels in the image.
+A plot of $p_r(r_k)$ versus $r_k$ is commonly referred to as a histogramm.
+
+
+\subsubsection{Histogram Matching (Specification)}
+If we want to highlight only some intensity levels we need other methods than histogram equalisation.
+
+\paragraph{For continous Values}
+\begin{align}
+	s	&= T(r) = (L-1) \int_0^r p_r(\omega) d\omega \label{eq:histmatch:cont1} \\
+	G(z)&= (L-1) \int_0^z p_z(t) dt \label{eq:histmatch:cont2} \\
+	z 	&= G^{-1}[T(r)] = G^{-1}(z) \label{eq:histmatch:cont3}
+\end{align}
+
+\begin{enumerate}
+  \item Optain $p_r(r)$ from the original image and use Eq.\ref{eq:histmatch:cont1} to obtain the value of $s$.
+  \item Use Eq.\ref{eq:histmatch:cont2} to obtain the transformation function $G(z)$
+  \item Obtain the inverse tranfromation $z = G^{-1}(s)$
+  \item Optain the output image by first equalizing the original image using Eq.\ref{eq:histmatch:cont1}; the pixels values in this image are the $s$ values.
+  	For each pixel witch value $s$ in the equalized image, perform the inverse mapping $z = G^{-1}(s)$ to obtain the corresponding pixel in the output image. 
+\end{enumerate}
+
+\paragraph{For discrete Values}
+\begin{align}
+	s_k		&= T(r_k) = \frac{L-1}{MN}\sum_{j=0}^{k} n_j \label{eq:histmatch:disc1} \\
+	G(z_q)	&= (L-1) \sum_{i=0}^q p_z(z_i) = s_k \label{eq:histmatch:disc2}  \\
+	z_q 	&= G^{-1}(s_k)	 
+\end{align}
+
+\begin{enumerate}
+  \item Compute the histogram $p_r(r)$ of the given image.
+  \item Find the histogram equalization transformation (Eq.\ref{eq:histmatch:disc1}), round the resulting $s_k$
+  	values to the integer rage $[o, L-1]$
+  \item Compute all values of the transformation function $G$ using Eq.\ref{eq:histmatch:disc2}, where $p_z(z_i)$ are the values
+  	of the specified histogram. Round the values of $G$ to integers and store them in a table
+  \item For every value of $s_k$ use the stored values of $G$ to find the corresponding value of $z_q$ so that $G(z_q)$ is 
+  	closest to $s_k$ and store these mappings from $s$ to $z$.
+  \item Form the output image by first histogram-equalizing the input image and then mapping every equalized pixel value, $s_k$, of this
+  	image to the corresponding value $z_q$ in the output image using the mappings found in step 4.
+\end{enumerate}
+
+
+\subsubsection{Local Histogram Processing}
+The techniques described above are easily adapted to local enhancement. Thre procedure is to define a neighborhood and move its center from pixel to pixel.
+At each location, the histogram of the neighborhood is computed and a transformation function is obtained. This function is then used to map the intensity
+of the pixel centered in the neighborhood.
+
+
+\subsubsection{Using Histogram Statistics for Image Enhancement}
+
+
 
 \subsection{Fundamentals of spatial filtering}
 \subsubsection{Smoothing spatial filters}
