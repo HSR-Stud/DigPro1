@@ -33,7 +33,7 @@ The histogram shows the number of occurrence of a particular intensity level rel
 \subsubsection{Histogram equalization}
 The intensity level in an image may be viewed as random variables in the interval $[0, L-1]$.
 
-\paragraph{For continous Values}
+\paragraph{For continuous Values}
 \begin{equation}
 	s = T(r) = (L-1)\int_0^r p_r(\omega) d\omega
 \end{equation} 
@@ -43,13 +43,13 @@ The intensity level in an image may be viewed as random variables in the interva
 	s_k = T(r_k) = (L-1) \sum_{j=0}^k p_r(r_j) = \frac{L-1}{MN} \sum_{j=0}^k n_j \qquad k = 0,1,2,\ldots, L-1
 \end{equation}
 where $MN$ is the total number of pixels, $n_k$ is the number of pixels that have the intensity $r_k$ and $L$ is the number of possible intensity levels in the image.
-A plot of $p_r(r_k)$ versus $r_k$ is commonly referred to as a histogramm.
+A plot of $p_r(r_k)$ versus $r_k$ is commonly referred to as a histogram.
 
 
 \subsubsection{Histogram Matching (Specification)}
-If we want to highlight only some intensity levels we need other methods than histogram equalisation.
+If we want to highlight only some intensity levels we need other methods than histogram equalization.
 
-\paragraph{For continous Values}
+\paragraph{For continuous Values}
 \begin{align}
 	s	&= T(r) = (L-1) \int_0^r p_r(\omega) d\omega \label{eq:histmatch:cont1} \\
 	G(z)&= (L-1) \int_0^z p_z(t) dt \label{eq:histmatch:cont2} \\
@@ -59,8 +59,8 @@ If we want to highlight only some intensity levels we need other methods than hi
 \begin{enumerate}
   \item Optain $p_r(r)$ from the original image and use Eq.\ref{eq:histmatch:cont1} to obtain the value of $s$.
   \item Use Eq.\ref{eq:histmatch:cont2} to obtain the transformation function $G(z)$
-  \item Obtain the inverse tranfromation $z = G^{-1}(s)$
-  \item Optain the output image by first equalizing the original image using Eq.\ref{eq:histmatch:cont1}; the pixels values in this image are the $s$ values.
+  \item Obtain the inverse transformation $z = G^{-1}(s)$
+  \item Obtain the output image by first equalizing the original image using Eq.\ref{eq:histmatch:cont1}; the pixels values in this image are the $s$ values.
   	For each pixel witch value $s$ in the equalized image, perform the inverse mapping $z = G^{-1}(s)$ to obtain the corresponding pixel in the output image. 
 \end{enumerate}
 
@@ -85,7 +85,7 @@ If we want to highlight only some intensity levels we need other methods than hi
 
 
 \subsubsection{Local Histogram Processing}
-The techniques described above are easily adapted to local enhancement. Thre procedure is to define a neighborhood and move its center from pixel to pixel.
+The techniques described above are easily adapted to local enhancement. The procedure is to define a neighborhood and move its center from pixel to pixel.
 At each location, the histogram of the neighborhood is computed and a transformation function is obtained. This function is then used to map the intensity
 of the pixel centered in the neighborhood.
 
