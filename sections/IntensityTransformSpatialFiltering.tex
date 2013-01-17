@@ -94,6 +94,123 @@ of the pixel centered in the neighborhood.
 
 
 
-\subsection{Fundamentals of spatial filtering}
+\subsection{Fundamentals of spatial filtering\buch{p. 144}}
+A spatial filter consist of
+\begin{enumerate}
+	\item neighborhood (typically a small rectangle)
+	\item a predefined operation
+\end{enumerate}
+If the operation is linear its a \emph{linear spatial filter} otherwise its \emph{nonlinear}.
+Linear filters may be described by a correlation or convolution of a filter $w(x,y)$ and the picture $f(x,y)$ 
+\begin{eqnarray}
+	\text{correlation:}& w(x,y) \text{\FiveStarOpen} f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x+s, y+t) \\
+	\text{convolution:}& w(x,y) \star f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x-s, y-t) 
+\end{eqnarray}
+Correlation and convolution can be interchanged by rotating the filter by $180^\circ$.
+% TODO: add picture
 \subsubsection{Smoothing spatial filters}
+The output of a smoothing, linear spatial filter is the average of the pixels contained in the neighborhood of the filter mask.
+Its main application is blurring and thus reducing noise in images.
+\begin{equation}
+g(x,y) = \frac{\sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x+s, y+t)}{\sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t)}
+\end{equation}
+\paragraph{box filter}
+A filter which all coefficients are equal:
+$ \frac{1}{9} \cdot$ \begin{tabular}{|c|c|c|} \hline 1 & 1 & 1 \\ \hline 1 & 1 & 1 \\ \hline 1 & 1 & 1  \\ \hline \end{tabular}
+\paragraph{weighted average}
+Giving more importance to some pixels:
+$ \frac{1}{16} \cdot$ \begin{tabular}{|c|c|c|} \hline 1 & 2 & 1 \\ \hline 2 & 4 & 2 \\ \hline 1 & 2 & 1  \\ \hline \end{tabular}
 \subsubsection{Sharpening spatial filters}
+This filter highlights transitions in intensity, thus sharpening the image.
+It is the opposite of the smoothing filter and since they have a integrative effect it follows that sharpening filters have a derivative effect.
+\begin{align}
+\frac{\partial f}{\partial x} &= f(x+1) - f(x)& \text{first order derivative} \\
+\frac{\partial^2 f}{\partial x^2} &= f(x+1) + f(x-1)  -2 f(x)& \text{second order derivative}
+\end{align}
+
+\paragraph{Second Derivative - Laplacian}
+The Laplacian is a isotropic (rotation invariant) derivative operator
+\begin{align}
+\nabla^2f &= \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} \\
+\nabla^2f &= f(x+1,y) + f(x-1,y) + f(x,y+1) + f(x,y-1) - 4 f(x,y)
+\end{align}
+
+\begin{tabular}{|c|c|c|} \hline
+0 & 1 & 0  \\ \hline
+1 &-4 & 1  \\ \hline
+0 & 1 & 0  \\ \hline
+\end{tabular}
+Implementation with filter masks (rotation invariant for $90^\circ$ rotations)
+
+\begin{tabular}{|c|c|c|} \hline
+1 & 1 & 1 \\ \hline
+1 &-8 & 1 \\ \hline
+1 & 1 & 1 \\ \hline
+\end{tabular}
+Incorporating the diagonal directions (rotation invariant for $45^\circ$ rotations)
+\\ \\
+To sharpen an image we add the Laplacian to the original
+
+\begin{equation}
+g(x,y) = f(x,y) + c \left[ \nabla^2f(x,y) \right]
+\end{equation}
+
+\paragraph{Unsharp Masking / Highboost}
+\begin{enumerate}
+\item Blur the original $\bar{f}$
+\item Subtract the blurred image from the original (gives the mask $g_{mask}$)
+\item Add the mask to the original
+\end{enumerate}
+\begin{align}
+g_{mask}(x,y) &= f(x,y) - \bar{f}(x,y) \\
+g(x,y) &= f(x,y) + k \cdot g_{mask}(x,y)
+\end{align}
+
+with $k=1$ this filter is called unsharp masking, with $k>1$ highboost.
+
+\paragraph{First-Order Derivative - Gradient}
+The first derivative in an image is the magnitude of the gradient.
+The gradient of image $f$ at $(x,y)$ is a two-dimensional \emph{vector} pointing in the direction of the greatest rate of change.
+\begin{equation}
+\nabla f \equiv grad(f) \equiv \begin{pmatrix}g_x\\g_y\end{pmatrix} = \begin{pmatrix} \dfrac{\partial f}{\partial x} \\ \\ \dfrac{\partial f}{\partial y} \end{pmatrix}
+\end{equation}
+The magnitude of the gradient, is the value of the rate of change into the direction of the gradient.
+\begin{equation}
+M(x,y) = \sqrt{g_x^2 + g_y^2}
+\end{equation}
+\begin{itemize}
+\item isotropic but not linear
+\item $M(x,y)$ is called the gradient image
+\item a popular approximation is $M(x,y) \approx |g_x| + |g_y|$
+\end{itemize}
+
+The gradient can be approximated using filter masks.
+
+\begin{itemize}
+	\item Roberts cross gradient operators
+		\begin{itemize}
+		\item \begin{tabular}{|c|c|} \hline
+		-1 & 0 \\ \hline
+		 0 & 1 \\ \hline
+		\end{tabular}
+		\begin{tabular}{|c|c|} \hline
+		 0 &-1 \\ \hline
+		 1 & 0 \\ \hline
+		\end{tabular}
+	\item no center of symmetry $\rightarrow$ difficult to implement
+	\end{itemize}
+		\item  Sobel operators
+		\begin{itemize}
+		\item \begin{tabular}{|c|c|c|} \hline
+		-1 &-2 &-1 \\ \hline
+		 0 & 0 & 0 \\ \hline
+		 1 & 2 & 1 \\ \hline
+		\end{tabular}
+		\begin{tabular}{|c|c|c|} \hline
+		-1 & 0 & 1 \\ \hline
+		-2 & 0 & 2 \\ \hline
+		-1 & 0 & 1 \\ \hline
+		\end{tabular}
+		\item 3x3 neighborhood $\rightarrow$ smoothing
+		\end{itemize}
+\end{itemize}
