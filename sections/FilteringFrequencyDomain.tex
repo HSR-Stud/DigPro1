@@ -1,8 +1,43 @@
 \section{Filtering in the frequency domain}
 \subsection{Sampling}
+Multiplication of the function with an impulse train
+\begin{equation}
+\tilde{f}(t) = f(t) s_{\Delta T}(t) = \sum_{n=-\infty}^{\infty}f(t)\sigma (t-n \Delta T)
+\end{equation}
+The fourier transform of it
+\begin{equation}
+\tilde{F}(\mu) = F(\mu) \star S(\mu) = \frac{1}{\Delta T} \sum_{n=-\infty}^{\infty}F\left(\mu - \frac{n}{\Delta T}\right)
+\end{equation}
 
 \subsection{The discrete Fourier transform}
+The Fourier transform of sampled data is continuous and infinitely periodic with period $1/\Delta T$
+\begin{equation}
+\tilde{F}(\mu)= \sum_{n=-\infty}^{\infty} f_n \cdot e^{-j 2 \pi  \mu n \Delta T}
+\end{equation}
 
+We are only interested in one period.
+So we obtain $M$ equally spaced samples of $\tilde{F}(\mu)$ over the period $\mu = 0$ to $\mu = 1/\Delta T$
+\begin{equation}
+\mu = \frac{m}{M \Delta T}
+\end{equation}
+
+This results in
+
+\begin{equation}
+F_m = \sum_{n=0}^{M-1} f_n \cdot e^{-j 2 \pi m n / M} \quad m = 0,1,2,\dots,M-1
+\end{equation}
+ 
+The \emph{inverse discrete Fourier transform} is used to recover the sample set ${f_n}$
+\begin{equation}
+f_n = \frac{1}{M} \sum_{m=0}^{M-1}F_m e^{j 2 \pi m n / M \quad n = 0,1,2,\dots,M-1}
+\end{equation}
+
+\begin{itemize}
+\item The discrete Fourier transform is an invertible, linear transformation
+\item The DFT pair is applicable to \emph{any} finite set of uniformly discrete samples
+\item DFT and IDFT are periodic with period M
+\end{itemize}
+ 
 \subsection{2D DFT and IDFT}
 
 \subsection{Image smoothing using frequency domain filters}
