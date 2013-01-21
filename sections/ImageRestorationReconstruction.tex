@@ -35,6 +35,47 @@ Works well on slat noise and not work for pepper noise. It does well also with o
 	\hat{f}(x,y)= \frac{\sum\limits_{(s,t)\in S_{xy}} g(s,t)^{Q+1}}{\sum\limits_{(s,t)\in S_{xy}} g(s,t)^Q}
 \end{equation}
 
+\subsubsection{Order-Statistic Filters}
+
+The output of these filters depends on the order of the pixel values. \\ \\
+
+\textbf{Median filter}\\
+Quite popular, since they result in good noise, without much smoothing \\
+\begin{equation}
+	\hat{f}(x,y)=\underset{(s,t) \in S_{xy}}{\text{median}}\{g(s,t) \}
+\end{equation}
+
+\textbf{Max filter}\\
+This filter picks the maximum of the neighborhood, also it reduce the pepper noise.
+\begin{equation}
+	\hat{f}(x,y)=\underset{(s,t) \in S_{xy}}{\text{max}}\{g(s,t) \}
+\end{equation}
+
+\textbf{Min filter}\\
+This filter picks the minimum of the neighborhood, also it reduce the salt noise.
+\begin{equation}
+	\hat{f}(x,y)=\underset{(s,t) \in S_{xy}}{\text{min}}\{g(s,t) \}
+\end{equation}
+
+\textbf{Midpoint filter}\\
+The midpoint filter simply computes the midpoint between the maximum and the minimum values in the neighborhood. \\
+It works best for randomly distributed noise, like Gaussian or uniform noise.
+\begin{equation}
+	\hat{f}(x,y)=\frac{1}{2} \left[ \underset{(s,t) \in S_{xy}}{\text{max}}\{g(s,t) \} + \underset{(s,t) \in S_{xy}}{\text{min}}\{g(s,t) \}\right]
+\end{equation}
+
+\textbf{Alpha-trimmed filter}\\
+It is robust against outliers and it is good against "normal" noise.\\ 
+
+Suppose that we delete the $d/2$ lowest and $d/2$ highest intensity values of $g(s,t)$ in the neighborhood $S_{xy}$. Let $g_r{s,t}$ represent the remaining $mn-d$ pixels.
+\begin{itemize}
+	\item $d$ can range from $mn-1$
+	\item When $d=0$, then it is a arithmetic mean filter
+	\item When $d=mn-1$, then the filter becomes a median filter
+\end{itemize}
+\begin{equation}
+	\hat{f}(x,y)=\frac{1}{mn-d} \sum\limits_{(s,t)\in S_{xy}} g_r(s,t)
+\end{equation}
 
 \subsection{Restoration in the presence of noise only - frequency domain filtering for periodic noise}
 
