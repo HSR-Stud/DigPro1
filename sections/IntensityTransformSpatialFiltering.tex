@@ -1,6 +1,6 @@
-\section{Intensity Transformations and Spatial Filtering \buch{Chapter 3}}
+\section{Intensity Transformations and Spatial Filtering  \buch{p.104}}
 
-\subsection{Basic intensity transformation functions}
+\subsection{Basic intensity transformation functions \buch{p.105}}
 \begin{equation}
 s = T(r)
 \end{equation}
@@ -27,10 +27,10 @@ s = T(r)
 \end{itemize}
 
 
-\subsection{Histogram processing}
+\subsection{Histogram processing \buch{p.120}}
 The histogram shows the number of occurrence of a particular intensity level relative to the total number of pixels (probability of the intensity value)
 
-\subsubsection{Histogram equalization}
+\subsubsection{Histogram equalization \buch{p.122}}
 The intensity level in an image may be viewed as random variables in the interval $[0, L-1]$.
 
 \paragraph{For continuous Values}
@@ -46,7 +46,7 @@ where $MN$ is the total number of pixels, $n_k$ is the number of pixels that hav
 A plot of $p_r(r_k)$ versus $r_k$ is commonly referred to as a histogram.
 
 
-\subsubsection{Histogram Matching (Specification)}
+\subsubsection{Histogram Matching (Specification) \buch{p.128}}
 If we want to highlight only some intensity levels we need other methods than histogram equalization.
 
 \paragraph{For continuous Values}
@@ -84,17 +84,23 @@ If we want to highlight only some intensity levels we need other methods than hi
 \end{enumerate}
 
 
-\subsubsection{Local Histogram Processing}
+\subsubsection{Local Histogram Processing \buch{p.139}}
 The techniques described above are easily adapted to local enhancement. The procedure is to define a neighborhood and move its center from pixel to pixel.
 At each location, the histogram of the neighborhood is computed and a transformation function is obtained. This function is then used to map the intensity
 of the pixel centered in the neighborhood.
 
 
-\subsubsection{Using Histogram Statistics for Image Enhancement}
+\subsubsection{Using Histogram Statistics for Image Enhancement \buch{p.139}}
+    Mean (average intensity):
+    \begin{equation}
+        m = \sum\limits_{i=0}^{L-1}r_i p(r_i)
+    \end{equation}
+    nth movement (standart deviation $\mu_2 = \sigma^2$)
+    \begin{equation}
+        \mu_n(r) = \sum\limits_{i=0}^{L-1}(r_i -m)^n p(r_i)
+    \end{equation}
 
-
-
-\subsection{Fundamentals of spatial filtering\buch{p. 144}}
+\subsection{Fundamentals of spatial filtering \buch{p.144}}
 A spatial filter consist of
 \begin{enumerate}
 	\item neighborhood (typically a small rectangle)
@@ -108,7 +114,7 @@ Linear filters may be described by a correlation or convolution of a filter $w(x
 \end{eqnarray}
 Correlation and convolution can be interchanged by rotating the filter by $180^\circ$.
 % TODO: add picture
-\subsubsection{Smoothing spatial filters}
+\subsubsection{Smoothing spatial filters \buch{p.152}}
 The output of a smoothing, linear spatial filter is the average of the pixels contained in the neighborhood of the filter mask.
 Its main application is blurring and thus reducing noise in images.
 \begin{equation}
@@ -120,7 +126,7 @@ $ \frac{1}{9} \cdot$ \begin{tabular}{|c|c|c|} \hline 1 & 1 & 1 \\ \hline 1 & 1 &
 \paragraph{weighted average}
 Giving more importance to some pixels:
 $ \frac{1}{16} \cdot$ \begin{tabular}{|c|c|c|} \hline 1 & 2 & 1 \\ \hline 2 & 4 & 2 \\ \hline 1 & 2 & 1  \\ \hline \end{tabular}
-\subsubsection{Sharpening spatial filters}
+\subsubsection{Sharpening spatial filters \buch{p.157}}
 This filter highlights transitions in intensity, thus sharpening the image.
 It is the opposite of the smoothing filter and since they have a integrative effect it follows that sharpening filters have a derivative effect.
 \begin{align}
