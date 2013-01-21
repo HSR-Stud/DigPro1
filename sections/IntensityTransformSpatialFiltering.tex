@@ -74,7 +74,7 @@ If we want to highlight only some intensity levels we need other methods than hi
 \begin{enumerate}
   \item Compute the histogram $p_r(r)$ of the given image.
   \item Find the histogram equalization transformation (Eq.\ref{eq:histmatch:disc1}), round the resulting $s_k$
-  	values to the integer rage $[o, L-1]$
+  	values to the integer range $[o, L-1]$
   \item Compute all values of the transformation function $G$ using Eq.\ref{eq:histmatch:disc2}, where $p_z(z_i)$ are the values
   	of the specified histogram. Round the values of $G$ to integers and store them in a table
   \item For every value of $s_k$ use the stored values of $G$ to find the corresponding value of $z_q$ so that $G(z_q)$ is 
