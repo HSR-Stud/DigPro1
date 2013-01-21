@@ -1,5 +1,5 @@
-\section{Filtering in the frequency domain\buch{Chapter 4}}
-\subsection{Sampling}
+\section{Filtering in the frequency domain \buch{p.299}}
+\subsection{Sampling \buch{p.211}}
 Multiplication of the function with an impulse train
 \begin{equation}
 \tilde{f}(t) = f(t) s_{\Delta T}(t) = \sum_{n=-\infty}^{\infty}f(t)\sigma (t-n \Delta T)
@@ -9,7 +9,7 @@ The fourier transform of it
 \tilde{F}(\mu) = F(\mu) \star S(\mu) = \frac{1}{\Delta T} \sum_{n=-\infty}^{\infty}F\left(\mu - \frac{n}{\Delta T}\right)
 \end{equation}
 
-\subsection{The discrete Fourier transform}
+\subsection{The discrete Fourier transform \buch{p.220}}
 The Fourier transform of sampled data is continuous and infinitely periodic with period $1/\Delta T$
 \begin{equation}
 \tilde{F}(\mu)= \sum_{n=-\infty}^{\infty} f_n \cdot e^{-j 2 \pi  \mu n \Delta T}
@@ -38,7 +38,7 @@ f_n = \frac{1}{M} \sum_{m=0}^{M-1}F_m e^{j 2 \pi m n / M \quad n = 0,1,2,\dots,M
 \item DFT and IDFT are periodic with period M
 \end{itemize}
  
-\subsection{2D DFT and IDFT}
+\subsection{2D DFT and IDFT \buch{p.235}}
 \subsubsection{The 2D Impulse}
 The discrete 2D impulse is defined as
 \begin{equation}
@@ -73,8 +73,8 @@ $\Delta u = \frac{1}{M \Delta T} \quad \Delta v = \frac{1}{N \Delta Z}$
 \end{itemize}
 
 
-\subsection{Image smoothing using frequency domain filters}
+\subsection{Image smoothing using frequency domain filters \buch{p.269}}
 
-\subsection{Image sharpening using frequency domain filters}
+\subsection{Image sharpening using frequency domain filters \buch{p.280}}
 
 
