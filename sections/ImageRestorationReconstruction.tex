@@ -76,6 +76,21 @@ Suppose that we delete the $d/2$ lowest and $d/2$ highest intensity values of $g
 \begin{equation}
 	\hat{f}(x,y)=\frac{1}{mn-d} \sum\limits_{(s,t)\in S_{xy}} g_r(s,t)
 \end{equation}
+\newpage
+
+\subsubsection{Adaptive Filter}
+Change the filter, depending on the contents of $S_{xy}$
+\begin{itemize}
+	\item The local mean $m_L$ and the local variance $\sigma_{L}^2$ can be used as compact descriptors of $S_{xy}$
+	\item The ration of the variances can in theory never be lager then 1
+	\item In practice, since the noise variance $\sigma_{\eta}^2$ needs to be estimated (schätzen), this must be enforced.
+	\item $\sigma_{\eta}^2 \le \sigma_{L}^2$
+\end{itemize}
+
+\begin{equation}
+	\hat{f}(x,y)=g(x,y) - \frac{\sigma_{\eta}^2}{\sigma_{L}^2} \left[g(x,y)-m_L \right]
+\end{equation}
+
 
 \subsection{Restoration in the presence of noise only - frequency domain filtering for periodic noise}
 
