@@ -2,6 +2,38 @@
 \subsection{Noise models}
 
 \subsection{Restoration in the presence of noise only - spatial filtering}
+\subsubsection{Mean Filters}
+
+\textbf{Arithmetic mean filter}\\
+This filter is a standard filter.
+\begin{equation}
+	\hat{f}(x,y)= \frac{1}{m  n} \sum\limits_{(s,t)\in S_{xy}}g(s,t)
+\end{equation}
+
+\textbf{Geometric mean filter}\\
+Smooth similar to arithmetic mean, but less loss of detail.
+\begin{equation}
+	\hat{f}(x,y)= \left[\prod\limits_{(s,t)\in S_{xy}} g(s,t)\right]^\frac{1}{mn}
+\end{equation}
+
+\textbf{Harmonic mean filter}\\
+Works well on slat noise and not work for pepper noise. It does well also with other types of noise like Gaussian noise
+\begin{equation}
+	\hat{f}(x,y)= \frac{mn}{\sum\limits_{(s,t)\in S_{xy}} \frac{1}{g(s,t)}}
+\end{equation}
+
+\textbf{Contraharmonic mean filter}\\
+\begin{itemize}
+\item For positive Q, good for pepper noise
+\item For negative Q, good for salt noise
+\item For Q = -1, it is a harmonic mean filter
+\item For Q = 0, it is a arithmetic mean filter\\ \\
+\textbf{This filter can not simultaneously reduce salt and pepper noise}
+\end{itemize}
+
+\begin{equation}
+	\hat{f}(x,y)= \frac{\sum\limits_{(s,t)\in S_{xy}} g(s,t)^{Q+1}}{\sum\limits_{(s,t)\in S_{xy}} g(s,t)^Q}
+\end{equation}
 
 
 \subsection{Restoration in the presence of noise only - frequency domain filtering for periodic noise}
