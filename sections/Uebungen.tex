@@ -98,26 +98,6 @@ Write a Matlab program which implement the normal convolution between two finite
 sequences (vectors) h and f. Now use the FFT (a fast version of the DFT) to calculate the circular convolution between h and f by multiplying their DFTs. Compare the results, what do you observe?
 Unterschied zwischen den beiden Ergebnissen: Faltung ist wie gewohnt, Circular convolution ist an den Rand veschoben.
 \lstinputlisting{./matlab/Convolution.m}
-% \begin{lstlisting}
-% f = ones(50,1);
-% h = ones(50,1);
-% 
-% result = zeros(size(f,1)+size(h,1)-1);
-% 
-% for x=1:(size(f,1)+size(h,1)-1)
-%    for m=1:(size(h,1))
-%        if x-m >= 0
-%            if x-m < size(f,1)
-%                result(x)=f(x-m+1)*h(m) + result(x);
-%            end
-%        end
-%    end
-% end
-% 
-% fft(f);
-% 
-% plot(result);
-% \end{lstlisting}
 
 \subsection{Phase correlation method for image registration}
 Write a Matlab program which implements the phase correlation method for image
