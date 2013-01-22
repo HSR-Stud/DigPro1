@@ -220,7 +220,7 @@ subplot(3,2,3);
 imshow(uint8(abs(I)));
 title('Bild padding X(u,v)');
 
-% ---- Gehe in Fequenzwereich
+% ---- Gehe in Fequenzbereich
 Iln = log(I);
 If = fft2(Iln);
 
@@ -247,7 +247,7 @@ subplot(3,2,4);
 imshow(uint8(abs(Yf)));
 title('Filter angewendet X(u,v)*H(u,v)');
 
-% ---- Ruecktranforation in Zeitbereich
+% ---- Ruecktransformation in Zeitbereich
 Y = ifft2(Yf);
 Y = exp(Y);
 
