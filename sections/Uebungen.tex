@@ -1,0 +1,48 @@
+\section{Uebungen und Musterloesung}
+
+\subsection{Load and display images}
+Find out how to load and display images in Matlab using the image processing
+toolbox
+\subsection{White noise}
+Create 100 versions of the same gray scale image, each with different additive
+white noise; average the images; what do you observe?
+\subsection{Calculate normalized histogram}
+Write a Matlab program which will calculate the normalized histogram of a
+grayscale image and display it. 
+\subsection{Histrogram equalization}
+Write a Matlab program which will implement a histogram equalization
+%TODO Code
+\subsection{Lowpass filter}
+Write a Matlab program which implements a lowpass filter, where each pixel is
+replaced by the average of a (2*m+1) x (2*m+1) neigborhood. Observe the effects for different m's. Use this lowpass filter to highpass filter an image using the unsharp masking technique. 
+\subsection{Normal convolution vs. FFT}
+Write a Matlab program which implement the normal convolution between two finite
+sequences (vectors) h and f. Now use the FFT (a fast version of the DFT) to calculate the circular convolution between h and f by multiplying their DFTs. Compare the results, what do you observe?
+\subsection{Phase correlation method for image registration}
+Write a Matlab program which implements the phase correlation method for image
+registration: http://en.wikipedia.org/wiki/Phase\_correlation
+%TODO Code
+\subsection{Filter 4.27}
+Write a Matlab program which implements the filter in problem 4.27 in the
+frequency and in the spatial domain. Filter a digital image using these two filters and compare the resulting images.
+\subsection{Homophobic filter}
+Implement a homomorphic filter (4.9-29) and play with the different parameters.
+What do you observe?
+\subsection{Adaptive local noise reduction filter vs. adaptive median filter}
+Implement an adaptive local noise reduction filter (Eq. 5.3-12). Also implement
+an adaptive median filter (page 333). Compare the performance of these two filters.
+\subsection{Motion blur}
+An image contains a motion blur, which occurred during acquisition and can be modeled as follows g(r,c)=f(r,c)+f(r,c-1)+f(r,c-2)+f(r,c-3);
+Write a Matlab program which will create such a motion blur and write a restoration program, which will remove the motion blur using a simple recursive structure of the following form  v(r,c)=g(r,c)-v(r,c-1)-v(r,c-2)-v(r,c-3);
+Be careful that the above recursion is initialized properly. After the restoration works, add noise of different levels to the blurred image. How much noise can you add, that the restoration scheme still works?
+%TODO Code
+\subsection{Restortion of blured and noisy image}
+Write a Matlab program which restores the above blured and noisy image (play
+with the noise power) using a Wiener filter (play with the faktor K). Also write a Matlab program which restores the blured and noisy image using a constrained least squares filter (play with the factor gamma). For the Fourier transform of the Laplacian, use the solution of problem 4.26
+%TODO Code
+\subsection{RGB to HSI conversion}
+Write a Matlab program which converts RGB images to HSI images and vice versa.
+Compare it to the Matlab functions rgb2hsv and hsv2rgb. Are they the same?  Find out how HSV and HSI differ. Write a program that shifts all hues in a given image by a predefined value and displays the resulting image. Do the same with the saturation and the intensity. Observe the effects, are they what you expected to see?
+\subsection{Problem 6.24}
+Write a Matlab program which implements the suggested equalization scheme in the
+solution to problem 6.24.  Compare this to a scheme, where you equalize each RGB component independently.
