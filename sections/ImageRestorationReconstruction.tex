@@ -96,7 +96,18 @@ Change the filter, depending on the contents of $S_{xy}$
 
 
 \subsection{Estimating the degradation function \buch{p.346}}
+The Mathematical model comes for example from the physics of atmospheric turbulence. 
+\begin{equation}
+	H(u,v) = e^{-k(u^2+v^2)^{\frac{5}{6}}}
+\end{equation}
 
+To create a motion blurring:
+
+\begin{equation}
+	H(u,v) = \frac{T}{\pi (ua + vb)}\sin[\pi (ua + vb)] e^{-j \pi(ua + vb)}
+\end{equation}
+
+The parameter $a,b,T$ are adjust by human.
 
 \subsection{Inverse filtering \buch{p.351}}
 
@@ -112,6 +123,22 @@ Change the filter, depending on the contents of $S_{xy}$
 
 
 \subsection{Minimum Mean Square Error Filtering (Wiener) \buch{p.352}}
+The goal is a minimum mean square error estimate. Image and noise are considered random variables. The goal is to deal with the degradation and 
+\begin{equation}
+	e^2 = E\{(f- \hat{f})^2 \} \qquad \hat{f} \text{ is the estimate}
+\end{equation}
+
+\begin{itemize}
+	\item noise and image are uncorrelated
+	\item one of both is zero mean
+\end{itemize}
+
+\begin{equation}
+	\hat{F}(u,v) = \left[ \frac{1}{H(u,v)} \frac{|H(u,v)|^2}{|H(u,v)|^2 +K} \right] G(u,v)
+\end{equation}
+
+The parameter $K$ is adjust by human, and the function $H(u,v)$ is known.
+
 \subsection{Constrained least squares filtering \buch{p.357}}
 
 
