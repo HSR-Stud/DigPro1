@@ -156,12 +156,21 @@ The goal is to find the smoothest image, witch satisfies the original equation, 
 \textbf{To automatically adjust the $\gamma$ use the Eq.~\ref{eq:error}}
 
 \begin{equation}
+	r = g-H \hat{f}	
+	\label{eq:rCalculate}
+\end{equation}
+
+\begin{equation}
+	||\eta||^2= MN[\sigma_{\eta}^2 + m_{\eta}^2]	
+\end{equation}
+
+\begin{equation}
 	||r||^2 = ||\eta||^2 \pm a
 	\label{eq:error}
 \end{equation}
 \begin{enumerate}
 	\item Specify an inital value of $\gamma$
-	\item Compute $||r||^2$
+	\item Compute $||r||^2$ with Eq.~\ref{eq:rCalculate}
 	\item Stop if Eq.~\ref{eq:error} is statisfied, otherwise return to step 2 after increasing $\gamma$ if $||r||^2 < ||\eta||^2-a$ or  decreasing $\gamma$ if  $||r||^2 > ||\eta||^2+a$. Use the new value of $\gamma$ in Eq.~\ref{eq:ConstrainedFilter} to recompute the optimum estimate $\hat{F}(u,v)$
 \end{enumerate}
 
