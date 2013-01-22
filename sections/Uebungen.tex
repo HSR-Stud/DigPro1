@@ -32,7 +32,10 @@ Write a Matlab program which implement the normal convolution between two finite
 sequences (vectors) h and f. Now use the FFT (a fast version of the DFT) to calculate the circular convolution between h and f by multiplying their DFTs. Compare the results, what do you observe?
 \subsection{Phase correlation method for image registration}
 Write a Matlab program which implements the phase correlation method for image
-registration: http://en.wikipedia.org/wiki/Phase\_correlation
+registration:
+
+http://en.wikipedia.org/wiki/Phase\textunderscore correlation
+
 \begin{lstlisting}
 imdata = imread('barack-obama-2.jpg');
 f=rgb2gray(imdata);[M N]=size(f);
@@ -92,7 +95,9 @@ imdata = imread('barack-obama-2.jpg');
 f=double(rgb2gray(imdata));[M N]=size(f);
 for u=0:M-1
     for v=0:N-1
-        H(u+1,v+1)=1+exp(-j*2*pi*(v-N/2)/N)+exp(-j*2*pi*2*(v-N/2)/N)+exp(-j*2*pi*3*(v-N/2)/N);
+        H(u+1,v+1)=1+exp(-j*2*pi*(v-N/2)/N)+exp(-j*2*pi*2*(v-N/2)/N)
+        +exp(-j*2*pi*3*(v-N/2)/N);
+        
         P(u+1,v+1)=-4*pi^2*((u-M/2)^2+(v-N/2)^2);
         CHESS(u+1,v+1)=(-1)^(u+v);
     end
@@ -105,9 +110,12 @@ figure(1);imagesc(g);colormap(gray);
 K=10;GA= 4.8000e-011;
 for u=0:M-1
     for v=0:N-1
-        Fhw(u+1,v+1)=(conj(H(u+1,v+1))/(abs(H(u+1,v+1))^2+K                   ))*G(u+1,v+1);
-        Fh(u+1,v+1) =(conj(H(u+1,v+1))/(abs(H(u+1,v+1))^2+GA*abs(P(u+1,v+1))^2))*G(u+1,v+1);
-    end
+        Fhw(u+1,v+1)=(conj(H(u+1,v+1))/(abs(H(u+1,v+1))^2+K                   ))
+        *G(u+1,v+1);
+        
+        Fh(u+1,v+1) =(conj(H(u+1,v+1))/(abs(H(u+1,v+1))^2+GA*abs(P(u+1,v+1))^2))
+        *G(u+1,v+1);
+        end
 end
 fhw=real(ifft2(Fhw)).*CHESS;
 figure(2);imagesc(fhw);colormap(gray);
