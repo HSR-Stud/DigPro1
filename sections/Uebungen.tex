@@ -105,23 +105,9 @@ registration:
 
 http://en.wikipedia.org/wiki/Phase\textunderscore correlation
 
-\begin{lstlisting}
-imdata = imread('barack-obama-2.jpg');
-f=rgb2gray(imdata);[M N]=size(f);
-dr=1;dc=4;
-ga=f(1:M-dr+1,1:N-dc+1);gb=f(dr:M,dc:N);
+\lstinputlisting{./matlab/PhaseCorrelation.m}
 
-Ga=fft2(ga);Gb=fft2(gb);
-temp=Ga.*conj(Gb);
-R=(temp)./abs(temp);
-r=ifft2(R);
-imshow(r);
 
-[a,rowtemp]=max(r);
-[b,col]=max(a);
-row=rowtemp(col)
-col
-\end{lstlisting}
 \subsection{Filter 4.27}
 Write a Matlab program which implements the filter in problem 4.27 in the
 frequency and in the spatial domain. Filter a digital image using these two filters and compare the resulting images.
