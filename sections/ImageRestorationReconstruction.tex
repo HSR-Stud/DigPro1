@@ -91,7 +91,7 @@ Change the filter, depending on the contents of $S_{xy}$
 	\hat{f}(x,y)=g(x,y) - \frac{\sigma_{\eta}^2}{\sigma_{L}^2} \left[g(x,y)-m_L \right]
 \end{equation}
 
-
+\subsubsection{Notch Filter \buch{p.337}}
 \subsection{Restoration in the presence of noise only - frequency domain filtering for periodic noise \buch{p.335}}
 
 
@@ -100,9 +100,20 @@ Change the filter, depending on the contents of $S_{xy}$
 
 \subsection{Inverse filtering \buch{p.351}}
 
+\begin{itemize}
+	\item Clearly, even though we might know $H(u,v)$ perfectly, the noise makes it impossible to recover $f(x,y)$
+	\item Furthermonre, if H(u,v) is close to zero, $\frac{N(u,v)}{H(u,v)}$ will dominate the result, rendering it useless.
+	\item One trick is, to focus on $H(u,v)$ near the origin, where it tends to be lager.
+\end{itemize}
 
-\subsection{Constrained least squares filtering \buch{p.352}}
+\begin{equation}
+	\hat{F}(x,y)= F(u,v) + \frac{N(u,v)}{H(u,v)}
+\end{equation}
 
 
-\subsection{Geometric mean filter \buch{p.357}}
+\subsection{Minimum Mean Square Error Filtering (Wiener) \buch{p.352}}
+\subsection{Constrained least squares filtering \buch{p.357}}
+
+
+\subsection{Geometric mean filter \buch{p.361}}
 
