@@ -103,7 +103,15 @@ Unterschied zwischen den beiden Ergebnissen: Faltung ist wie gewohnt, Circular c
 Write a Matlab program which implements the phase correlation method for image
 registration:
 
-http://en.wikipedia.org/wiki/Phase\textunderscore correlation
+\begin{align}
+	G_a &= \mathfrak{F}\{g_a\} \qquad G_b = \mathfrak{F}\{g_b\} \\
+	R   &= \frac{G_aG_b^\ast}{|G_aG_b^\ast|} \\
+	r   &= \mathfrak{F}^{-1}\{R\} \\
+	(\Delta x, \Delta y) &= \arg \max_{(x, y)}\{r\}
+\end{align}
+
+$(\Delta x, \Delta y)$ ist der einzig weisse Punkt im rücktransformierten Bild und zeigt die Verschiebung zwischen den beiden Ausgangsbilder.
+Quelle: http://en.wikipedia.org/wiki/Phase\textunderscore correlation
 
 \lstinputlisting{./matlab/PhaseCorrelation.m}
 
