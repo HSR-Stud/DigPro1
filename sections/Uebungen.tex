@@ -1,5 +1,5 @@
 \section{Uebungen und Musterloesung}
-\lstset{language=Matlab}
+\lstset{style=Matlab}
 \subsection{White noise}
 Create 100 versions of the same gray scale image, each with different additive
 white noise; average the images; what do you observe?
@@ -7,7 +7,7 @@ white noise; average the images; what do you observe?
 % Bild laden, Colormap festlegen, Groesse bestimmen
 I = imread('pout.tif');
 colormap('gray');
-[x,y] = size(I);
+[y,x] = size(I);
 
 % Originalbild anzeigen
 figure(1);
@@ -96,27 +96,28 @@ replaced by the average of a (2*m+1) x (2*m+1) neigborhood. Observe the effects 
 \subsection{Normal convolution vs. FFT}
 Write a Matlab program which implement the normal convolution between two finite
 sequences (vectors) h and f. Now use the FFT (a fast version of the DFT) to calculate the circular convolution between h and f by multiplying their DFTs. Compare the results, what do you observe?
-Achtung! Code scheisse!
-\begin{lstlisting}
-f = ones(50,1);
-h = ones(50,1);
-
-result = zeros(size(f,1)+size(h,1)-1);
-
-for x=1:(size(f,1)+size(h,1)-1)
-   for m=1:(size(h,1))
-       if x-m >= 0
-           if x-m < size(f,1)
-               result(x)=f(x-m+1)*h(m) + result(x);
-           end
-       end
-   end
-end
-
-fft(f);
-
-plot(result);
-\end{lstlisting}
+Unterschied zwischen den beiden Ergebnissen: Faltung ist wie gewohnt, Circular convolution ist an den Rand veschoben.
+\lstinputlisting{./matlab/Convolution.m}
+% \begin{lstlisting}
+% f = ones(50,1);
+% h = ones(50,1);
+% 
+% result = zeros(size(f,1)+size(h,1)-1);
+% 
+% for x=1:(size(f,1)+size(h,1)-1)
+%    for m=1:(size(h,1))
+%        if x-m >= 0
+%            if x-m < size(f,1)
+%                result(x)=f(x-m+1)*h(m) + result(x);
+%            end
+%        end
+%    end
+% end
+% 
+% fft(f);
+% 
+% plot(result);
+% \end{lstlisting}
 
 \subsection{Phase correlation method for image registration}
 Write a Matlab program which implements the phase correlation method for image
