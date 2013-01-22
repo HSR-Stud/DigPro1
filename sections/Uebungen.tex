@@ -1,8 +1,5 @@
 \section{Uebungen und Musterloesung}
 \lstset{language=Matlab}
-\subsection{Load and display images}
-Find out how to load and display images in Matlab using the image processing
-toolbox
 \subsection{White noise}
 Create 100 versions of the same gray scale image, each with different additive
 white noise; average the images; what do you observe?
@@ -42,7 +39,42 @@ title('Rekonstruiertes Bild');
 \end{lstlisting}
 \subsection{Calculate normalized histogram}
 Write a Matlab program which will calculate the normalized histogram of a
-grayscale image and display it. 
+grayscale image and display it. \\
+Achtung! Code nicht optimal!
+\begin{lstlisting}
+% Read Image
+I = imread('pout.tif');
+histogram = zeros(1, 256);
+
+imagesc(I,[0,255]);
+colormap('gray');
+
+%Plot Image
+subplot(1,3,1);
+imshow(I);
+
+%Plot Matlab Histogram
+subplot(1,3,2);
+imhist(I);
+
+%Calc and plot histogram
+%Get size of image
+[rmax, cmax] = size(I);
+for row = 1:rmax;               % Loop over rows
+    for col = 1:cmax;         % Loop over columns
+        histogram(I(row,col) + 1) = histogram(I(row,col) + 1) + 1;
+    end
+end
+
+subplot(1,3,3);
+%normalize
+an = row * col;
+histogram = histogram ./ an;
+%draw
+stem(histogram, 'Marker', 'none')
+%set axis
+axis([0,256,0,max(histogram)])
+\end{lstlisting}
 \subsection{Histrogram equalization}
 Write a Matlab program which will implement a histogram equalization
 \begin{lstlisting}
@@ -64,6 +96,28 @@ replaced by the average of a (2*m+1) x (2*m+1) neigborhood. Observe the effects 
 \subsection{Normal convolution vs. FFT}
 Write a Matlab program which implement the normal convolution between two finite
 sequences (vectors) h and f. Now use the FFT (a fast version of the DFT) to calculate the circular convolution between h and f by multiplying their DFTs. Compare the results, what do you observe?
+Achtung! Code scheisse!
+\begin{lstlisting}
+f = ones(50,1);
+h = ones(50,1);
+
+result = zeros(size(f,1)+size(h,1)-1);
+
+for x=1:(size(f,1)+size(h,1)-1)
+   for m=1:(size(h,1))
+       if x-m >= 0
+           if x-m < size(f,1)
+               result(x)=f(x-m+1)*h(m) + result(x);
+           end
+       end
+   end
+end
+
+fft(f);
+
+plot(result);
+\end{lstlisting}
+
 \subsection{Phase correlation method for image registration}
 Write a Matlab program which implements the phase correlation method for image
 registration:
@@ -90,9 +144,118 @@ col
 \subsection{Filter 4.27}
 Write a Matlab program which implements the filter in problem 4.27 in the
 frequency and in the spatial domain. Filter a digital image using these two filters and compare the resulting images.
+Achtung! Code unsicher!
+\begin{lstlisting}
+I = imread('pout.tif');
+
+If = fft2(I);
+If = fftshift(If);
+subplot(2,2,3);
+imshow(log(abs(If)),[]);
+
+[x1 y1] = size(I);
+Ip = double( padarray(I,[2 2],0,'symmetric'));
+
+G = zeros(x1, y1);
+for y = 2:1:y1+1
+    for x = 2:1:x1+1
+        G(x-1,y-1) = 1/4.*(Ip(x,y+1) + Ip(x +1,y) + Ip(x-1,y) + Ip(x,y-1));
+    end
+end
+
+%G = G(2:x1,2:y1);
+
+Gf = fft2(G);
+Gf = fftshift(Gf);
+
+subplot(2,2,1)
+imshow(I);
+
+subplot(2,2,2)
+imshow(G,[0 255]);
+
+subplot(2,2,4);
+imshow(log(abs(Gf)),[]);
+
+%figure;
+%surf(double(log(abs(Gf))));
+
+Df = If - Gf;
+\end{lstlisting}
+
 \subsection{Homophobic filter}
 Implement a homomorphic filter (4.9-29) and play with the different parameters.
 What do you observe?
+Achtung! Code bäh!
+\begin{lstlisting}
+clc;
+clear;
+close all;
+
+x = 300;
+y = 300;
+p = x*2;
+q = y*2;
+
+Yl = 0.25;
+Yh = 2;
+c = 1;
+D0 = 80;
+
+% ---- Generiere Bild
+I = zeros(x,y);
+for i=1:1:x;
+    for j = 1:1:y;
+        I(i,j) = (i+j)/(x+y).*254 +1;
+    end
+end
+subplot(3,2,1);
+imshow(uint8(I));
+title('Orginal Bild');
+
+% ---- Padding
+I = padarray(I,[x y],'symmetric','pre');
+
+subplot(3,2,3);
+imshow(uint8(abs(I)));
+title('Bild padding X(u,v)');
+
+% ---- Gehe in Fequenzwereich
+Iln = log(I);
+If = fft2(Iln);
+
+subplot(3,2,5);
+imshow(uint8(abs(If)));
+title('Bild im Frequenzbereich');
+
+% ---- H(u,v) generieren
+H = zeros(p,q);
+H = double(H);
+for i=1:1:p;
+    for j = 1:1:q;
+        H(i,j) = (Yh-Yl).*(1-exp(-c.*(sqrt((i-p/2).^2+(j-q/2).^2)./D0).^2))+Yl;
+    end
+end
+subplot(3,2,2);
+surf((H));
+title('Filterfunktion H(u,v)');
+
+% ---- Multiplikation im Frequenzbereich
+Yf = If.*H;
+
+subplot(3,2,4);
+imshow(uint8(abs(Yf)));
+title('Filter angewendet X(u,v)*H(u,v)');
+
+% ---- Ruecktranforation in Zeitbereich
+Y = ifft2(Yf);
+Y = exp(Y);
+
+subplot(3,2,6);
+imshow(abs(Y));
+title('Gefiltertes Bild');
+
+\end{lstlisting}
 \subsection{Adaptive local noise reduction filter vs. adaptive median filter}
 Implement an adaptive local noise reduction filter (Eq. 5.3-12). Also implement
 an adaptive median filter (page 333). Compare the performance of these two filters.
