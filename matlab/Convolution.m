@@ -19,5 +19,5 @@ subplot(2,1,1)
 stem(g);title('Convolution');grid on;
 
 subplot(2,1,2)
-result=real(ifft(fft(f).*fft(h)));
+result=real(fftshift(ifft(fft(f).*fft(h))));
 stem(result); title('Circular Convolution');grid on;
