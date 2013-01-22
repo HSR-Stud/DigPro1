@@ -1,0 +1,327 @@
+\section{Uebungen und Musterloesung}
+\lstset{language=Matlab}
+\subsection{White noise}
+Create 100 versions of the same gray scale image, each with different additive
+white noise; average the images; what do you observe?
+\begin{lstlisting}
+% Bild laden, Colormap festlegen, Groesse bestimmen
+I = imread('pout.tif');
+colormap('gray');
+[x,y] = size(I);
+
+% Originalbild anzeigen
+figure(1);
+subplot(2,2,1);
+imagesc(I, [0,255]);
+title('Original Bild');
+
+anzahlBilder = 100;
+
+images = zeros(x,y,anzahlBilder);
+
+for i = 1:100
+    images(:,:,i) = imnoise(I, 'gaussian');
+end
+
+J = mean(images, 3);
+
+subplot(2,2,3);
+imagesc(images(:,:,1), [0,255]);
+title('Bild mit Rauschen 1');
+
+subplot(2,2,4);
+imagesc(images(:,:,2), [0,255]);
+title('Bild mit Rauschen 2');
+
+subplot(2,2,2);
+imagesc(J, [0,255]);
+title('Rekonstruiertes Bild');
+\end{lstlisting}
+\subsection{Calculate normalized histogram}
+Write a Matlab program which will calculate the normalized histogram of a
+grayscale image and display it. \\
+Achtung! Code nicht optimal!
+\begin{lstlisting}
+% Read Image
+I = imread('pout.tif');
+histogram = zeros(1, 256);
+
+imagesc(I,[0,255]);
+colormap('gray');
+
+%Plot Image
+subplot(1,3,1);
+imshow(I);
+
+%Plot Matlab Histogram
+subplot(1,3,2);
+imhist(I);
+
+%Calc and plot histogram
+%Get size of image
+[rmax, cmax] = size(I);
+for row = 1:rmax;               % Loop over rows
+    for col = 1:cmax;         % Loop over columns
+        histogram(I(row,col) + 1) = histogram(I(row,col) + 1) + 1;
+    end
+end
+
+subplot(1,3,3);
+%normalize
+an = row * col;
+histogram = histogram ./ an;
+%draw
+stem(histogram, 'Marker', 'none')
+%set axis
+axis([0,256,0,max(histogram)])
+\end{lstlisting}
+\subsection{Histrogram equalization}
+Write a Matlab program which will implement a histogram equalization
+\begin{lstlisting}
+  imdata = imread('ngc6543a.jpg');
+  f=rgb2gray(imdata);[M N]=size(f);
+  r=0:255; p=hist(f(:),r)/(M*N);
+  T=uint8(round(255*cumsum(p)));
+  g=f;
+  for r=1:M
+      for c=1:N
+          g(r,c)=T(f(r,c)+1);
+      end
+  end
+  imshow(f);figure;imshow(g)
+\end{lstlisting}
+\subsection{Lowpass filter}
+Write a Matlab program which implements a lowpass filter, where each pixel is
+replaced by the average of a (2*m+1) x (2*m+1) neigborhood. Observe the effects for different m's. Use this lowpass filter to highpass filter an image using the unsharp masking technique. 
+\subsection{Normal convolution vs. FFT}
+Write a Matlab program which implement the normal convolution between two finite
+sequences (vectors) h and f. Now use the FFT (a fast version of the DFT) to calculate the circular convolution between h and f by multiplying their DFTs. Compare the results, what do you observe?
+Achtung! Code scheisse!
+\begin{lstlisting}
+f = ones(50,1);
+h = ones(50,1);
+
+result = zeros(size(f,1)+size(h,1)-1);
+
+for x=1:(size(f,1)+size(h,1)-1)
+   for m=1:(size(h,1))
+       if x-m >= 0
+           if x-m < size(f,1)
+               result(x)=f(x-m+1)*h(m) + result(x);
+           end
+       end
+   end
+end
+
+fft(f);
+
+plot(result);
+\end{lstlisting}
+
+\subsection{Phase correlation method for image registration}
+Write a Matlab program which implements the phase correlation method for image
+registration:
+
+http://en.wikipedia.org/wiki/Phase\textunderscore correlation
+
+\begin{lstlisting}
+imdata = imread('barack-obama-2.jpg');
+f=rgb2gray(imdata);[M N]=size(f);
+dr=1;dc=4;
+ga=f(1:M-dr+1,1:N-dc+1);gb=f(dr:M,dc:N);
+
+Ga=fft2(ga);Gb=fft2(gb);
+temp=Ga.*conj(Gb);
+R=(temp)./abs(temp);
+r=ifft2(R);
+imshow(r);
+
+[a,rowtemp]=max(r);
+[b,col]=max(a);
+row=rowtemp(col)
+col
+\end{lstlisting}
+\subsection{Filter 4.27}
+Write a Matlab program which implements the filter in problem 4.27 in the
+frequency and in the spatial domain. Filter a digital image using these two filters and compare the resulting images.
+Achtung! Code unsicher!
+\begin{lstlisting}
+I = imread('pout.tif');
+
+If = fft2(I);
+If = fftshift(If);
+subplot(2,2,3);
+imshow(log(abs(If)),[]);
+
+[x1 y1] = size(I);
+Ip = double( padarray(I,[2 2],0,'symmetric'));
+
+G = zeros(x1, y1);
+for y = 2:1:y1+1
+    for x = 2:1:x1+1
+        G(x-1,y-1) = 1/4.*(Ip(x,y+1) + Ip(x +1,y) + Ip(x-1,y) + Ip(x,y-1));
+    end
+end
+
+%G = G(2:x1,2:y1);
+
+Gf = fft2(G);
+Gf = fftshift(Gf);
+
+subplot(2,2,1)
+imshow(I);
+
+subplot(2,2,2)
+imshow(G,[0 255]);
+
+subplot(2,2,4);
+imshow(log(abs(Gf)),[]);
+
+%figure;
+%surf(double(log(abs(Gf))));
+
+Df = If - Gf;
+\end{lstlisting}
+
+\subsection{Homophobic filter}
+Implement a homomorphic filter (4.9-29) and play with the different parameters.
+What do you observe?
+Achtung! Code bäh!
+\begin{lstlisting}
+clc;
+clear;
+close all;
+
+x = 300;
+y = 300;
+p = x*2;
+q = y*2;
+
+Yl = 0.25;
+Yh = 2;
+c = 1;
+D0 = 80;
+
+% ---- Generiere Bild
+I = zeros(x,y);
+for i=1:1:x;
+    for j = 1:1:y;
+        I(i,j) = (i+j)/(x+y).*254 +1;
+    end
+end
+subplot(3,2,1);
+imshow(uint8(I));
+title('Orginal Bild');
+
+% ---- Padding
+I = padarray(I,[x y],'symmetric','pre');
+
+subplot(3,2,3);
+imshow(uint8(abs(I)));
+title('Bild padding X(u,v)');
+
+% ---- Gehe in Fequenzwereich
+Iln = log(I);
+If = fft2(Iln);
+
+subplot(3,2,5);
+imshow(uint8(abs(If)));
+title('Bild im Frequenzbereich');
+
+% ---- H(u,v) generieren
+H = zeros(p,q);
+H = double(H);
+for i=1:1:p;
+    for j = 1:1:q;
+        H(i,j) = (Yh-Yl).*(1-exp(-c.*(sqrt((i-p/2).^2+(j-q/2).^2)./D0).^2))+Yl;
+    end
+end
+subplot(3,2,2);
+surf((H));
+title('Filterfunktion H(u,v)');
+
+% ---- Multiplikation im Frequenzbereich
+Yf = If.*H;
+
+subplot(3,2,4);
+imshow(uint8(abs(Yf)));
+title('Filter angewendet X(u,v)*H(u,v)');
+
+% ---- Ruecktranforation in Zeitbereich
+Y = ifft2(Yf);
+Y = exp(Y);
+
+subplot(3,2,6);
+imshow(abs(Y));
+title('Gefiltertes Bild');
+
+\end{lstlisting}
+\subsection{Adaptive local noise reduction filter vs. adaptive median filter}
+Implement an adaptive local noise reduction filter (Eq. 5.3-12). Also implement
+an adaptive median filter (page 333). Compare the performance of these two filters.
+\subsection{Motion blur}
+An image contains a motion blur, which occurred during acquisition and can be modeled as follows g(r,c)=f(r,c)+f(r,c-1)+f(r,c-2)+f(r,c-3);
+Write a Matlab program which will create such a motion blur and write a restoration program, which will remove the motion blur using a simple recursive structure of the following form  v(r,c)=g(r,c)-v(r,c-1)-v(r,c-2)-v(r,c-3);
+Be careful that the above recursion is initialized properly. After the restoration works, add noise of different levels to the blurred image. How much noise can you add, that the restoration scheme still works?
+\begin{lstlisting}
+imdata = imread('barack-obama-2.jpg');
+f=double(rgb2gray(imdata));[M N]=size(f);
+g=zeros(M,N);
+f(:,1:3)=g(:,1:3); %important!
+for r=1:M
+    for c=4:N
+        g(r,c)=f(r,c)+f(r,c-1)+f(r,c-2)+f(r,c-3);
+    end
+end
+figure(1);imagesc(g);colormap(gray);
+%g=g+std(g(:))*randn(size(g));
+
+v=zeros(M,N);
+for r=1:M
+    for c=4:N
+        v(r,c)=g(r,c)-v(r,c-1)-v(r,c-2)-v(r,c-3);
+    end
+end
+figure(2);imagesc(v);colormap(gray);
+\end{lstlisting}
+\subsection{Restortion of blured and noisy image}
+Write a Matlab program which restores the above blured and noisy image (play
+with the noise power) using a Wiener filter (play with the faktor K). Also write a Matlab program which restores the blured and noisy image using a constrained least squares filter (play with the factor gamma). For the Fourier transform of the Laplacian, use the solution of problem 4.26
+\begin{lstlisting}
+imdata = imread('barack-obama-2.jpg');
+f=double(rgb2gray(imdata));[M N]=size(f);
+for u=0:M-1
+    for v=0:N-1
+        H(u+1,v+1)=1+exp(-j*2*pi*(v-N/2)/N)+exp(-j*2*pi*2*(v-N/2)/N)
+        +exp(-j*2*pi*3*(v-N/2)/N);
+        
+        P(u+1,v+1)=-4*pi^2*((u-M/2)^2+(v-N/2)^2);
+        CHESS(u+1,v+1)=(-1)^(u+v);
+    end
+end
+F=fft2(f.*CHESS);
+G=F.*H; g=real(ifft2(G)).*CHESS;
+noise=20*randn(size(g));g=g+noise; G=fft2(g.*CHESS);
+figure(1);imagesc(g);colormap(gray);
+
+K=10;GA= 4.8000e-011;
+for u=0:M-1
+    for v=0:N-1
+        Fhw(u+1,v+1)=(conj(H(u+1,v+1))/(abs(H(u+1,v+1))^2+K                   ))
+        *G(u+1,v+1);
+        
+        Fh(u+1,v+1) =(conj(H(u+1,v+1))/(abs(H(u+1,v+1))^2+GA*abs(P(u+1,v+1))^2))
+        *G(u+1,v+1);
+        end
+end
+fhw=real(ifft2(Fhw)).*CHESS;
+figure(2);imagesc(fhw);colormap(gray);
+fh=real(ifft2(Fh)).*CHESS;
+figure(3);imagesc(fh);colormap(gray);
+\end{lstlisting}
+\subsection{RGB to HSI conversion}
+Write a Matlab program which converts RGB images to HSI images and vice versa.
+Compare it to the Matlab functions rgb2hsv and hsv2rgb. Are they the same?  Find out how HSV and HSI differ. Write a program that shifts all hues in a given image by a predefined value and displays the resulting image. Do the same with the saturation and the intensity. Observe the effects, are they what you expected to see?
+\subsection{Problem 6.24}
+Write a Matlab program which implements the suggested equalization scheme in the
+solution to problem 6.24.  Compare this to a scheme, where you equalize each RGB component independently.
