@@ -135,12 +135,48 @@ The goal is a minimum mean square error estimate. Image and noise are considered
 
 \begin{equation}
 	\hat{F}(u,v) = \left[ \frac{1}{H(u,v)} \frac{|H(u,v)|^2}{|H(u,v)|^2 +K} \right] G(u,v)
-\end{equation}
+\end{equation}\\
 
 The parameter $K$ is adjust by human, and the function $H(u,v)$ is known.
+While the Wiener filter is powerful, the power spectral densities of the noise and the image need to be know, or a fixed ratio must be a good approximation. Wiener filter are optimal in the mean square error in the statistic sense, which means on average over an ensemble of image.
 
 \subsection{Constrained least squares filtering \buch{p.357}}
+The goal is to find the smoothest image, witch satisfies the original equation, in some meaningful form.
+ 
+\begin{equation}
+	\hat{F}(u,v) = \left[ \frac{H^*(u,v)}{|H(u,v)|^2 + \gamma |P(u,v)|^2} \right] G(u,v)
+	\label{eq:ConstrainedFilter}
+\end{equation}\\
 
+\begin{itemize}
+	\item $P(u,v)$ is the Fourier transform of the Laplacian operator (properly padded)
+	\item $\gamma$ can be iteratively adjusted by a human operator or automatically.
+\end{itemize}
+
+\textbf{To automatically adjust the $\gamma$ use the Eq.~\ref{eq:error}}
+
+\begin{equation}
+	||r||^2 = ||\eta||^2 \pm a
+	\label{eq:error}
+\end{equation}
+\begin{enumerate}
+	\item Specify an inital value of $\gamma$
+	\item Compute $||r||^2$
+	\item Stop if Eq.~\ref{eq:error} is statisfied, otherwise return to step 2 after increasing $\gamma$ if $||r||^2 < ||\eta||^2-a$ or  decreasing $\gamma$ if  $||r||^2 > ||\eta||^2+a$. Use the new value of $\gamma$ in Eq.~\ref{eq:ConstrainedFilter} to recompute the optimum estimate $\hat{F}(u,v)$
+\end{enumerate}
 
 \subsection{Geometric mean filter \buch{p.361}}
+The form of the Wiener filter can be generalized to the so called geometric mean filter.
+
+\begin{equation}
+	\hat{F}(u,v) =  \left[ \frac{H^*(u,v)}{|H(u,v)|^2} \right]^{\alpha}  \left[ \frac{H^*(u,v)}{|H(u,v)|^2 + \beta \left[ \frac{S_\eta(u,v)}{S_f(u,v)}\right]} \right]^{1-\alpha} G(u,v)
+\end{equation}
+
+\begin{itemize}
+	\item $\alpha$ and $\beta$ are positive constants
+	\item $\alpha = 1$, this is simply the inverse filter
+	\item $\alpha=0$ and $\beta=1$, this is the Wiener filter
+	\item $\alpha=0$ and $0 < \beta < 1$, this is the parametric Wiener filter
+	\item $\alpha=0.5$ and $\beta=1$, this is the geometic mean of the inverse filter and the Wiener filter
+\end{itemize}
 
