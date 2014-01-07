@@ -20,7 +20,7 @@ s = T(r)
 		\begin{equation}
 			s = c r^\gamma
 		\end{equation}
-	\item Piecewise-linear transformation functions:
+	\item Piecewise-linear transformation functions \buch{p.115}:
 			\begin{itemize}
 				\item contrast stretching
 				\item intensity level slicing
@@ -51,49 +51,53 @@ The intensity level in an image may be viewed as random variables in the interva
 where $MN$ is the total number of pixels, $n_k$ is the number of pixels that have the intensity $r_k$ and $L$ is the number of possible intensity levels in the image.
 A plot of $p_r(r_k)$ versus $r_k$ is commonly referred to as a histogram.
 
+\newpage
 
 \subsubsection{Histogram Matching (Specification) \buch{p.128}}
-If we want to highlight only some intensity levels we need other methods than histogram equalization.
+If we want to highlight only some intensity levels we need other methods than histogram equalization. \\
+$p_z(z)$ is the specified PDF, we wish the output image to have.
 
 \paragraph{For continuous Values}
 \begin{align}
 	s	&= T(r) = (L-1) \int_0^r p_r(\omega) d\omega \label{eq:histmatch:cont1} \\
-	G(z)&= (L-1) \int_0^z p_z(t) dt \label{eq:histmatch:cont2} \\
-	z 	&= G^{-1}[T(r)] = G^{-1}(z) \label{eq:histmatch:cont3}
+	G(z)&= (L-1) \int_0^z p_z(t) dt = s \label{eq:histmatch:cont2} \\
+	z 	&= G^{-1}[T(r)] = G^{-1}(s) \label{eq:histmatch:cont3}
 \end{align}
 
 \begin{enumerate}
   \item Obtain $p_r(r)$ from the original image and use Eq.\ref{eq:histmatch:cont1} to obtain the value of $s$.
-  \item Use Eq.\ref{eq:histmatch:cont2} to obtain the transformation function $G(z)$
+  \item Use specified PDF $p_z(z)$ in Eq.\ref{eq:histmatch:cont2} to obtain the transformation function $G(z)$
   \item Obtain the inverse transformation $z = G^{-1}(s)$
   \item Obtain the output image by first equalizing the original image using Eq.\ref{eq:histmatch:cont1}; the pixels values in this image are the $s$ values.
-  	For each pixel witch value $s$ in the equalized image, perform the inverse mapping $z = G^{-1}(s)$ to obtain the corresponding pixel in the output image. 
+  	For each pixel witch value $s$ in the equalized image, perform the inverse mapping $z = G^{-1}(s)$ to obtain the corresponding pixel in the output image. $\Rightarrow$ PDF of output image is equal to specified PDF.
 \end{enumerate}
 
 \paragraph{For discrete Values}
 \begin{align}
-	s_k		&= T(r_k) = \frac{L-1}{MN}\sum_{j=0}^{k} n_j \label{eq:histmatch:disc1} \\
-	G(z_q)	&= (L-1) \sum_{i=0}^q p_z(z_i) = s_k \label{eq:histmatch:disc2}  \\
+	s_k		&= T(r_k) = \frac{L-1}{MN}\sum_{j=0}^{k} n_j \qquad 
+      k = 0,1,2,\ldots,L-1 \label{eq:histmatch:disc1} \\
+	G(z_q)	&= (L-1) \sum_{i=0}^q p_z(z_i) = s_k  \qquad   
+      q = 0,1,2,\ldots,L-1\label{eq:histmatch:disc2}  \\
 	z_q 	&= G^{-1}(s_k)	 
 \end{align}
 
 \begin{enumerate}
-  \item Compute the histogram $p_r(r)$ of the given image.
+  \item Compute the histogram $p_r(r_k)$ of the given image.
   \item Find the histogram equalization transformation (Eq.\ref{eq:histmatch:disc1}), round the resulting $s_k$
-  	values to the integer range $[o, L-1]$
+  	values to the integer range $[0, L-1]$
   \item Compute all values of the transformation function $G$ using Eq.\ref{eq:histmatch:disc2}, where $p_z(z_i)$ are the values
   	of the specified histogram. Round the values of $G$ to integers and store them in a table
   \item For every value of $s_k$ use the stored values of $G$ to find the corresponding value of $z_q$ so that $G(z_q)$ is 
   	closest to $s_k$ and store these mappings from $s$ to $z$.
   \item Form the output image by first histogram-equalizing the input image and then mapping every equalized pixel value, $s_k$, of this
-  	image to the corresponding value $z_q$ in the output image using the mappings found in step 4.
+  	image to the corresponding value $z_q$ in the output image using the mappings found in step 4. Note: $T$ and $G^{-1}$ can also be combined $\Rightarrow r_k \rightarrow z_q$
 \end{enumerate}
 
 
 \subsubsection{Local Histogram Processing \buch{p.139}}
 The techniques described above are easily adapted to local enhancement. The procedure is to define a neighborhood and move its center from pixel to pixel.
-At each location, the histogram of the neighborhood is computed and a transformation function is obtained. This function is then used to map the intensity
-of the pixel centered in the neighborhood.
+At each location, the histogram of the neighborhood is computed and a transformation function is obtained. This function is then used to map the intensity of the pixel centered in the neighborhood.
+See Fig. 3.36(c) \buch{p.140} for local histogram equalization with a 3x3 neighborhood.
 
 \newpage
 \subsubsection{Using Histogram Statistics for Image Enhancement \buch{p.139}}
@@ -119,22 +123,23 @@ The stated formulas can be used to calculate the global mean and variance. Equat
 		\sigma^2 =  \frac{1}{MN} \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} \left[f(x,y)-m\right]^2
 	\end{equation}
 
-
-\subsection{Fundamentals of spatial filtering \buch{p.144}}
+This information of the picture can be used for enhancing the image. Eq. 3.3-24 \buch{p.144} is an example of image enhancement with usage of mean and variance.  
+\subsection{Spatial filtering \buch{p.144}}
 A spatial filter consists of
 \begin{enumerate}
-	\item neighborhood (typically a small rectangle)
-	\item a predefined operation
+	\item neighborhood (typically a small rectangle) of $f(x,y)$
+	\item a predefined operation, filter mask $w(x,y)$
 \end{enumerate}
 If the operation is linear its a \emph{linear spatial filter} otherwise its \emph{nonlinear}.
-Linear filters may be described by a correlation or convolution of a filter $w(x,y)$ and the picture $f(x,y)$ 
+Linear filters may be described by a correlation of a filter $w(x,y)$ and the picture $f(x,y)$. (Not a convolution!) 
 \begin{eqnarray}
 	\text{correlation:}& w(x,y) \text{\FiveStarOpen} f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x+s, y+t) \\
 	\text{convolution:}& w(x,y) \star f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x-s, y-t) 
 \end{eqnarray}
 Correlation and convolution can be interchanged by rotating the filter by $180^\circ$. \\
 %TODO: add picture
-
+\textbf{Zero padding}\\
+  filter $w$ of size $m \times n$ $\Rightarrow$ Pad the image with a minimum of $m-1$ rows of 0s at top \& bottom and with $n-1$ columns of 0s on left \& right 
 \subsubsection{Vector Representation of Linear Filtering}
 When interest lies in the characteristic response R, it the sum of products can be written as
 \begin{align}
@@ -188,11 +193,11 @@ Incorporating the diagonal directions (rotation invariant for $45^\circ$ rotatio
 To sharpen an image we add the Laplacian to the original
 
 \begin{equation}
-g(x,y) = f(x,y) + c \left[ \nabla^2f(x,y) \right]
+g(x,y) = f(x,y) + c \left[ \nabla^2f(x,y) \right] \qquad \textrm{with } c=-1
 \end{equation}
 
 \newpage
-\paragraph{Unsharp Masking / Highboost \buch{p.162}}
+\paragraph{Unsharp Masking / Highboost Filtering \buch{p.162}}
 \begin{enumerate}
 \item Blur the original $\bar{f}$
 \item Subtract the blurred image from the original (gives the mask $g_{mask}$)
@@ -211,14 +216,16 @@ The gradient of image $f$ at $(x,y)$ is a two-dimensional \emph{vector} pointing
 \begin{equation}
 \nabla f \equiv grad(f) \equiv \begin{pmatrix}g_x\\g_y\end{pmatrix} = \begin{pmatrix} \dfrac{\partial f}{\partial x} \\ \\ \dfrac{\partial f}{\partial y} \end{pmatrix}
 \end{equation}
-\textbf{Gradient Image:} The magnitude of the gradient, is the value of the rate of change into the direction of the gradient.
+\textbf{Gradient Image:}\\
+ We are interested in the magnitude of the gradient, is the value of the rate of change into the direction of the gradient.
 \begin{equation}
 M(x,y) = \sqrt{g_x^2 + g_y^2}
 \end{equation}
 \begin{itemize}
 \item isotropic but not linear
 \item $M(x,y)$ is called the gradient image
-\item a popular approximation is $M(x,y) \approx |g_x| + |g_y|$
+\item a popular approximation is 
+  \[M(x,y) \approx |g_x| + |g_y|\]
 \end{itemize}
 
 The gradient can be approximated using filter masks.
@@ -226,28 +233,30 @@ The gradient can be approximated using filter masks.
 \begin{itemize}
 	\item Roberts cross gradient operators
 		\begin{itemize}
-		\item \begin{tabular}{|c|c|} \hline
+		\item $g_x$ = \begin{tabular}{|c|c|} \hline
 		-1 & 0 \\ \hline
 		 0 & 1 \\ \hline
 		\end{tabular}
-		\begin{tabular}{|c|c|} \hline
+		$\qquad g_y$ = \begin{tabular}{|c|c|} \hline
 		 0 &-1 \\ \hline
 		 1 & 0 \\ \hline
 		\end{tabular}
 	\item no center of symmetry $\rightarrow$ difficult to implement
 	\end{itemize}
-		\item  Sobel operators
+		\item  \textbf{Sobel operators}, often used
 		\begin{itemize}
-		\item \begin{tabular}{|c|c|c|} \hline
-		-1 &-2 &-1 \\ \hline
-		 0 & 0 & 0 \\ \hline
-		 1 & 2 & 1 \\ \hline
-		\end{tabular}
-		\begin{tabular}{|c|c|c|} \hline
-		-1 & 0 & 1 \\ \hline
-		-2 & 0 & 2 \\ \hline
-		-1 & 0 & 1 \\ \hline
-		\end{tabular}
+		\item $g_x$ =  
+        \begin{tabular}{|c|c|c|} \hline
+		      -1 &-2 &-1 \\ \hline
+		       0 & 0 & 0 \\ \hline
+		       1 & 2 & 1 \\ \hline
+		    \end{tabular}
+		    $\qquad g_y$ = 
+        \begin{tabular}{|c|c|c|} \hline
+		      -1 & 0 & 1 \\ \hline
+	      	-2 & 0 & 2 \\ \hline
+	      	-1 & 0 & 1 \\ \hline
+		    \end{tabular}
 		\item 3x3 neighborhood $\rightarrow$ smoothing
 		\end{itemize}
 \end{itemize}
