@@ -1,9 +1,25 @@
 \section{Image restoration and reconstruction \buch{p.311}}
 \subsection{Noise models  \buch{p.313}}
+	\subsubsection{Estimation of noise parameters}
+		\begin{itemize}
+			\item Select a strip of image, where the noiseless picture would be flat\\
+			$\Rightarrow$ The histogram in these areas give a first hint about the noise corrupting the image 
+			\item The normalized histogram is a proxy of the pdf of the noise, so the mean and variance can be estimated with (5.2-15) and (5.2-16).
+			\item The shape identifies the noise model which matches the best $\Rightarrow$ $\chi^2$-Test			
+		\end{itemize}
+		
 
 \subsection{Restoration in the presence of noise only - spatial filtering \buch{p.322}}
+	\[
+		g(x,y) = f(x,y) + \eta(x,y) \quad
+		\Leftrightarrow \quad
+		G(u,v) = F(u,v) + N(u,v)
+	\]
+	\begin{center}
+		Spatial filtering (low pass) is the method of choise in situations when only addative random noise is present.
+	\end{center}
+	
 \subsubsection{Mean Filters}
-
 \textbf{Arithmetic mean filter}\\
 This filter is a standard filter.
 \begin{equation}
@@ -17,12 +33,12 @@ Smooth similar to arithmetic mean, but less loss of detail.
 \end{equation}
 
 \textbf{Harmonic mean filter}\\
-Works well on slat noise and not work for pepper noise. It does well also with other types of noise like Gaussian noise
+Works well on slat noise, but fails for pepper noise. It does well also with other types of noise like Gaussian noise
 \begin{equation}
 	\hat{f}(x,y)= \frac{mn}{\sum\limits_{(s,t)\in S_{xy}} \frac{1}{g(s,t)}}
 \end{equation}
 
-\textbf{Contraharmonic mean filter}\\
+\textbf{Contraharmonic mean filter}
 \begin{itemize}
 \item For positive Q, good for pepper noise
 \item For negative Q, good for salt noise
@@ -37,10 +53,10 @@ Works well on slat noise and not work for pepper noise. It does well also with o
 
 \subsubsection{Order-Statistic Filters \buch{p.325}}
 
-The output of these filters depends on the order of the pixel values. \\ \\
+The output of these filters depends on the \textbf{order of the pixel} values. \\
 
 \textbf{Median filter}\\
-Quite popular, since they result in good noise, without much smoothing \\
+Quite popular, since they result in good noise suppression, without much smoothing \\
 \begin{equation}
 	\hat{f}(x,y)=\underset{(s,t) \in S_{xy}}{\text{median}}\{g(s,t) \}
 \end{equation}
@@ -67,54 +83,88 @@ It works best for randomly distributed noise, like Gaussian or uniform noise.
 \textbf{Alpha-trimmed filter}\\
 It is robust against outliers and it is good against "normal" noise.\\ 
 
-Suppose that we delete the $d/2$ lowest and $d/2$ highest intensity values of $g(s,t)$ in the neighborhood $S_{xy}$. Let $g_r{s,t}$ represent the remaining $mn-d$ pixels.
+Suppose that we delete the $d/2$ lowest and $d/2$ highest intensity values of $g(s,t)$ in the neighborhood $S_{xy}$. Let $g_r(s,t)$ represent the remaining $mn-d$ pixels.
 \begin{itemize}
-	\item $d$ can range from $mn-1$
+	\item $d$ can range from 0 to $mn-1$
 	\item When $d=0$, then it is a arithmetic mean filter
 	\item When $d=mn-1$, then the filter becomes a median filter
 \end{itemize}
 \begin{equation}
 	\hat{f}(x,y)=\frac{1}{mn-d} \sum\limits_{(s,t)\in S_{xy}} g_r(s,t)
 \end{equation}
-\newpage
 
 \subsubsection{Adaptive Filter \buch{p.330}}
+\textbf{Adaptive local noise reduction filter}\\
 Change the filter, depending on the contents of $S_{xy}$
 \begin{itemize}
 	\item The local mean $m_L$ and the local variance $\sigma_{L}^2$ can be used as compact descriptors of $S_{xy}$
-	\item The ration of the variances can in theory never be lager then 1
-	\item In practice, since the noise variance $\sigma_{\eta}^2$ needs to be estimated (schätzen), this must be enforced.
-	\item $\sigma_{\eta}^2 \le \sigma_{L}^2$
+	\item The ratio of the variances can in theory never be lager then 1 $\Rightarrow \quad\sigma_{\eta}^2 \le \sigma_{L}^2$
+	\item In practice, since the noise variance $\sigma_{\eta}^2$ needs to be estimated (schätzen), this must be enforced.\\
+	$\Rightarrow$ If $\sigma_{\eta}^2 > \sigma_{L}^2$, set ratio $\frac{\sigma_{\eta}^2}{\sigma_{L}^2}$ to 1
 \end{itemize}
-
 \begin{equation}
 	\hat{f}(x,y)=g(x,y) - \frac{\sigma_{\eta}^2}{\sigma_{L}^2} \left[g(x,y)-m_L \right]
 \end{equation}
 
-\subsubsection{Notch Filter \buch{p.337}}
+
+\textbf{Adaptive median filter \buch{p.332}}\\
+
+
+
 \subsection{Restoration in the presence of noise only - frequency domain filtering for periodic noise \buch{p.335}}
+\subsubsection{Bandreject, Bandpass Filters \buch{p.337}}
+\subsubsection{Notch Filter \buch{p.337}}
+\subsubsection{Optimum Notch Filtering \buch{p.338}}
+	\begin{itemize}
+		\item Optimally, such that the resulting variance is minimized
+	\end{itemize}
+	
+\subsection{Linear, Position-Invariant Degradations}
+	\[
+		g(x,y) = H[f(x,y)] + \eta(x,y) \quad
+		\Leftrightarrow \quad
+		G(u,v) = H(u,v)F(u,v) + N(u,v)
+	\]
+	
+\subsubsection{Estimating the degradation function \buch{p.346}}
+\textbf{By image observation}
+	\begin{itemize}
+		\item Gather information from the image itself
+		\item High contrast part of image is restored by hand and then degradtion function is estimated $\Rightarrow$ labor intensive
+	\end{itemize}
+\textbf{By experminentaion}
+	\begin{itemize}
+		\item Image acquisition system can be used to estimate the degradation function\\
+		$\Rightarrow$ Obtain the impulse response of the degradiation by imaging an impulse (small dot of light)
+	\end{itemize}
+
+\textbf{By modeling}\\
+	\begin{itemize}
+		\item Preferred way, since general insights into degradation process can be found and it can be fully automated
+		\item The Mathematical model comes for example from the physics of atmospheric turbulence. 
+			\begin{equation}
+				H(u,v) = e^{-k(u^2+v^2)^{\frac{5}{6}}}
+			\end{equation}
+	\end{itemize}
 
 
-\subsection{Estimating the degradation function \buch{p.346}}
-The Mathematical model comes for example from the physics of atmospheric turbulence. 
-\begin{equation}
-	H(u,v) = e^{-k(u^2+v^2)^{\frac{5}{6}}}
-\end{equation}
+To create a \textbf{motion blurring}:
 
-To create a motion blurring:
+	\begin{equation}
+		H(u,v) = \frac{T}{\pi (ua + vb)}\sin[\pi (ua + vb)] e^{-j \pi(ua + vb)}
+	\end{equation}
 
-\begin{equation}
-	H(u,v) = \frac{T}{\pi (ua + vb)}\sin[\pi (ua + vb)] e^{-j \pi(ua + vb)}
-\end{equation}
-
-The parameter $a,b,T$ are adjust by human.
+	\begin{center}
+		motion in x-dim. : $x_0(t) = \frac{a \cdot t}{T} \qquad \qquad$ 
+		motion in y-dim. : $y_0(t) = \frac{b \cdot t}{T}$
+	\end{center}
 
 \subsection{Inverse filtering \buch{p.351}}
 
 \begin{itemize}
 	\item Clearly, even though we might know $H(u,v)$ perfectly, the noise makes it impossible to recover $f(x,y)$
 	\item Furthermonre, if H(u,v) is close to zero, $\frac{N(u,v)}{H(u,v)}$ will dominate the result, rendering it useless.
-	\item One trick is, to focus on $H(u,v)$ near the origin, where it tends to be lager.
+	\item One trick is to focus on $H(u,v)$ near the origin, where it tends to be lager. $\Rightarrow$ Use of lowpass
 \end{itemize}
 
 \begin{equation}
@@ -134,13 +184,15 @@ The goal is a minimum mean square error estimate. Image and noise are considered
 \end{itemize}
 
 \begin{equation}
-	\hat{F}(u,v) = \left[ \frac{1}{H(u,v)} \frac{|H(u,v)|^2}{|H(u,v)|^2 +K} \right] G(u,v)
+	\hat{F}(u,v) = \left[ \frac{1}{H(u,v)} \frac{|H(u,v)|^2}{|H(u,v)|^2 +K} \right] G(u,v) \qquad \textrm{with } K = \frac{S_{\eta}(u,v)}{S_f(u,v)} \approx const
 \end{equation}\\
 
-The parameter $K$ is adjust by human, and the function $H(u,v)$ is known.
-While the Wiener filter is powerful, the power spectral densities of the noise and the image need to be know, or a fixed ratio must be a good approximation. Wiener filter are optimal in the mean square error in the statistic sense, which means on average over an ensemble of image.
+The parameter $K$ is evalueted iteratevely, often using humans to judge the result. The function $H(u,v)$ is known.
+ Wiener filter are optimal in the mean square error in the statistic sense, which means on average over an ensemble of image.
 
 \subsection{Constrained least squares filtering \buch{p.357}}
+While the Wiener filter is powerful, the power spectral densities of the noise and the image need to be know, or a fixed ratio must be a good approximation. With the contrained least squares filter, only the noise mean and variance need to be known.
+
 The goal is to find the smoothest image, witch satisfies the original equation, in some meaningful form.
  
 \begin{equation}
@@ -149,30 +201,39 @@ The goal is to find the smoothest image, witch satisfies the original equation, 
 \end{equation}\\
 
 \begin{itemize}
-	\item $P(u,v)$ is the Fourier transform of the Laplacian operator (properly padded)
+	\item $P(u,v)$ is the Fourier transform of the Laplacian operator, see  Eq.~\ref{equ:Laplacian_Freq_Domain}
 	\item $\gamma$ can be iteratively adjusted by a human operator or automatically.
 \end{itemize}
 
 \textbf{To automatically adjust the $\gamma$ use the Eq.~\ref{eq:error}}
 
 \begin{equation}
-	r = g-H \hat{f}	
+	||\mathbf{r}||^{2} = \mathbf{r}^{T}\mathbf{r} \quad \textrm{with} \quad\mathbf{r} = \mathbf{g}-\mathbf{H} \mathbf{\hat{f}}	
 	\label{eq:rCalculate}
 \end{equation}
 
 \begin{equation}
-	||\eta||^2= MN[\sigma_{\eta}^2 + m_{\eta}^2]	
+	||\bm\eta||^2= MN[\sigma_{\eta}^2 + m_{\eta}^2]	
 \end{equation}
 
 \begin{equation}
-	||r||^2 = ||\eta||^2 \pm a
-	\label{eq:error}
+	||\mathbf{r}||^2 = ||\bm\eta||^2 \pm a
+	\label{eq:error}\\
 \end{equation}
 \begin{enumerate}
 	\item Specify an inital value of $\gamma$
-	\item Compute $||r||^2$ with Eq.~\ref{eq:rCalculate}
-	\item Stop if Eq.~\ref{eq:error} is statisfied, otherwise return to step 2 after increasing $\gamma$ if $||r||^2 < ||\eta||^2-a$ or  decreasing $\gamma$ if  $||r||^2 > ||\eta||^2+a$. Use the new value of $\gamma$ in Eq.~\ref{eq:ConstrainedFilter} to recompute the optimum estimate $\hat{F}(u,v)$
+	\item Compute $||\mathbf{r}||^2$ with Eq.~\ref{eq:rCalculate}, or  Eq.~\ref{eq:rCalculateFreq}
+	\item Stop if Eq.~\ref{eq:error} is statisfied, otherwise return to step 2 after increasing $\gamma$ if $||\mathbf{r}||^2 < ||\bm\eta||^2-a$ or  decreasing $\gamma$ if  $||\mathbf{r}||^2 > ||\bm\eta||^2+a$. Use the new value of $\gamma$ in Eq.~\ref{eq:ConstrainedFilter} to recompute the optimum estimate $\hat{F}(u,v)$
 \end{enumerate}
+
+\textbf{Calculation of $||\mathbf{r}||^2$ in frequency domain}
+	\begin{equation}
+		R(u,v) = G(u,v) - H(u,v)\hat{F}(u,v)
+	\end{equation}
+	\begin{equation}
+		||\mathbf{r}||^2 = \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} r^{2}(x,y) \quad \textrm{where } r(x,y) \textrm{ is inverse of } R(u,v) 
+		\label{eq:rCalculateFreq}
+	\end{equation}
 
 \subsection{Geometric mean filter \buch{p.361}}
 The form of the Wiener filter can be generalized to the so called geometric mean filter.
@@ -186,6 +247,6 @@ The form of the Wiener filter can be generalized to the so called geometric mean
 	\item $\alpha = 1$, this is simply the inverse filter
 	\item $\alpha=0$ and $\beta=1$, this is the Wiener filter
 	\item $\alpha=0$ and $0 < \beta < 1$, this is the parametric Wiener filter
-	\item $\alpha=0.5$ and $\beta=1$, this is the geometic mean of the inverse filter and the Wiener filter
+	\item $\alpha=0.5$ and $\beta=1$, this is the geometic mean of the inverse filter and the Wiener filter, also called spectrum equalization filter
 \end{itemize}
 
