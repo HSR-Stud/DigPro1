@@ -107,8 +107,8 @@ and
 \item Separation between samples in the frequency domain are inversely proportional to the spacing between spatial samples and the number of samples
 $\Delta u = \frac{1}{M \Delta T} \quad \Delta v = \frac{1}{N \Delta Z}$
 \item Infinitely periodic
-\item Symmetry properties \buch{p.242}, see Table \ref{tab:Properties_2D_DFT} (Appendix)
-\item Summary of properties \buch{p.253}, see Table ???? and ??? (Appendix)
+\item Symmetry properties \buch{p.242}, see Table \ref{tab:Symmetry_2D_DFT} (Appendix)
+\item Summary of properties \buch{p.253}, see Table \ref{tab:Properties_2D_DFT} and \ref{tab:DFT_Pairs} (Appendix)
 
 %TODO: Tabelle  4.2, 4.3 einfügen
 \end{itemize}
@@ -191,7 +191,7 @@ where $D_0$ is a positive constant and $D(u,v)$ is the distance between a point 
 	D(u,v) = \left[ (u-P/2)^2 + (v-Q/2)^2 \right]^{1/2}
 	\label{equ:Freq_Filter_D_uv}
 \end{equation}
-ILPFs have a huge ringing problem and are not frequently used.
+ILPFs have a \textbf{huge ringing problem} and are not frequently used.
 
 \subsubsection{Butterworth Lowpass Filters}
 The transfer function of a Butterworth lowpass filter (BLPF) of order $n$, and with cutoff frequency at a distance $D_0$ from the origin, is defined as
@@ -205,7 +205,7 @@ A Gaussian lowpass filter (GLPF) of two dimensions is given by
 \begin{equation}
 	H(u,v) = e^{-D^2(u,v)/2D_0^2}
 \end{equation}
-where $D_0$ is the cutoff frequency. When $D(u,v)=D_0$, the GLPF is down to $0.607$ of its maximum value. The GLPF will have no ringing.
+where $D_0$ is the cutoff frequency. When $D(u,v)=D_0$, the GLPF is down to $0.607$ of its maximum value. The GLPF will have \textbf{no ringing}.
 
 \subsection{Image sharpening using frequency domain filters \buch{p.280}}
 A highpass filter is obtained from a given lowpass filter by
@@ -240,6 +240,7 @@ The transfer function of the Gaussian highpass filter (GHPF) with cutoff frequen
 The Laplacian can be implemented in the frequency domain using the filter
 \begin{equation}
 	H(u,v) = -4 \pi^2 D^2(u,v)
+	\label{equ:Laplacian_Freq_Domain}
 \end{equation}
 The Laplacian image is obtained as
 \begin{equation}
