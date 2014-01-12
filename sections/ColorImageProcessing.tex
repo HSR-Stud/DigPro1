@@ -1,3 +1,4 @@
+\newpage
 \section{Color image processing \buch{p.394}}
 \subsection{Color fundamentals \buch{p.395}}
 \begin{itemize}
@@ -52,16 +53,60 @@ Based on the three primary colors of the HVS and the most used model as most col
 These are models well suited for the primary colors of pigments, such as used in printing. The K stands for black, which, in theory can be mixed by summing up all subtractive primary colors, but for printing, the result tends to be a bit muddy, hence black is its own color.
 
 \subsubsection{The HSI Color Model \buch{p.407}}
-%TODO: Do it!
+The HSI Color Model is well suited for image procesing algorithms.\\
+\begin{minipage}{0.6\textwidth}
+\begin{itemize}
+	\item \textbf{H} - hue: information about color, determined by an angle from some reference point $\rightarrow$ usually an angle of $0^\circ$ at the red axis.
+	\item \textbf{S} - saturation: length from the origin to the abritrary color point
+	\item \textbf{I} - intensity: given by the position of the plane on the vertical intensity axis.
+\end{itemize}
+\end{minipage}
+\hspace{0.05\textwidth}
+\begin{minipage}{0.35\textwidth}
+	\includegraphics[width = \textwidth]{./images/HSI_ColorSpace}
+\end{minipage}
+
+\subsubsection{Converting RGB $\Leftrightarrow$ HSI \buch{p.410}}
+
 
 \subsection{Pseudo color image processing \buch{p.414}}
+\subsubsection{Intensity Slicing \buch{p.415}}
+\subsubsection{Intensity to color transformation \buch{p.418}}
+
 
 \subsection{Color transformations \buch{p.426}}
+\subsubsection{Color complements \buch{p.430}}
+\subsubsection{Color slicing \buch{p.431}}
+\subsubsection{Histrogram processing {p.438}}
 
 \subsection{Smoothing and sharpening \buch{p.439}}
+\begin{tabular}{l|l|l}
+	& 
+	\textbf{RGB} & 
+	\textbf{HSI} \\
+	
+	\textbf{Smoothing \buch{p.439}}&
+	Eq. 6.6-2 &
+	only I (average)\\
+	
+	\textbf{Sharpening \buch{p.442}}&
+	Eq. 6.6-3 &
+	only I (laplace)\\
+\end{tabular}
 
 \subsection{Image segmentation based on color \buch{p.443}}
+HSI is not perfect for image segmentation $\rightarrow$ RGB method yields better results! $\Rightarrow$ p.445
+\subsubsection{Bounding boxes \buch{p.446}}
+Simplest method of implementing image segmentation in RGB space 
 
 \subsection{Color edge detection \buch{p.447}}
+Two possibilities to detect edges in RGB-color space:
+\begin{enumerate}
+	\item Use Sobel operators on each color to form the gradient of each RGB component and add them together at each coordinate (x,y)
+	\item Vector method described on p.449
+\end{enumerate}
 
 \subsection{Noise in color images \buch{p.451}}
+Some of the gray scale methods are allowed for full color images.
+
+Other schemes cannot be that easily extended to color images, such as the order statistic filters.
