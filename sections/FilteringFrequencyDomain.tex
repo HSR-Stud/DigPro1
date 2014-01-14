@@ -109,8 +109,6 @@ $\Delta u = \frac{1}{M \Delta T} \quad \Delta v = \frac{1}{N \Delta Z}$
 \item Infinitely periodic
 \item Symmetry properties \buch{p.242}, see Table \ref{tab:Symmetry_2D_DFT} (Appendix)
 \item Summary of properties \buch{p.253}, see Table \ref{tab:Properties_2D_DFT} and \ref{tab:DFT_Pairs} (Appendix)
-
-%TODO: Tabelle  4.2, 4.3 einfügen
 \end{itemize}
 
 \subsubsection{Periodicity \buch{237}}
@@ -279,7 +277,7 @@ allows to attenuate the low frequencies (illumination) with $\gamma_L < 1$ and a
 
 \subsection{Selective Filtering \buch{p.294}}
 
-\subsubsection{Bandreject and Bandpass Filters}
+\subsubsection{Bandreject and Bandpass Filters} \label{subsubsec:FilteringFrequency_BandrejectFilters}
 Bandreject filters are given by the following equations,
 
 \begin{table}[htbp]
@@ -305,7 +303,7 @@ A bandpass filter is obtained by
 	H_{BP}(u,v) = 1 - H_{BR}(u,v)
 \end{equation}
 
-\subsubsection{Notch Filters}
+\subsubsection{Notch Filters}  \label{subsubsec:FilteringFrequency_NotchFilters}
 A notch filter rejects (or passes) frequencies in a predefined neighborhood about the center of the frequency rectangle. Notch reject filters are constructed as products of highpass filters whose centers have been translated to the centers of the notches. The general form is
 \begin{equation}
 	H_{NR}(u,v) = \prod_{k=1}^{Q} H_k(u,v) H_{-k}(u,v)

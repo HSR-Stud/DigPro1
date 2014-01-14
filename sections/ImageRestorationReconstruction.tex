@@ -1,10 +1,94 @@
 \section{Image restoration and reconstruction \buch{p.311}}
+A degraded image is given in the spatial domain by
+\begin{equation}
+	g(x,y) = h(x,y) \star f(x,y) + \eta(x,y)
+\end{equation}
+where $h(x,y)$ is the degradation function, $f(x,y)$ is the original image and $\eta(x,y)$ is the noise.
+
 \subsection{Noise models  \buch{p.313}}
+	%TODO: Insert plot of these probability density functions (p.315 / Fig. 5.2)
+	\subsubsection{Gaussian noise}
+		Frequently used because of its mathematical tractability in spatial and frequency domain.
+		\begin{equation}
+			p(z) = \frac{1}{\sqrt{2\pi} \sigma} e^{-\left(z-\overline{z}\right)^2 / 2\sigma^2}
+		\end{equation}
+		
+	\subsubsection{Rayleigh noise}
+		\begin{equation}
+			p(z) = 
+				\begin{cases}
+					\frac{2}{b} \left(z-a\right) e^{-\left(z-a\right)^2/b} & \text{ for } z\geq a \\
+					0 & \text{ for } z < a
+				\end{cases}
+		\end{equation}
+		The mean and variance of this density are given by
+		\begin{align}
+			\overline{z} &= a + \sqrt{\pi b / 4} \\
+			\sigma^2 &= \frac{b\left(4-\pi\right)}{4}
+		\end{align}
+		
+	\subsubsection{Erlang (gamma) noise}
+		\begin{equation}
+			p(z) = 
+				\begin{cases}
+					\frac{a^bz^{b-1}}{\left(b-1\right))!} e^{-az} & \text{ for } z \geq 0 \\
+					0 & \text{ for } z < 0
+				\end{cases}
+		\end{equation}	
+		where the parameters are such that $a>0$ and $b$ is a positive integer. The mean and variance of this density are given by
+		\begin{align}
+			\overline{z} &= \frac{b}{a} \\
+			\sigma^2 &= \frac{b}{a^2}
+		\end{align}
+		
+	\subsubsection{Exponential noise}
+		\begin{equation}
+			p(z) = 
+				\begin{cases}
+					ae^{-az} & \text{ for } z \geq 0 \\
+					0 & \text{ for } z < 0
+				\end{cases}
+		\end{equation}
+		where $a>0$. The mean and variance of this density are given by
+		\begin{align}
+			\overline{z} &= \frac{1}{a} \\
+			\sigma^2 &= \frac{1}{a^2}
+		\end{align}
+	
+	\subsubsection{Uniform noise}
+		\begin{equation}
+			p(z) = 
+				\begin{cases}
+					\frac{1}{b-a} & \text{ if } a \leq z \leq b \\
+					0 & \text{ otherwise } 
+				\end{cases}
+		\end{equation}		
+		The mean and variance of this density are given by
+		\begin{align}
+			\overline{z} &= \frac{a+b}{2} \\
+			\sigma^2 &= \frac{\left(b-a\right)^2}{12}
+		\end{align}
+	
+	\subsubsection{Impulse (salt-and-pepper) noise}
+		\begin{equation}
+			p(z) = 
+				\begin{cases}
+					P_a & \text{ for } z = a \\
+					P_b & \text{ for } z = b \\
+					0 & \text{ otherwise }
+				\end{cases}
+		\end{equation}	
+	
 	\subsubsection{Estimation of noise parameters}
 		\begin{itemize}
-			\item Select a strip of image, where the noiseless picture would be flat\\
-			$\Rightarrow$ The histogram in these areas give a first hint about the noise corrupting the image 
-			\item The normalized histogram is a proxy of the pdf of the noise, so the mean and variance can be estimated with (5.2-15) and (5.2-16).
+			\item Select a strip $S$ of the image, with constant background. \\
+			$\Rightarrow$ The histogram in these areas gives a first hint about the noise corrupting the image 
+			\item The mean and variance of the noise can be estimated by
+				\begin{align}
+					\overline{z} &= \sum_{i=0}^{L-1} z_i p_S(z_i) \\
+					\sigma^2 &= \sum_{i=0}^{L-1} \left(z_i - \overline{z}\right)^2 p_S(z_i)
+				\end{align}
+				where $p_S(z_i)$ with $i=0,1,\dots,L-1$ denotes the probability estimates of the intensity values.
 			\item The shape identifies the noise model which matches the best $\Rightarrow$ $\chi^2$-Test			
 		\end{itemize}
 		
@@ -99,7 +183,7 @@ Change the filter, depending on the contents of $S_{xy}$
 \begin{itemize}
 	\item The local mean $m_L$ and the local variance $\sigma_{L}^2$ can be used as compact descriptors of $S_{xy}$
 	\item The ratio of the variances can in theory never be lager then 1 $\Rightarrow \quad\sigma_{\eta}^2 \le \sigma_{L}^2$
-	\item In practice, since the noise variance $\sigma_{\eta}^2$ needs to be estimated (schätzen), this must be enforced.\\
+	\item In practice, since the noise variance $\sigma_{\eta}^2$ needs to be estimated, this must be enforced.\\
 	$\Rightarrow$ If $\sigma_{\eta}^2 > \sigma_{L}^2$, set ratio $\frac{\sigma_{\eta}^2}{\sigma_{L}^2}$ to 1
 \end{itemize}
 \begin{equation}
@@ -108,16 +192,30 @@ Change the filter, depending on the contents of $S_{xy}$
 
 
 \textbf{Adaptive median filter \buch{p.332}}\\
-
+%TODO: add adaptive meidan filter
 
 
 \subsection{Restoration in the presence of noise only - frequency domain filtering for periodic noise \buch{p.335}}
+Noise appears as concentrated bursts of energy in the Fourier transform, at locations corresponding to the frequencies of the periodic interference.
+
 \subsubsection{Bandreject, Bandpass Filters \buch{p.337}}
+see \ref{subsubsec:FilteringFrequency_BandrejectFilters} Bandreject and Bandpass Filters, on page \pageref{subsubsec:FilteringFrequency_BandrejectFilters}.
+
 \subsubsection{Notch Filter \buch{p.337}}
+see \ref{subsubsec:FilteringFrequency_NotchFilters} Notch Filters, on page \pageref{subsubsec:FilteringFrequency_NotchFilters}.
+
 \subsubsection{Optimum Notch Filtering \buch{p.338}}
-	\begin{itemize}
-		\item Optimally, such that the resulting variance is minimized
-	\end{itemize}
+Danger: losing too much image information. \\
+Concept: subtract a \textit{weighted} portion of $\eta(x,y)$ from $g(x,y)$ to obtain an estimate of $f(x,y)$:
+\begin{equation}
+	\hat{f}(x,y) = g(x,y) - w(x,y) \eta(x,y)
+\end{equation}
+The weighting or modulation function $w(x,y)$ can be selected so that the resulting variance of $\hat{f}(x,y)$ is minimized over a specified neighborhood of every point $(x,y)$. This results in
+\begin{equation}
+	w(x,y) = \frac{\overline{g(x,y) \eta(x,y)} - \overline{g}(x,y)\overline{\eta}(x,y)}{\overline{\eta^2}(x,y) - \overline{\eta}^2(x,y)}
+\end{equation}
+As $w(x,y)$ can be assumed to be constant in a neighborhood, it can be computed for \textit{one} point in each non-overlapping neighborhood and used to process all points contained in that neighborhood.
+
 	
 \subsection{Linear, Position-Invariant Degradations}
 	\[
