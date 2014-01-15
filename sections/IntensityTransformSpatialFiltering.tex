@@ -142,52 +142,60 @@ Correlation and convolution can be interchanged by rotating the filter by $180^\
   filter $w$ of size $m \times n$ $\Rightarrow$ Pad the image with a minimum of $m-1$ rows of 0s at top \& bottom and with $n-1$ columns of 0s on left \& right 
   
 \subsubsection{2D Convolution, a fast way to calculate}
-Shown on a example: \\
-To calculate the 2D-Convolution, flip the Kernel in both horizontal and vertical direction. Move the center of the Kernel over the Input, multiply all overlapping Pixel and add them up.\\
+Shown on an example: \\
+%To calculate the 2D-Convolution, flip the Kernel in both horizontal and vertical direction. Move the center of the Kernel over the Input, multiply all overlapping Pixel and add them up.\\
 	\begin{minipage}{2.1cm}
+	\centering
 		\begin{tabular}{|c|c|c|} \hline
 			1 & 2 & 3 \\ \hline
 	      	4 & 5 & 6 \\ \hline
 	      	7 & 8 & 9 \\ \hline
-	      \end{tabular}
-	      \\ Input
+	      \end{tabular} \\ 
+	      Input
 	\end{minipage}
 	\begin{minipage}{0.3cm}
 		$\bigstar$
 	\end{minipage}
 	\begin{minipage}{2.5cm}
+	\centering
 		\begin{tabular}{|c|c|c|} \hline
 			\rowcolor{lightgray} -1 & -2 & -1 \\ \hline
 	      	\cellcolor{lightgray} 0 & \cellcolor{gray} 0 & \cellcolor{lightgray} 0 \\ \hline
 	      	\rowcolor{lightgray} 1 & 2 & 1 \\ \hline
-	      \end{tabular}
-	      \\Kernel
+	      \end{tabular}\\
+	      Kernel
 	\end{minipage}
 	\begin{minipage}{0.3cm}
+	\centering
 			$\Rightarrow$
 		\end{minipage}
-	\begin{minipage}{5cm}
-		\begin{tabular}{|c|c|c|c|} \hline
-			\cellcolor{lightgray} 1 & \cellcolor{lightgray} 2& \cellcolor{lightgray} 1 &  \\ \hline
-		 	\cellcolor{lightgray} 0 & \cellcolor{gray} 0 $\cdot$ 1 & \cellcolor{lightgray} 0 $\cdot$ 2 & 3 \\ \hline
-	      	 \cellcolor{lightgray} -1 & \cellcolor{lightgray} -2 $\cdot$ 4 & \cellcolor{lightgray} -1 $\cdot$ 5 & 6\\ \hline
-	      	 & 13 & 20 & 17 \\ \hline
-	      \end{tabular}
-	      \\Step 1
-	\end{minipage}
-	\begin{minipage}{2cm}
-			Step 2,3...
+	\begin{minipage}{7cm}
+	\centering
+		\begin{tabular}{|c|c|c|c|c|c|c|} \hline
+			\cellcolor{lightgray} 1 $\cdot$ 0 & \cellcolor{lightgray} 2 $\cdot$ 0& \cellcolor{lightgray} 1$\cdot$ 0 & 0 & 0 & 0 & 0  \\ \hline
+		 	\cellcolor{lightgray} 0$\cdot$ 0 & \cellcolor{gray} 0$\cdot$ 0  & \cellcolor{lightgray} 0$\cdot$ 0 & 0& 0 & 0 & 0 \\ \hline
+	      	 \cellcolor{lightgray} -1$\cdot$ 0 & \cellcolor{lightgray} -2$\cdot$ 0  & \cellcolor{lightgray} -1 $\cdot$ 1 & 2 & 3 & 0 & 0\\ \hline
+	      	 0 & 0 & 4 & 5 & 6 & 0 & 0 \\ \hline
+	      	 0 & 0 & 13 & 20 & 17& 0 & 0 \\ \hline
+	      	 0 & 0 & 0 & 0 & 0 & 0& 0 \\ \hline
+	      	 0 & 0 & 0 & 0 & 0 & 0& 0 \\ \hline
+	      \end{tabular}\\
+	      Step 1
 	\end{minipage}
 	\begin{minipage}{0.3cm}
+	\centering
 		=
 	\end{minipage}
 	\begin{minipage}{2.3cm}
-		\begin{tabular}{|c|c|c|} \hline
-			-13 & -20 & -17 \\ \hline
-	      	-18 & -24 & -18 \\ \hline
-	      	13 & 20 & 17 \\ \hline
-	      \end{tabular}
-	      \\Output
+	\centering
+		\begin{tabular}{|c|c|c|c|c|} \hline
+			-1 & -4 & -8 & -8 & -3 \\\hline	
+			-4 &-13 & -20 & -17 & -6 \\ \hline
+	      	-6 &-18 & -24 & -18 & -6 \\ \hline
+	      	4 & 13 & 20 & 17 & 6 \\ \hline
+	      	7 & 22 & 32 & 26 & 9 \\ \hline
+	      \end{tabular}\\
+	      Output
 	\end{minipage}
 \\
 	
