@@ -243,6 +243,7 @@ The Laplacian can be implemented in the frequency domain using the filter
 The Laplacian image is obtained as
 \begin{equation}
 	\nabla^2 f(x,y) = \Im^{-1} \left\lbrace H(u,v)F(u,v) \right\rbrace 
+	\label{equ:laplacian_freq_backtransform}
 \end{equation}
 
 The enhanced image $g(x,y) = f(x,y) + c \nabla^2f(x,y)$ with $c=-1$ can be achieved by
@@ -250,7 +251,11 @@ The enhanced image $g(x,y) = f(x,y) + c \nabla^2f(x,y)$ with $c=-1$ can be achie
 	g(x,y) = \Im^{-1} \left\lbrace \left[ 1 + 4 \pi^2 D^2(u,v) \right] F(u,v) \right\rbrace 
 \end{equation}
 
-Usually, $f(x,y)$ is normalized to the range $\left[0,1\right]$ and $\nabla^2 f(x,y)$ is divided by its maximum value, which brings it to the approximate range $\left[-1,1\right]$.
+Usually, $f(x,y)$ is normalized to the range $\left[0,1\right]$ and $\nabla^2 f(x,y)$ is divided by its maximum value, which brings it to the approximate range $\left[-1,1\right]$. The normalizing factor in the frequency domain is not easily computed, so the preferred frequency domain implementation is using the equation
+	\begin{equation}
+		g(x,y) = f(x,y) + c \nabla^2f(x,y)
+	\end{equation}
+with $\nabla^2f(x,y)$ computed using Eq.  \ref{equ:laplacian_freq_backtransform}.
 
 \subsubsection{Unsharp Masking, Highboost Filtering, and High-Frequency-Emphasis Filtering \buch{p.288}}
 A high-frequency-emphasis filter is achieved by
@@ -273,7 +278,7 @@ A modified version of a Gaussian highpass,
 \end{equation}
 allows to attenuate the low frequencies (illumination) with $\gamma_L < 1$ and amplify the high frequencies (reflectance) with $\gamma_H > 1$.
 
-
+\newpage
 \subsection{Selective Filtering \buch{p.294}}
 
 \subsubsection{Bandreject and Bandpass Filters} \label{subsubsec:FilteringFrequency_BandrejectFilters}
