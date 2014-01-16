@@ -1,5 +1,7 @@
 \appendix
-\section{Properties of the 2-D DFT}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+\section{Appendix}
+\subsection{Properties of the 2-D DFT}
 
 \begin{table}[htbp]
 	\centering
@@ -81,3 +83,28 @@
 	\caption{Summary of DFT Pairs}
 	\label{tab:DFT_Pairs}
 \end{table}
+
+\newpage
+
+\setArrayStretch{1.5}
+\input{idiotenseite/trigo/subsections/Winkelargumente}
+\begin{multicols}{2}
+	\input{idiotenseite/trigo/subsections/Additionstheoreme}
+	\input{idiotenseite/trigo/subsections/Produkte}
+
+	\columnbreak
+	
+	\input{idiotenseite/trigo/subsections/DoppelHalbwinkel}	
+	\input{idiotenseite/trigo/subsections/SummeDifferenzen}
+\end{multicols}
+
+	
+\subsection{Euler-Formeln}
+\begin{align}
+	\cos(\alpha) = \frac{e^{j\alpha} + e^{-j\alpha}}{2}
+	&& \sin(\alpha) = \frac{e^{j\alpha} - e^{-j\alpha}}{2j} && 
+	    {e}^{\pm jn\omega} = \cos{n\omega} \pm j \sin{n\omega} \notag\\
+	e^{j\frac{\pi}{2}n} = j^n & & e^{-j\frac{\pi}{2}n} = (-j)^n &&
+	e^{jn\pi}=e^{-jn\pi}=(-1)^n \notag
+\end{align}
+	
