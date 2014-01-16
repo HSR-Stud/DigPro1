@@ -95,22 +95,20 @@ The intensity component is given by
 \end{equation}
 
 \subsubsection{Converting HSI $\Rightarrow$ RGB \buch{p.411}}
-Given values of HSI in the interval $[0,1]$, the applicable equations depend on the values of $H$. The the $120^{\circ}$ intervals separating the primaries.\\
+Given values of HSI in the interval $[0,1]$, the applicable equations depend on the values of $H$, according to the $120^{\circ}$ intervals separating the primaries.\\
 
 First, $H$ is multiplied by $360^{\circ}$ so its range is $[0^{\circ},360^{\circ}]$. \\
 
-\textbf{RG sector} ($0^{\circ} \leq H < 120^{\circ}$): In this sector, the RGB components are directly achieved.
+\begin{tabularx}{\linewidth}{|l|X|X|X|}
+	\hline 
+	& \textbf{RG sector} ($0^{\circ} \leq H < 120^{\circ}$) & \textbf{GB sector} ($120^{\circ} \leq H < 240^{\circ}$) & \textbf{BR sector} ($240^{\circ} \leq H < 360^{\circ}$) \\ \hline
+	$\mathbf{H}$ & $H = H$ & $H = H-120^{\circ}$ & $H = H-240^{\circ}$ \\ \hline
+	$\mathbf{R}$ & $R = I \left[ 1 + \frac{S \cos(H)}{\cos(60^{\circ} - H)} \right]$ & $R = I(1-S)$ & $R = 3I - (R+B)$ \\
+	$\mathbf{G}$ & $G = 3I - (R+B)$ & $G = I \left[ 1 + \frac{S \cos(H)}{\cos(60^{\circ} - H)} \right]$ & $G = I(1-S)$ \\
+	$\mathbf{B}$ & $B = I(1-S)$ & $B = 3I - (R+B)$ & $B = I \left[ 1 + \frac{S \cos(H)}{\cos(60^{\circ} - H)} \right]$ \\
+	\hline
+\end{tabularx}
 
-\textbf{GB sector} ($120^{\circ} \leq H < 240^{\circ}$): In this sector, we subtract $120^{\circ}$ from H: $H = H-120^{\circ}$.
-
-\textbf{BR sector} ($240^{\circ} \leq H < 360^{\circ}$): In this sector, we subtract $240^{\circ}$ from H: $H = H-240^{\circ}$.
-
-Then, the RGB components are achieved by
-\begin{align}
-	B &= I(1-S) \\
-	R &= I \left[ 1 + \frac{S \cos(H)}{\cos(60^{\circ} - H)} \right] \\
-	G &= 3I - (R+B)
-\end{align}
 
 \subsection{Pseudo color image processing \buch{p.414}}
 \begin{itemize}
