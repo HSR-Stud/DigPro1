@@ -134,7 +134,7 @@ If the operation is linear its a \emph{linear spatial filter} otherwise its \emp
 Linear filters may be described by a correlation of a filter $w(x,y)$ and the picture $f(x,y)$. (Not a convolution!) 
 \begin{eqnarray}
 	\text{correlation:}& w(x,y) \text{\FiveStarOpen} f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x+s, y+t) \\
-	\text{convolution:}& w(x,y) \star f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x-s, y-t) 
+	\text{convolution:}& w(x,y) \bigstar f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x-s, y-t) 
 \end{eqnarray}
 Correlation and convolution can be interchanged by rotating the filter by $180^\circ$. \\
 \textbf{Zero padding}\\
@@ -204,7 +204,7 @@ When interest lies in the characteristic response R, it the sum of products can 
 	R & = w_1z_1 + w_2z_2 + \dots + w_{mn}z_{mn} = \sum\limits_{k=1}^{mn}w_kz_k\\
 	  & = \mathbf{w}^T\mathbf{z}
 \end{align}
-where $\mathbf{w}$ and $\mathbf{z}$ are vectors formed from the coefficients of the mask an the image.
+where $\mathbf{w}$ and $\mathbf{z}$ are vectors formed from the coefficients of the mask and the image.
 
 \subsubsection{Smoothing spatial filters \buch{p.152}}
 The output of a smoothing, linear spatial filter is the average of the pixels contained in the neighborhood of the filter mask.
