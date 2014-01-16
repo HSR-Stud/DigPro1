@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+\tikzstyle{gray_block} = [draw,outer sep=0,inner sep=5,minimum width=110,minimum height=40,line width=1, very thick, draw=black!55, top color=white,bottom color=black!20]
+\tikzstyle{vecArrow} = [thick, decoration={markings,mark=at position
+   1 with {\arrow[semithick]{open triangle 60}}},
+   double distance=1.4pt, shorten >= 5.5pt,
+   preaction = {decorate},
+   postaction = {draw,line width=1.4pt, white,shorten >= 4.5pt}]
+\tikzstyle{innerWhite} = [semithick, white,line width=1.4pt, shorten >= 4.5pt]   
+   
+	\node (a) at (0,0) {$f(x,y)$};
+	\node[inner sep=0,minimum size=0] (a1) at (1,0) {};
+	\node (b) [gray_block] at (4,2) {Red transformation};
+	\node (c) [gray_block] at (4,0) {Green transformation};
+	\node (d) [gray_block] at (4,-2) {Blue transformation};
+	\node (e) at (7.5,2) {$f_R(x,y)$};
+	\node (f) at (7.5,0) {$f_G(x,y)$};
+	\node (g) at (7.5,-2) {$f_B(x,y)$};
+
+	\draw[vecArrow] (a)  -- (c);
+	\draw[vecArrow] (a1) |- (b) ;
+	\draw[vecArrow] (a1) |- (d) ;
+	
+	\draw[innerWhite] (a) |- (c);
+	\draw[innerWhite] (a1) |- (b);
+	\draw[innerWhite] (a1) |- (d);
+	
+	\draw[vecArrow] (b)  -- (e);
+	\draw[vecArrow] (c)  -- (f);
+	\draw[vecArrow] (d)  -- (g);
+	
+\end{tikzpicture}

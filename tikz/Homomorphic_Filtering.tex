@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+\tikzstyle{gray_block} = [draw,outer sep=0,inner sep=5,minimum size=50,line width=1, very thick, draw=black!55, top color=white,bottom color=black!20]
+\tikzstyle{vecArrow} = [thick, decoration={markings,mark=at position
+   1 with {\arrow[semithick]{open triangle 60}}},
+   double distance=1.4pt, shorten >= 5.5pt,
+   preaction = {decorate},
+   postaction = {draw,line width=1.4pt, white,shorten >= 4.5pt}]
+   
+	\node (a) at (-2.2,0) {$f(x,y)$};
+    \node (b) [gray_block] at (0,0) {ln};
+	\node (c) [gray_block] at (2.2,0) {DFT};
+	\node (d) [gray_block] at (4.4,0) {$H(u,v)$};
+	\node (e) [gray_block] at (6.6,0) {(DFT)$^{-1}$};
+	\node (f) [gray_block] at (8.8,0) {exp};
+	\node (g) at (11,0) {$g(x,y)$};
+	
+	\draw[vecArrow] (a) node[right] {} -> (b) node [left] {};
+	\draw[vecArrow] (b) node[right] {} -> (c) node [left] {};
+	\draw[vecArrow] (c) node[right] {} -> (d) node [left] {};
+	\draw[vecArrow] (d) node[right] {} -> (e) node [left] {};
+	\draw[vecArrow] (e) node[right] {} -> (f) node [left] {};
+	\draw[vecArrow] (f) node[right] {} -> (g) node [left] {};
+	
+\end{tikzpicture}
