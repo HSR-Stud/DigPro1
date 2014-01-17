@@ -3,11 +3,13 @@
 \section{Appendix}
 \subsection{Properties of the 2-D DFT}
 
+\setArrayStretch{1.4}
+
 \begin{table}[htbp]
 	\centering
 	\begin{tabular}{|rrllp{0.1cm}|}
 	\hline
-	& \textbf{Spatial Domain} & & \textbf{Frequency Domain} & \\
+	& \textbf{Spatial Domain} & & \textbf{Frequency Domain} & \\ \hline
 	1) & $f(x,y)$ real & $\Leftrightarrow$ & $F^*(u,v) = F(-u,-v)$ & \\
 	2) & $f(x,y)$ imaginary & $\Leftrightarrow$ & $F^*(-u,-v) = -F(u,v)$ & \\
 	3) & $f(x,y)$ real & $\Leftrightarrow$ & $R(u,v)$ even; $I(u,v)$ odd & \\
@@ -29,57 +31,58 @@
 
 \begin{table}[htbp]
 	\centering
-	\begin{tabular}{|rp{6cm}p{10cm}|}
+	\begin{tabularx}{\linewidth}{|rp{6cm}rlX|}
 	\hline
-		& \textbf{Name} & \textbf{Expression(s)} \\
+		& \textbf{Name} & & \multicolumn{2}{l|}{\textbf{Expression(s)}} \\
 	\hline
-		1) & Discrete Fourier transform (DFT) of $f(x,y)$ & $F(u,v) = \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} f(x,y) e^{-j2\pi (ux/M+vy/N)}$ \\
-		2) & Inverse discrete Fourier transform (IDFT) of $F(u,v)$ & $f(x,y) = \frac{1}{MN} \sum\limits_{u=0}^{M-1} \sum\limits_{v=0}^{N-1} F(u,v) e^{j2\pi (ux/M+vy/N)}$ \\
-		3) & Polar representation & $F(u,v) = \left|  F(u,v) \right| e^{j\phi(u,v)}$\\
-		4) & Spectrum & $\left| F(u,v) \right| = \left[ R^2(u,v) + I^2(u,v) \right]^{1/2}$, \\ & & $R$ = Real($F$); $I$ = Imag($F$) \\
-		5) & Phase angle & $\phi(u,v) = \tan^{-1}\left[\frac{I(u,v)}{R(u,v)}\right]$ \\
-		6) & Power spectrum & $P(u,v) = \left|F(u,v)\right|^2$\\
-		7) & Average value & $\bar{f}(x,y) = \frac{1}{MN} \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} f(x,y) = \frac{1}{MN}F(0,0)$\\
-		8) & Periodicity ($k_1$ and $k_2$ are integers) & $F(u,v) = F(u+k_1M,v+k_2N)$ \\
-				& & $f(x,y) = f(x+k_1M,y+k_2N)$ \\
-		9) & Convolution & $f(x,y) \star h(x,y) = \sum\limits_{m=0}^{M-1} \sum\limits_{n=0}^{N-1} f(m,n) h(x-m,y-n)$\\
-		10) & Correlation & $f(x,y) \text{\FiveStarOpen} h(x,y) = \sum\limits_{m=0}^{M-1} \sum\limits_{n=0}^{N-1} f(m,n) h(x-m,y-n)$\\
-		11) & Separability & The 2-D DFT can be computed by computing 1-D DFT transforms along the rows (columns) of the image, followed by 1-D transforms along the columns(rows) of the result. \\
-		12) & Obtaining the inverse Fourier transform using forward transform  & $MN f^*(x,y) = \sum\limits_{u=0}^{M-1} \sum\limits_{v=0}^{N-1} F^*(u,v) e^{-j2\pi(ux/M+vy/N)}$\\
+		1) & Discrete Fourier transform (DFT) of $f(x,y)$ & $F(u,v)$ & $=$ & $\sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} f(x,y) e^{-j2\pi (ux/M+vy/N)}$ \\
+		2) & Inverse discrete Fourier transform (IDFT) of $F(u,v)$ & $f(x,y)$ & $=$ & $\frac{1}{MN} \sum\limits_{u=0}^{M-1} \sum\limits_{v=0}^{N-1} F(u,v) e^{j2\pi (ux/M+vy/N)}$ \\
+		3) & Polar representation & $F(u,v)$ & $=$ & $\left|  F(u,v) \right| e^{j\phi(u,v)}$\\
+		4) & Spectrum & $\left| F(u,v) \right|$ & $=$ & $\left[ R^2(u,v) + I^2(u,v) \right]^{1/2}$, \\ & & \multicolumn{3}{c|}{$R$ = Real($F$) $\quad$ $I$ = Imag($F$)} \\
+		5) & Phase angle & $\phi(u,v)$ & $=$ & $\tan^{-1}\left[\frac{I(u,v)}{R(u,v)}\right]$ \\
+		6) & Power spectrum & $P(u,v)$ & $=$ & $\left|F(u,v)\right|^2$\\
+		7) & Average value & $\bar{f}(x,y)$ & $=$ & $\frac{1}{MN} \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} f(x,y) = \frac{1}{MN}F(0,0)$\\
+		8) & Periodicity ($k_1$ and $k_2$ are integers) & $F(u,v)$ & $=$ & $F(u+k_1M,v+k_2N)$ \\
+				& & $f(x,y)$ & $=$ & $f(x+k_1M,y+k_2N)$ \\
+		9) & Convolution & $f(x,y) \star h(x,y)$ & $=$ & $\sum\limits_{m=0}^{M-1} \sum\limits_{n=0}^{N-1} f(m,n) h(x-m,y-n)$\\
+		10) & Correlation & $f(x,y) \text{\FiveStarOpen} h(x,y)$ & $=$ & $\sum\limits_{m=0}^{M-1} \sum\limits_{n=0}^{N-1} f(m,n) h(x-m,y-n)$\\
+		11) & Separability & \multicolumn{3}{p{10cm}|}{The 2-D DFT can be computed by computing 1-D DFT transforms along the rows (columns) of the image, followed by 1-D transforms along the columns(rows) of the result.} \\
+		12) & Obtaining the inverse Fourier transform using forward transform  & $MN f^*(x,y) $ & $=$ & $ \sum\limits_{u=0}^{M-1} \sum\limits_{v=0}^{N-1} F^*(u,v) e^{-j2\pi(ux/M+vy/N)}$\\
 	\hline
-	\end{tabular}
+	\end{tabularx}
 	\caption{Summary of DFT definitions and corresponding expressions}
 	\label{tab:Properties_2D_DFT}
 \end{table}
 
 \begin{table}[htbp]
 	\centering
-	\begin{tabular}{|rp{6cm}p{10cm}|}
+	\begin{tabularx}{\linewidth}{|rp{6cm}XlX|}
 	\hline
-		& \textbf{Name} & \textbf{DFT Pairs} \\ \hline
-		1) & Linearity & $af_1(x,y)+bf_2(x,y) \Leftrightarrow aF_1(u,v) + bF_2(u,v)$ \\
-		2) & Translation (general) & $f(x,y) e^{j2\pi(u_0x/M+v_0y/n)} \Leftrightarrow F(u-u_0,v-v_0)$ \\
-				& & $f(x-x_0,y-y_0) \Leftrightarrow F(u,v) e^{-j2\pi(ux_0/M+vy_0/N)} $ \\
+		& \textbf{Name} & \textbf{DFT Pairs} & & \\ \hline
+		1) & Linearity & $af_1(x,y)+bf_2(x,y)$ & $\Leftrightarrow$ & $aF_1(u,v) + bF_2(u,v)$ \\
+		2) & Translation (general) & $f(x,y) e^{j2\pi(u_0x/M+v_0y/n)}$ & $\Leftrightarrow$ & $ F(u-u_0,v-v_0)$ \\
+				& & $f(x-x_0,y-y_0) )$ & $\Leftrightarrow$ & $ F(u,v) e^{-j2\pi(ux_0/M+vy_0/N)} $ \\
 		3) & \multirow{2}{6cm}{Translation to the center of the frequency rectangle, $(M/2,N/2)$} &
-				$f(x,y)(-1)^{x+y} \Leftrightarrow F(u-M/2,v-N/2)$ \\
-				& & $f(x-M/2,y-N/2) \Leftrightarrow F(u,v)(-1)^{u+v}$ \\
-		4) & Rotation & $f(r,\theta + \theta_0) \Leftrightarrow F(\omega,\varphi+\theta_0)$ \\
-				& & $x = r \cos(\theta); \; y = r \sin(\theta); \; u = \omega \cos(\varphi); \; v = \omega \sin(\varphi)$ \\
-		5) & Convolution theorem & $f(x,y) \star h(x,y) \Leftrightarrow F(u,v) H(u,v) $ \\
-				& & $f(x,y) h(x,y) \Leftrightarrow F(u,v) \star H(u,v)$ \\
-		6) & Correlation theorem & $f(x,y) \text{\FiveStarOpen} h(x,y) \Leftrightarrow F^*(u,v) H(u,v) $ \\
-						& & $f^*(x,y) h(x,y) \Leftrightarrow F(u,v) \text{\FiveStarOpen} H(u,v)$ \\
-		7) & Discrete unit impulse & $\delta(x,y) \Leftrightarrow 1$ \\
-		8) & Rectangle & $rect[a,b] \Leftrightarrow ab\frac{\sin(\pi ua)}{(\pi ua)}\frac{\sin(\pi vb)}{(\pi vb)} e^{-j\pi(ua+vb)}$ \\
-		9) & Sine & $\sin(2\pi u_0x + 2\pi v_0y) \Leftrightarrow $ \\
-			& & $\qquad j\frac{1}{2} \left[ \delta(u+Mu_0,v+Nv_0) - \delta(u-Mu_0,v_Nv_0) \right]$ \\
-		10) & Cosine & $\cos(2\pi u_0x + 2\pi v_0y) \Leftrightarrow $ \\
-					& & $\qquad j\frac{1}{2} \left[ \delta(u+Mu_0,v+Nv_0) + \delta(u-Mu_0,v_Nv_0) \right]$ \\
-		\multicolumn{3}{|l|}{\textit{For continuous variables only:}} \\
-		11) & \textit{Differentiation}\footnote{} & $\left(\frac{\partial}{\partial t}\right)^m \left(\frac{\partial}{\partial z}\right)^n f(t,z) \Leftrightarrow (j 2 \pi \mu)^m (j 2 \pi \nu)^n F(\mu,\nu)$ \\
-		11) & \textit{Gaussian} & $A 2 \pi \sigma^2 e^{-2 \pi^2 \sigma^2 (t^2+z^2)} \Leftrightarrow Ae^{-(\mu^2\nu^2)/2\sigma^2}$ \\
+				$f(x,y)(-1)^{x+y} )$ & $\Leftrightarrow$ & $ F(u-M/2,v-N/2)$ \\
+				& & $f(x-M/2,y-N/2) )$ & $\Leftrightarrow$ & $ F(u,v)(-1)^{u+v}$ \\
+		4) & Rotation & $f(r,\theta + \theta_0) )$ & $\Leftrightarrow$ & $ F(\omega,\varphi+\theta_0)$ \\
+				& & \multicolumn{3}{l|}{$x = r \cos(\theta); \quad y = r \sin(\theta); \quad u = \omega \cos(\varphi); \quad v = \omega \sin(\varphi)$} \\
+		5) & Convolution theorem & $f(x,y) \star h(x,y) )$ & $\Leftrightarrow$ & $ F(u,v) H(u,v) $ \\
+				& & $f(x,y) h(x,y) )$ & $\Leftrightarrow$ & $ F(u,v) \star H(u,v)$ \\
+		6) & Correlation theorem & $f(x,y) \text{\FiveStarOpen} h(x,y) )$ & $\Leftrightarrow$ & $ F^*(u,v) H(u,v) $ \\
+						& & $f^*(x,y) h(x,y) )$ & $\Leftrightarrow$ & $ F(u,v) \text{\FiveStarOpen} H(u,v)$ \\
+		7) & Discrete unit impulse & $\delta(x,y) )$ & $\Leftrightarrow$ & $ 1$ \\
+						& & $1$ & $\Leftrightarrow$ & $MN\delta(u,v)$ \\
+		8) & Rectangle & $rect[a,b] )$ & $\Leftrightarrow$ & $ ab\frac{\sin(\pi ua)}{(\pi ua)}\frac{\sin(\pi vb)}{(\pi vb)} e^{-j\pi(ua+vb)}$ \\
+		9) & Sine & $\sin(2\pi u_0x + 2\pi v_0y) )$ & $\Leftrightarrow$ &  \\
+			& & $\qquad j\frac{1}{2} \left[ \delta(u+Mu_0,v+Nv_0) - \delta(u-Mu_0,v_Nv_0) \right]$ & & \\
+		10) & Cosine & $\cos(2\pi u_0x + 2\pi v_0y) )$ & $\Leftrightarrow$ & \\
+					& & $\qquad j\frac{1}{2} \left[ \delta(u+Mu_0,v+Nv_0) + \delta(u-Mu_0,v_Nv_0) \right]$ & & \\
+		\multicolumn{5}{|l|}{\textit{For continuous variables only:}} \\
+		11) & \textit{Differentiation} & $\left(\frac{\partial}{\partial t}\right)^m \left(\frac{\partial}{\partial z}\right)^n f(t,z) )$ & $\Leftrightarrow$ & $ (j 2 \pi \mu)^m (j 2 \pi \nu)^n F(\mu,\nu)$ \\
+		11) & \textit{Gaussian} & $A 2 \pi \sigma^2 e^{-2 \pi^2 \sigma^2 (t^2+z^2)} )$ & $\Leftrightarrow$ & $ Ae^{-(\mu^2\nu^2)/2\sigma^2}$ \\
 	\hline
-	\end{tabular}
+	\end{tabularx}
 	\caption{Summary of DFT Pairs}
 	\label{tab:DFT_Pairs}
 \end{table}
