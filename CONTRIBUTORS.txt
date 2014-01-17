@@ -1,2 +1,6 @@
-Jürg Rast (jrast)
+﻿Jürg Rast (jrast)
 Raphael Nestler (rnestler)
+Sven Körner (skoerner)
+Christian Gwerder (cgwerder)
+Hannes Badertscher (hbaderts)
+Gregor Dengler (gdengler)
