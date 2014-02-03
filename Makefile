@@ -15,9 +15,7 @@ $(TARGET): $(TARGET:%.pdf=%.tex) revision.tex
 	$(LL) $<
 
 revisionRevert: revision.tex
-	rm -f revision.tex
-	# git clean -e $(TARGET) -e Makefile -x -f -d
-	# Achtung, untracked files werden gelöscht, wenn obiges auskommentiert!
+	#rm -f revision.tex
 
 clean:
 	$(CLEAN)
