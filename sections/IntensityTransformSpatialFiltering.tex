@@ -1,6 +1,6 @@
-\section{Intensity Transformations and Spatial Filtering  \buch{p.104}}
+\section{Intensity Transformations and Spatial Filtering  \buch{p.119}}
 
-\subsection{Basic intensity transformation functions \buch{p.105}}
+\subsection{Basic intensity transformation functions \buch{p.122}}
 General intensity transformation function:
 \begin{equation}
 s = T(r)
@@ -20,29 +20,28 @@ s = T(r)
 		\begin{equation}
 			s = c r^\gamma
 		\end{equation}
-	\item Piecewise-linear transformation functions \buch{p.115}:
+	\item Piecewise linear transformation functions \buch{p.128}:
 			\begin{itemize}
 				\item contrast stretching
-				\item intensity level slicing
+				\item intensity-level slicing
+				\item Bit-plane slicing: \newline
+					Split a image in slices for each intensity bit. All resulting planes are binary images.
+					May be used for a simple compression.
 			\end{itemize}
-	\item Bit-plane slicing: \\ 
-		Split a image in slices for each intensity bit.  All resulting plane are binary images.
-		May be used for a simple compression.
-	
 \end{itemize}
 
 
-\subsection{Histogram processing \buch{p.120}}
-The histogram shows the number of occurrence of a particular intensity level relative to the total number of pixels (probability of the intensity value). \\
+\subsection{Histogram processing \buch{p.133}}
+The histogram shows the number of occurrences of a particular intensity level relative to the total number of pixels (probability of the intensity value). \\
 A normalized histogram is given by $p(r_k) = n_k / MN$ for $k=0,1,2,\dots,L-1$.
 
-\subsubsection{Histogram equalization \buch{p.122}}
-The intensity level in an image may be viewed as random variables in the interval $[0, L-1]$.
+\subsubsection{Histogram equalization \buch{p.134}}
+The intensity levels in an image may be viewed as random variables in the interval $[0, L-1]$.
 
 \paragraph{For continuous Values}
 \begin{equation}
 	s = T(r) = (L-1)\int_0^r p_r(\omega) d\omega
-\end{equation} 
+\end{equation}
 
 \paragraph{For discrete Values}
 \begin{equation}
@@ -53,7 +52,7 @@ A plot of $p_r(r_k)$ versus $r_k$ is commonly referred to as a histogram.
 
 \newpage
 
-\subsubsection{Histogram Matching (Specification) \buch{p.128}}
+\subsubsection{Histogram Matching (Specification) \buch{p.140}}
 If we want to highlight only some intensity levels we need other methods than histogram equalization. \\
 $p_z(z)$ is the specified PDF, we wish the output image to have.
 
@@ -68,17 +67,16 @@ $p_z(z)$ is the specified PDF, we wish the output image to have.
   \item Obtain $p_r(r)$ from the original image and use Eq.\ref{eq:histmatch:cont1} to obtain the value of $s$.
   \item Use specified PDF $p_z(z)$ in Eq.\ref{eq:histmatch:cont2} to obtain the transformation function $G(z)$
   \item Obtain the inverse transformation $z = G^{-1}(s)$
-  \item Obtain the output image by first equalizing the original image using Eq.\ref{eq:histmatch:cont1}; the pixels values in this image are the $s$ values.
-  	For each pixel witch value $s$ in the equalized image, perform the inverse mapping $z = G^{-1}(s)$ to obtain the corresponding pixel in the output image. $\Rightarrow$ PDF of output image is equal to specified PDF.
+  \item Obtain the output image by first equalizing the original image using Eq.\ref{eq:histmatch:cont1}; the pixel values in this image are the $s$ values. For each pixel with value $s$ in the equalized image, perform the inverse mapping $z = G^{-1}(s)$ to obtain the corresponding pixel in the output image. $\Rightarrow$ PDF of output image is equal to specified PDF.
 \end{enumerate}
 
 \paragraph{For discrete Values}
 \begin{align}
-	s_k		&= T(r_k) = \frac{L-1}{MN}\sum_{j=0}^{k} n_j \qquad 
+	s_k		&= T(r_k) = \frac{L-1}{MN}\sum_{j=0}^{k} n_j \qquad
       k = 0,1,2,\ldots,L-1 \label{eq:histmatch:disc1} \\
-	G(z_q)	&= (L-1) \sum_{i=0}^q p_z(z_i) = s_k  \qquad   
+	G(z_q)	&= (L-1) \sum_{i=0}^q p_z(z_i) = s_k  \qquad
       q = 0,1,2,\ldots,L-1\label{eq:histmatch:disc2}  \\
-	z_q 	&= G^{-1}(s_k)	 
+	z_q 	&= G^{-1}(s_k)
 \end{align}
 
 \begin{enumerate}
@@ -87,59 +85,60 @@ $p_z(z)$ is the specified PDF, we wish the output image to have.
   	values to the integer range $[0, L-1]$
   \item Compute all values of the transformation function $G$ using Eq.\ref{eq:histmatch:disc2}, where $p_z(z_i)$ are the values
   	of the specified histogram. Round the values of $G$ to integers and store them in a table
-  \item For every value of $s_k$ use the stored values of $G$ to find the corresponding value of $z_q$ so that $G(z_q)$ is 
+  \item For every value of $s_k$ use the stored values of $G$ to find the corresponding value of $z_q$ so that $G(z_q)$ is
   	closest to $s_k$ and store these mappings from $s$ to $z$.
   \item Form the output image by first histogram-equalizing the input image and then mapping every equalized pixel value, $s_k$, of this
   	image to the corresponding value $z_q$ in the output image using the mappings found in step 4. Note: $T$ and $G^{-1}$ can also be combined $\Rightarrow r_k \rightarrow z_q$
 \end{enumerate}
 
 
-\subsubsection{Local Histogram Processing \buch{p.139}}
+\subsubsection{Local Histogram Processing \buch{p.149}}
 The techniques described above are easily adapted to local enhancement. The procedure is to define a neighborhood and move its center from pixel to pixel.
 At each location, the histogram of the neighborhood is computed and a transformation function is obtained. This function is then used to map the intensity of the pixel centered in the neighborhood.
-See Fig. 3.36(c) \buch{p.140} for local histogram equalization with a 3x3 neighborhood.
+See Fig. 3.26(c) \buch{p.150} for local histogram equalization with a 3x3 neighborhood.
 
 \newpage
-\subsubsection{Using Histogram Statistics for Image Enhancement \buch{p.139}}
+\subsubsection{Using Histogram Statistics for Image Enhancement \buch{p.150}}
 The stated formulas can be used to calculate the global mean and variance. Equations for local mean and variance in a specified neighborhood can easily be found in a similar way. \\
 
     mean (average intensity):
     \begin{equation}
         m = \sum\limits_{i=0}^{L-1}r_i p(r_i)
     \end{equation}
-    
-    n-th movement (intensity variance $\mu_2 = \sigma^2$):
+
+    n-th moment (intensity variance $\mu_2 = \sigma^2$):
     \begin{equation}
         \mu_n(r) = \sum\limits_{i=0}^{L-1}(r_i -m)^n p(r_i)
     \end{equation}
-    
+
     sample mean:
 	\begin{equation}
 		m = \frac{1}{MN} \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} f(x,y)
 	\end{equation}
-	
+
 	sample variance:
 	\begin{equation}
 		\sigma^2 =  \frac{1}{MN} \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} \left[f(x,y)-m\right]^2
 	\end{equation}
 
-This information of the picture can be used for enhancing the image. Eq. 3.3-24 \buch{p.144} is an example of image enhancement with usage of mean and variance.  
-\subsection{Spatial filtering \buch{p.144}}
+This information of the picture can be used for enhancing the image. Eq. 3.3-29 \buch{p.152} is an example of image enhancement with usage of mean and variance.
+\subsection{Spatial filtering \buch{p.153}}
 A spatial filter consists of
 \begin{enumerate}
 	\item neighborhood (typically a small rectangle) of $f(x,y)$
 	\item a predefined operation, filter mask $w(x,y)$
 \end{enumerate}
-If the operation is linear its a \emph{linear spatial filter} otherwise its \emph{nonlinear}.
-Linear filters may be described by a correlation of a filter $w(x,y)$ and the picture $f(x,y)$. (Not a convolution!) 
+If the operation is linear it's a \emph{linear spatial filter} otherwise it's \emph{nonlinear}.
+Linear filters may be described by a correlation of a filter $w(x,y)$ and the picture $f(x,y)$. (Not a convolution!)
 \begin{eqnarray}
 	\text{correlation:}& w(x,y) \text{\FiveStarOpen} f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x+s, y+t) \\
-	\text{convolution:}& w(x,y) \bigstar f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x-s, y-t) 
+	\text{convolution:}& w(x,y) \bigstar f(x,y) = \sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x-s, y-t)
 \end{eqnarray}
 Correlation and convolution can be interchanged by rotating the filter by $180^\circ$. \\
+
 \textbf{Zero padding}\\
-  filter $w$ of size $m \times n$ $\Rightarrow$ Pad the image with a minimum of $m-1$ rows of 0s at top \& bottom and with $n-1$ columns of 0s on left \& right 
-  
+  Filter $w$ of size $m \times n$ $\Rightarrow$ Pad the image with a minimum of $m-1$ rows of 0's at top \& bottom and with $n-1$ columns of 0's on left \& right
+
 \subsubsection{2D Convolution, a fast way to calculate}
 Shown on an example: \\
 %To calculate the 2D-Convolution, flip the Kernel in both horizontal and vertical direction. Move the center of the Kernel over the Input, multiply all overlapping Pixel and add them up.\\
@@ -149,7 +148,7 @@ Shown on an example: \\
 			1 & 2 & 3 \\ \hline
 	      	4 & 5 & 6 \\ \hline
 	      	7 & 8 & 9 \\ \hline
-	      \end{tabular} \\ 
+	      \end{tabular} \\
 	      Input
 	\end{minipage}
 	\begin{minipage}{0.3cm}
@@ -188,7 +187,7 @@ Shown on an example: \\
 	\begin{minipage}{2.3cm}
 	\centering
 		\begin{tabular}{|c|c|c|c|c|} \hline
-			-1 & -4 & -8 & -8 & -3 \\\hline	
+			-1 & -4 & -8 & -8 & -3 \\\hline
 			-4 &-13 & -20 & -17 & -6 \\ \hline
 	      	-6 &-18 & -24 & -18 & -6 \\ \hline
 	      	4 & 13 & 20 & 17 & 6 \\ \hline
@@ -197,7 +196,7 @@ Shown on an example: \\
 	      Output
 	\end{minipage}
 \\
-	
+
 \subsubsection{Vector Representation of Linear Filtering}
 When interest lies in the characteristic response R, it the sum of products can be written as
 \begin{align}
@@ -206,28 +205,28 @@ When interest lies in the characteristic response R, it the sum of products can 
 \end{align}
 where $\mathbf{w}$ and $\mathbf{z}$ are vectors formed from the coefficients of the mask and the image.
 
-\subsubsection{Smoothing spatial filters \buch{p.152}}
+\subsubsection{Smoothing spatial filters \buch{p.164}} \label{sec:smoothingSpatialFilters}
 The output of a smoothing, linear spatial filter is the average of the pixels contained in the neighborhood of the filter mask.
 Its main application is blurring and thus reducing noise in images.
 \begin{equation}
 g(x,y) = \frac{\sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t) f(x+s, y+t)}{\sum\limits_{s=-a}^{a}\sum\limits_{t=-b}^{b}w(s,t)}
 \end{equation}
 \paragraph{box filter}
-A filter which all coefficients are equal:
+A filter whose coefficients are all equal:
 $ \frac{1}{9} \cdot$ \begin{tabular}{|c|c|c|} \hline 1 & 1 & 1 \\ \hline 1 & 1 & 1 \\ \hline 1 & 1 & 1  \\ \hline \end{tabular}
-\paragraph{weighted average}
+\paragraph{gaussian (weighted average)}
 Giving more importance to some pixels:
 $ \frac{1}{16} \cdot$ \begin{tabular}{|c|c|c|} \hline 1 & 2 & 1 \\ \hline 2 & 4 & 2 \\ \hline 1 & 2 & 1  \\ \hline \end{tabular}
-\subsubsection{Sharpening spatial filters \buch{p.157}}
+\subsubsection{Sharpening spatial filters \buch{p.175}}
 
 This filter highlights transitions in intensity, thus sharpening the image.
-It is the opposite of the smoothing filter and since they have a integrative effect it follows that sharpening filters have a derivative effect.
+It is the opposite of the smoothing filter and since they have an integrative effect it follows that sharpening filters have a derivative effect.
 \begin{align}
-\frac{\partial f}{\partial x} &= f(x+1) - f(x)& \text{first order derivative} \\
-\frac{\partial^2 f}{\partial x^2} &= f(x+1) + f(x-1)  -2 f(x)& \text{second order derivative}
+\frac{\partial f}{\partial x} &= f(x+1) - f(x)& \text{first-order derivative} \\
+\frac{\partial^2 f}{\partial x^2} &= f(x+1) + f(x-1)  -2 f(x)& \text{second-order derivative}
 \end{align}
 
-\paragraph{Second Derivative - Laplacian \buch{p.160}}
+\paragraph{Second Derivative - Laplacian \buch{p.178}}
 The Laplacian is a isotropic (rotation invariant) derivative operator
 \begin{align}
 \nabla^2f &= \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} \\
@@ -254,10 +253,10 @@ To sharpen an image we add the Laplacian to the original
 g(x,y) = f(x,y) + c \left[ \nabla^2f(x,y) \right] \qquad \textrm{with } c=-1
 \end{equation}
 
-\newpage
-\paragraph{Unsharp Masking / Highboost Filtering \buch{p.162}}
+
+\paragraph{Unsharp Masking / Highboost Filtering \buch{p.182}}
 \begin{enumerate}
-\item Blur the original $\bar{f}$
+\item Blur the original $f$
 \item Subtract the blurred image from the original (gives the mask $g_{mask}$)
 \item Add the mask to the original
 \end{enumerate}
@@ -268,33 +267,33 @@ g(x,y) &= f(x,y) + k \cdot g_{mask}(x,y)
 
 with $k=1$ this filter is called unsharp masking, with $k>1$ highboost.
 
-\paragraph{First-Order Derivative - Gradient \buch{p.165}}
+\paragraph{First-Order Derivative - Gradient \buch{p.184}}
 The first derivative in an image is the magnitude of the gradient.
 The gradient of image $f$ at $(x,y)$ is a two-dimensional \emph{vector} pointing in the direction of the greatest rate of change.
 \begin{equation}
 \nabla f \equiv grad(f) \equiv \begin{pmatrix}g_x\\g_y\end{pmatrix} = \begin{pmatrix} \dfrac{\partial f}{\partial x} \\ \\ \dfrac{\partial f}{\partial y} \end{pmatrix}
 \end{equation}
 \textbf{Gradient Image:}\\
- We are interested in the magnitude of the gradient, is the value of the rate of change into the direction of the gradient.
+ We are interested in the magnitude of the gradient, which is the value of the rate of change in the direction of the gradient vector.
 \begin{equation}
-M(x,y) = \sqrt{g_x^2 + g_y^2}
+M(x,y) = ||\nabla f|| = mag(\nabla f) = \sqrt{g_x^2 + g_y^2}
 \end{equation}
 \begin{itemize}
 \item isotropic but not linear
 \item $M(x,y)$ is called the gradient image
-\item a popular approximation is 
+\item a popular (but non-isotropic) approximation is
   \[M(x,y) \approx |g_x| + |g_y|\]
 \end{itemize}
 
 The gradient can be approximated using filter masks.
 
 \begin{itemize}
-	\item Roberts cross gradient operators
+	\item Roberts cross-gradient operators
 		\begin{itemize}
 		\item $g_x$ = \begin{tabular}{|c|c|} \hline
 		-1 & 0 \\ \hline
 		 0 & 1 \\ \hline
-		\end{tabular} 
+		\end{tabular}
 		\text{\FiveStarOpen} $f(x,y)$
 		$\qquad g_y$ = \begin{tabular}{|c|c|} \hline
 		 0 &-1 \\ \hline
@@ -305,14 +304,14 @@ The gradient can be approximated using filter masks.
 	\end{itemize}
 		\item  \textbf{Sobel operators}, often used
 		\begin{itemize}
-		\item $g_x$ =  
+		\item $g_x$ =
         \begin{tabular}{|c|c|c|} \hline
 		      -1 &-2 &-1 \\ \hline
 		       0 & 0 & 0 \\ \hline
 		       1 & 2 & 1 \\ \hline
 		    \end{tabular}
 		    \text{\FiveStarOpen} $f(x,y)$
-		    $\qquad g_y$ = 
+		    $\qquad g_y$ =
         \begin{tabular}{|c|c|c|} \hline
 		      -1 & 0 & 1 \\ \hline
 	      	-2 & 0 & 2 \\ \hline
@@ -323,4 +322,4 @@ The gradient can be approximated using filter masks.
 		\end{itemize}
 \end{itemize}
 
-\subsection{Fuzzy Techniques for Intensity Transformations and Spatial Filtering \buch{p.173}}
+\subsection{Combining spatial enhancement methods \buch{p.191}}

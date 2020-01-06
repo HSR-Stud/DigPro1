@@ -1,3 +1,4 @@
+\newpage
 \appendix
 \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 \section{Appendix}
@@ -13,7 +14,7 @@
 	1) & $f(x,y)$ real & $\Leftrightarrow$ & $F^*(u,v) = F(-u,-v)$ & \\
 	2) & $f(x,y)$ imaginary & $\Leftrightarrow$ & $F^*(-u,-v) = -F(u,v)$ & \\
 	3) & $f(x,y)$ real & $\Leftrightarrow$ & $R(u,v)$ even; $I(u,v)$ odd & \\
-	4) & $f(x,y)$ imaginary & $\Leftrightarrow$ & $(R(u,v)$ odd; $I(u,v)$ even & \\
+	4) & $f(x,y)$ imaginary & $\Leftrightarrow$ & $R(u,v)$ odd; $I(u,v)$ even & \\
 	5) & $f(-x,-y)$ real & $\Leftrightarrow$ & $F^*(u,v)$ complex & \\
 	6) & $f(-x,-y)$ complex & $\Leftrightarrow$ & $F(-u,-v)$ complex & \\
 	7) & $f^*(x,y)$ complex & $\Leftrightarrow$ & $F^*(-u,-v)$ complex & \\
@@ -61,26 +62,26 @@
 		& \textbf{Name} & \textbf{DFT Pairs} & & \\ \hline
 		1) & Linearity & $af_1(x,y)+bf_2(x,y)$ & $\Leftrightarrow$ & $aF_1(u,v) + bF_2(u,v)$ \\
 		2) & Translation (general) & $f(x,y) e^{j2\pi(u_0x/M+v_0y/n)}$ & $\Leftrightarrow$ & $ F(u-u_0,v-v_0)$ \\
-				& & $f(x-x_0,y-y_0) )$ & $\Leftrightarrow$ & $ F(u,v) e^{-j2\pi(ux_0/M+vy_0/N)} $ \\
+				& & $f(x-x_0,y-y_0)$ & $\Leftrightarrow$ & $ F(u,v) e^{-j2\pi(ux_0/M+vy_0/N)} $ \\
 		3) & \multirow{2}{6cm}{Translation to the center of the frequency rectangle, $(M/2,N/2)$} &
-				$f(x,y)(-1)^{x+y} )$ & $\Leftrightarrow$ & $ F(u-M/2,v-N/2)$ \\
-				& & $f(x-M/2,y-N/2) )$ & $\Leftrightarrow$ & $ F(u,v)(-1)^{u+v}$ \\
-		4) & Rotation & $f(r,\theta + \theta_0) )$ & $\Leftrightarrow$ & $ F(\omega,\varphi+\theta_0)$ \\
-				& & \multicolumn{3}{l|}{$x = r \cos(\theta); \quad y = r \sin(\theta); \quad u = \omega \cos(\varphi); \quad v = \omega \sin(\varphi)$} \\
-		5) & Convolution theorem & $f(x,y) \star h(x,y) )$ & $\Leftrightarrow$ & $ F(u,v) H(u,v) $ \\
-				& & $f(x,y) h(x,y) )$ & $\Leftrightarrow$ & $ F(u,v) \star H(u,v)$ \\
-		6) & Correlation theorem & $f(x,y) \text{\FiveStarOpen} h(x,y) )$ & $\Leftrightarrow$ & $ F^*(u,v) H(u,v) $ \\
-						& & $f^*(x,y) h(x,y) )$ & $\Leftrightarrow$ & $ F(u,v) \text{\FiveStarOpen} H(u,v)$ \\
-		7) & Discrete unit impulse & $\delta(x,y) )$ & $\Leftrightarrow$ & $ 1$ \\
+				$f(x,y)(-1)^{x+y}$ & $\Leftrightarrow$ & $ F(u-M/2,v-N/2)$ \\
+				& & $f(x-M/2,y-N/2)$ & $\Leftrightarrow$ & $ F(u,v)(-1)^{u+v}$ \\
+		4) & Rotation & $f(r,\theta + \theta_0)$ & $\Leftrightarrow$ & $ F(\omega,\varphi+\theta_0)$ \\
+				& & \multicolumn{3}{l|}{$r = \sqrt{x^2 + y^2}; \quad \theta = tan^{-1}(y/x); \quad \omega = \sqrt{u^2 + v^2}; \quad \varphi = tan^{-1}(v/u)$} \\
+		5) & Convolution theorem & $f(x,y) \star h(x,y)$ & $\Leftrightarrow$ & $ F(u,v) H(u,v) $ \\
+				& & $f(x,y) h(x,y)$ & $\Leftrightarrow$ & $ (1/MN) (F(u,v) \star H(u,v))$ \\
+		6) & Correlation theorem & $f(x,y) \text{\FiveStarOpen} h(x,y)$ & $\Leftrightarrow$ & $ F^*(u,v) H(u,v) $ \\
+						& & $f^*(x,y) h(x,y)$ & $\Leftrightarrow$ & $ (1/MN) (F(u,v) \text{\FiveStarOpen} H(u,v))$ \\
+		7) & Discrete unit impulse & $\delta(x,y)$ & $\Leftrightarrow$ & $ 1$ \\
 						& & $1$ & $\Leftrightarrow$ & $MN\delta(u,v)$ \\
-		8) & Rectangle & $rect[a,b] )$ & $\Leftrightarrow$ & $ ab\frac{\sin(\pi ua)}{(\pi ua)}\frac{\sin(\pi vb)}{(\pi vb)} e^{-j\pi(ua+vb)}$ \\
-		9) & Sine & $\sin(2\pi u_0x + 2\pi v_0y) )$ & $\Leftrightarrow$ &  \\
-			& & $\qquad j\frac{1}{2} \left[ \delta(u+Mu_0,v+Nv_0) - \delta(u-Mu_0,v_Nv_0) \right]$ & & \\
-		10) & Cosine & $\cos(2\pi u_0x + 2\pi v_0y) )$ & $\Leftrightarrow$ & \\
-					& & $\qquad \frac{1}{2} \left[ \delta(u+Mu_0,v+Nv_0) + \delta(u-Mu_0,v_Nv_0) \right]$ & & \\
+		8) & Rectangle & $rec[a,b]$ & $\Leftrightarrow$ & $ ab\frac{\sin(\pi ua)}{(\pi ua)}\frac{\sin(\pi vb)}{(\pi vb)} e^{-j\pi(ua+vb)}$ \\
+		9) & Sine & $\sin(2\pi u_0x/M + 2\pi v_0y/N)$ & $\Leftrightarrow$ &  \\
+			& & $\qquad j\frac{MN}{2} \left[ \delta(u+u_0,v+v_0) - \delta(u-u_0,v-v_0) \right]$ & & \\
+		10) & Cosine & $\cos(2\pi u_0x/M + 2\pi v_0y/N)$ & $\Leftrightarrow$ & \\
+					& & $\qquad \frac{1}{2} \left[ \delta(u+u_0,v+v_0) + \delta(u-u_0,v-v_0) \right]$ & & \\
 		\multicolumn{5}{|l|}{\textit{For continuous variables only:}} \\
 		11) & \textit{Differentiation} & $\left(\frac{\partial}{\partial t}\right)^m \left(\frac{\partial}{\partial z}\right)^n f(t,z) )$ & $\Leftrightarrow$ & $ (j 2 \pi \mu)^m (j 2 \pi \nu)^n F(\mu,\nu)$ \\
-		11) & \textit{Gaussian} & $A 2 \pi \sigma^2 e^{-2 \pi^2 \sigma^2 (t^2+z^2)} )$ & $\Leftrightarrow$ & $ Ae^{-(\mu^2\nu^2)/2\sigma^2}$ \\
+		11) & \textit{Gaussian} & $A 2 \pi \sigma^2 e^{-2 \pi^2 \sigma^2 (t^2+z^2)}$ & $\Leftrightarrow$ & $ Ae^{-(\mu^2+\nu^2)/2\sigma^2}$ \\
 	\hline
 	\end{tabularx}
 	\caption{Summary of DFT Pairs}
@@ -96,18 +97,17 @@
 	\input{idiotenseite/trigo/subsections/Produkte}
 
 	\columnbreak
-	
-	\input{idiotenseite/trigo/subsections/DoppelHalbwinkel}	
+
+	\input{idiotenseite/trigo/subsections/DoppelHalbwinkel}
 	\input{idiotenseite/trigo/subsections/SummeDifferenzen}
 \end{multicols}
 
-	
+
 \subsection{Euler-Formeln}
 \begin{align}
 	\cos(\alpha) = \frac{e^{j\alpha} + e^{-j\alpha}}{2}
-	&& \sin(\alpha) = \frac{e^{j\alpha} - e^{-j\alpha}}{2j} && 
+	&& \sin(\alpha) = \frac{e^{j\alpha} - e^{-j\alpha}}{2j} &&
 	    {e}^{\pm jn\omega} = \cos{n\omega} \pm j \sin{n\omega} \notag\\
 	e^{j\frac{\pi}{2}n} = j^n & & e^{-j\frac{\pi}{2}n} = (-j)^n &&
 	e^{jn\pi}=e^{-jn\pi}=(-1)^n \notag
 \end{align}
-	

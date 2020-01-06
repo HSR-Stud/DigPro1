@@ -1,12 +1,12 @@
-\section{Digital image fundamentals \buch{p.35}}
+\section{Digital image fundamentals \buch{p.47}}
   \begin{center}
     intensity values $L = 2^k$  with k-bit\\
-    bits to save $b = M \cdot N \cdot k$ 
+    bits to save $b = M \cdot N \cdot k$
   \end{center}
-\subsection{Image Interpolation \buch{p.65}}
+\subsection{Image Interpolation \buch{p.77}}
 \begin{itemize}
   \item Basic tool needed for zooming, shrinking, rotation, \ldots
-  \item Nearest Neighbor Interpolation: 
+  \item Nearest Neighbor Interpolation:
 	  \begin{itemize}
 		  \item Each pixel in the new resolution gets the value of the nearest pixel in the old resolution.
 		  \item Simple but bad
@@ -26,8 +26,8 @@
 \end{itemize}
 
 
-\subsection{Some Basic Relationships between pixels \buch{p.68}}
-\subsubsection{Neighbors of a Pixel \buch{p.68}}
+\subsection{Some basic relationships between pixels \buch{p.79}}
+\subsubsection{Neighbors of a pixel \buch{p.79}}
 \begin{minipage}{0.8\textwidth}
   A pixel p at coordinates (x,y) has four horizontal and vertical neighbors, called the 4-neighbors of p, denoted by $\mathbf{N_4(p)}$ have the coordinates:
   \[
@@ -35,14 +35,14 @@
   \]
 \end{minipage}
 \begin{minipage}{0.2\textwidth}
-  \begin{tabular}{|c|c|c|} 
-    \hline 
-       & \textbullet &  \\ 
-    \hline 
-      \textbullet & p & \textbullet \\ 
-    \hline 
-       & \textbullet &  \\ 
-    \hline  
+  \begin{tabular}{|c|c|c|}
+    \hline
+       & \textbullet &  \\
+    \hline
+      \textbullet & p & \textbullet \\
+    \hline
+       & \textbullet &  \\
+    \hline
   \end{tabular}
 \end{minipage}
 
@@ -53,42 +53,42 @@
   \]
 \end{minipage}
 \begin{minipage}{0.2\textwidth}
-  \begin{tabular}{|c|c|c|} 
-    \hline 
-    \textbullet &  & \textbullet \\ 
-    \hline 
-     & p &  \\ 
-    \hline 
-    \textbullet &  & \textbullet \\ 
-    \hline  
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \textbullet &  & \textbullet \\
+    \hline
+     & p &  \\
+    \hline
+    \textbullet &  & \textbullet \\
+    \hline
   \end{tabular}
 \end{minipage}
 
 \begin{minipage}{0.8\textwidth}
-  and are  $N_D(p)$ and $N_4(p)$ together are called the 8-neighbors of p, denoted by $N_8(p)$.
+  and $N_D(p)$ and $N_4(p)$ together are called the 8-neighbors of p, denoted by $\mathbf{N_8(p)}$.
 \end{minipage}
 \begin{minipage}{0.2\textwidth}
-  \begin{tabular}{|c|c|c|} 
-    \hline 
-    \textbullet & \textbullet  & \textbullet \\ 
-    \hline 
-    \textbullet & p & \textbullet \\ 
-    \hline 
-    \textbullet & \textbullet & \textbullet \\ 
-    \hline  
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \textbullet & \textbullet  & \textbullet \\
+    \hline
+    \textbullet & p & \textbullet \\
+    \hline
+    \textbullet & \textbullet & \textbullet \\
+    \hline
   \end{tabular}
 \end{minipage}
 
 
-\subsubsection{Adjacency, connectivity, regions and boundaries}
+\subsubsection{Adjacency, connectivity, regions and boundaries \buch{p.79}}
 \begin{description}
-  \item[4-adjacency:] Two pixels p and q with values of V (binary V = \{1\}) are 4-adjacency if q is in the set $N_4(p)$
-  \item[8-adjacency:] Two pixels p and q with values of V are 8-adjacency if q is in the set $N_8(p)$
-  \item[m-adjacency:] (mixed-adjacency) Two pixels p and q with values of V are m-adjacency if\\
+  \item[4-adjacency:] Two pixels p and q with values of V (binary V = \{1\}) are 4-adjacent if q is in the set $N_4(p)$
+  \item[8-adjacency:] Two pixels p and q with values of V are 8-adjacent if q is in the set $N_8(p)$
+  \item[m-adjacency:] (mixed adjacency) Two pixels p and q with values of V are m-adjacent if\\
     \begin{minipage}{0.8\textwidth}
   	\begin{enumerate}
   		\item q is in $N_4(p)$ or
-  		\item q is in $N_D(p)$ and the set $N_4(p) \cap N_4(q)$ has no pixel whose values are from V \\ $\Rightarrow$ No closed paths
+  		\item q is in $N_D(p)$ and the set $N_4(p) \cap N_4(q)$ has no pixels whose values are from V \\ $\Rightarrow$ No closed paths
 	  \end{enumerate}
   \end{minipage}
   \begin{minipage}{0.3\textwidth}
@@ -96,7 +96,7 @@
   \end{minipage}
 \end{description}
 
-\subsubsection{Distance measures / Neighbors \buch{p.71}}
+\subsubsection{Distance measures / Neighbors \buch{p.82}}
 For pixels $p,q$  with coordinates $(x,y), (s,t)$
 \paragraph{Euclidean}
 \begin{equation}
@@ -113,8 +113,8 @@ D_8(p,q) = max(|x-s|, |y-t|)
 \end{equation}
 Pixels with a $D_8 = 1$ are the 8-neighbors of $(x,y)$
 
-\subsection{Math tools \buch{p.72}}
-\subsubsection{Noise reduction \buch{p.75}}
+\subsection{Math tools \buch{p.83}}
+\subsubsection{Noise reduction \buch{p.86}}
 Image with noise
 \begin{equation}
 g(x,y) = f(x,y) + \eta(x,y)
@@ -122,39 +122,39 @@ g(x,y) = f(x,y) + \eta(x,y)
 Noise $\eta$ is uncorrelated and has zero average.  Averaging over $K$ different images reduces noise.
 \begin{eqnarray}
 \bar{g}(x,y)      =& \frac{1}{K} \sum\limits_{i=1}^{K}g_i(x,y) \notag \\
-E\{\bar{g}(x,y)\}   =& f(x,y) \\ 
+E\{\bar{g}(x,y)\}   =& f(x,y) \\
 \sigma_{\bar{g}(x,y)}^2 =& \frac{1}{K} \sigma_{\eta(x,y)}^2 \notag
 \end{eqnarray}
 
-\subsubsection{Set and Logical Operations \buch{p.80}}
+\subsubsection{Set and Logical Operations \buch{p.91}}
 \begin{tabular}{|l|l|l|}
   \hline
   Subset			& $A \subseteq B$						& Every element of A is also in B
   \\ \hline
   Union			& $C = A \cup B$						& C contains all Elements in A, B or both
   \\ \hline
-  Intersection	& $D = A \cap B$						& D contains all Elements wich are in A and B
+  Intersection	& $D = A \cap B$						& D contains all Elements which are in A and B
   \\ \hline
-  Complement		& $A^c = \{ \omega | \omega \in A\}$	& Set of elements that are not in A
+  Complement		& $A^c = \{ \omega | \omega \notin A\}$	& Set of elements that are not in A
   \\ \hline
   Difference		& $A-B = \{ \omega | \omega \in A, \omega \notin B\} = A \cap B^c$	&
   \\ \hline
 \end{tabular}
 
 
-\subsubsection{Neighborhood operations \buch{p.85}}
+\subsubsection{Neighborhood operations \buch{p.99}}
 Averaging of neighborhood $S_{xy}$
 \begin{equation}
 g(x,y) = \frac{1}{mn} \sum_{(r,c)\in S_{xy}}f(r,c)
 \end{equation}
 
-\subsubsection{Geometric spatial Transformations \buch{p.87}}
+\subsubsection{Geometric spatial Transformations \buch{p.100}}
 \begin{minipage}{0.55\textwidth}
   \[
   (x,y) = T\{(v,w)\} \notag \\
   \]
   \[
-  \text{affine transform:} \quad \left[ x~y~1 \right] = [ v~w~q ] \mathbf{T} = [ v~w~1 ] 
+  \text{affine transform:} \quad \left[ x~y~1 \right] = [ v~w~q ] \mathbf{T} = [ v~w~1 ]
   \left[ \begin{array}{ccc}
   t_{11} & t_{12} & 0 \\
   t_{21} & t_{22} & 0 \\
@@ -165,12 +165,13 @@ g(x,y) = \frac{1}{mn} \sum_{(r,c)\in S_{xy}}f(r,c)
   \begin{itemize}
 \item Spatial transformation of coordinates
 \item Intensity interpolation for transformed pixels
-\item See p.88 for examples of $\mathbf{T}$!
+\item See p.102 for examples of $\mathbf{T}$!
+\item \textbf{Note: Different Notation in 4th Edition of Book!}
 \end{itemize}
 \end{minipage}
 
-\subsubsection{Image registration \buch{p.89}}
+\subsubsection{Image registration \buch{p.103}}
 \begin{itemize}
-  \item Tries to align several images of the same scheme
+  \item Tries to align several images of the same scene
   \item Using \textbf{tie points}, whose location are known precisely
 \end{itemize}
