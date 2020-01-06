@@ -1,21 +1,21 @@
-\section{Image restoration and reconstruction \buch{p.311}}
+\section{Image restoration and reconstruction \buch{p.317}}
 A degraded image is given in the spatial domain by
 \begin{equation}
 	g(x,y) = h(x,y) \star f(x,y) + \eta(x,y)
 \end{equation}
 where $h(x,y)$ is the degradation function, $f(x,y)$ is the original image and $\eta(x,y)$ is the noise.
 
-\subsection{Noise models  \buch{p.313}}
+\subsection{Noise models  \buch{p.318}}
 	%TODO: Insert plot of these probability density functions (p.315 / Fig. 5.2)
 	\subsubsection{Gaussian noise}
 		Frequently used because of its mathematical tractability in spatial and frequency domain.
 		\begin{equation}
 			p(z) = \frac{1}{\sqrt{2\pi} \sigma} e^{-\left(z-\overline{z}\right)^2 / 2\sigma^2}
 		\end{equation}
-		
+
 	\subsubsection{Rayleigh noise}
 		\begin{equation}
-			p(z) = 
+			p(z) =
 				\begin{cases}
 					\frac{2}{b} \left(z-a\right) e^{-\left(z-a\right)^2/b} & \text{ for } z\geq a \\
 					0 & \text{ for } z < a
@@ -26,24 +26,24 @@ where $h(x,y)$ is the degradation function, $f(x,y)$ is the original image and $
 			\overline{z} &= a + \sqrt{\pi b / 4} \\
 			\sigma^2 &= \frac{b\left(4-\pi\right)}{4}
 		\end{align}
-		
+
 	\subsubsection{Erlang (gamma) noise}
 		\begin{equation}
-			p(z) = 
+			p(z) =
 				\begin{cases}
 					\frac{a^bz^{b-1}}{\left(b-1\right)!} e^{-az} & \text{ for } z \geq 0 \\
 					0 & \text{ for } z < 0
 				\end{cases}
-		\end{equation}	
+		\end{equation}
 		where the parameters are such that $a>0$ and $b$ is a positive integer. The mean and variance of this density are given by
 		\begin{align}
 			\overline{z} &= \frac{b}{a} \\
 			\sigma^2 &= \frac{b}{a^2}
 		\end{align}
-		
+
 	\subsubsection{Exponential noise}
 		\begin{equation}
-			p(z) = 
+			p(z) =
 				\begin{cases}
 					ae^{-az} & \text{ for } z \geq 0 \\
 					0 & \text{ for } z < 0
@@ -54,72 +54,77 @@ where $h(x,y)$ is the degradation function, $f(x,y)$ is the original image and $
 			\overline{z} &= \frac{1}{a} \\
 			\sigma^2 &= \frac{1}{a^2}
 		\end{align}
-	
+
 	\subsubsection{Uniform noise}
 		\begin{equation}
-			p(z) = 
+			p(z) =
 				\begin{cases}
 					\frac{1}{b-a} & \text{ if } a \leq z \leq b \\
-					0 & \text{ otherwise } 
+					0 & \text{ otherwise }
 				\end{cases}
-		\end{equation}		
+		\end{equation}
 		The mean and variance of this density are given by
 		\begin{align}
 			\overline{z} &= \frac{a+b}{2} \\
 			\sigma^2 &= \frac{\left(b-a\right)^2}{12}
 		\end{align}
-	
+
 	\subsubsection{Impulse (salt-and-pepper) noise}
 		\begin{equation}
-			p(z) = 
+			p(z) =
 				\begin{cases}
-					P_a & \text{ for } z = a \\
-					P_b & \text{ for } z = b \\
-					0 & \text{ otherwise }
+					P_S & \text{ for } z = 2^k-1 \\
+					P_P & \text{ for } z = 0 \\
+					1-(P_S+P_P) & \text{ for } z = V
 				\end{cases}
-		\end{equation}	
-	
-	\subsubsection{Estimation of noise parameters}
+		\end{equation}
+		where V is any integer value in the range $0 < V < 2^k-1$. The mean and variance of this density are given by
+		\begin{align}
+			\overline{z} &= (0)P_P + V(1-P_S-P_P) + (2^k-1)P_S \\
+			\sigma^2 &= (0-\overline{z})^2 P_P + (V-\overline{z})^2(1-P_S-P_P) + (2^k-1)^2P_S
+		\end{align}
+
+	\subsubsection{Estimating noise parameters \buch{p.325}}
 		\begin{itemize}
 			\item Select a strip $S$ of the image, with constant background. \\
-			$\Rightarrow$ The histogram in these areas gives a first hint about the noise corrupting the image 
+			$\Rightarrow$ The histogram in these areas gives a first hint about the noise corrupting the image
 			\item The mean and variance of the noise can be estimated by
 				\begin{align}
 					\overline{z} &= \sum_{i=0}^{L-1} z_i p_S(z_i) \\
 					\sigma^2 &= \sum_{i=0}^{L-1} \left(z_i - \overline{z}\right)^2 p_S(z_i)
 				\end{align}
 				where $p_S(z_i)$ with $i=0,1,\dots,L-1$ denotes the probability estimates of the intensity values.
-			\item The shape identifies the noise model which matches the best $\Rightarrow$ $\chi^2$-Test			
+			\item The shape identifies the noise model which matches the best $\Rightarrow$ $\chi^2$-Test
 		\end{itemize}
-		
 
-\subsection{Restoration in the presence of noise only - spatial filtering \buch{p.322}}
+
+\subsection{Restoration in the presence of noise only - spatial filtering \buch{p.327}}
 	\[
 		g(x,y) = f(x,y) + \eta(x,y) \quad
 		\Leftrightarrow \quad
 		G(u,v) = F(u,v) + N(u,v)
 	\]
 	\begin{center}
-		Spatial filtering (low pass) is the method of choise in situations when only addative random noise is present.
+		Spatial filtering (low pass) is the method of choice in situations when only additive random noise is present.
 	\end{center}
-	
-\subsubsection{Mean Filters}
+
+\subsubsection{Mean Filters \buch{328}}
 \textbf{Arithmetic mean filter}\\
-This filter is a standard filter.
+This filter is a standard filter. (Is the same as the box filter, sec.\ref{sec:smoothingSpatialFilters})
 \begin{equation}
-	\hat{f}(x,y)= \frac{1}{m  n} \sum\limits_{(s,t)\in S_{xy}}g(s,t)
+	\hat{f}(x,y)= \frac{1}{m  n} \sum\limits_{(r,c)\in S_{xy}}g(r,c)
 \end{equation}
 
 \textbf{Geometric mean filter}\\
-Smooth similar to arithmetic mean, but less loss of detail.
+Smooths similar to arithmetic mean, but less loss of detail.
 \begin{equation}
-	\hat{f}(x,y)= \left[\prod\limits_{(s,t)\in S_{xy}} g(s,t)\right]^\frac{1}{mn}
+	\hat{f}(x,y)= \left[\prod\limits_{(r,c)\in S_{xy}} g(r,c)\right]^\frac{1}{mn}
 \end{equation}
 
 \textbf{Harmonic mean filter}\\
-Works well on salt noise, but fails for pepper noise. It does well also with other types of noise like Gaussian noise
+Works well for salt noise, but fails for pepper noise. It does well also with other types of noise like Gaussian noise
 \begin{equation}
-	\hat{f}(x,y)= \frac{mn}{\sum\limits_{(s,t)\in S_{xy}} \frac{1}{g(s,t)}}
+	\hat{f}(x,y)= \frac{mn}{\sum\limits_{(r,c)\in S_{xy}} \frac{1}{g(r,c)}}
 \end{equation}
 
 \textbf{Contraharmonic mean filter}
@@ -127,84 +132,109 @@ Works well on salt noise, but fails for pepper noise. It does well also with oth
 \item For positive Q, good for pepper noise
 \item For negative Q, good for salt noise
 \item For Q = -1, it is a harmonic mean filter
-\item For Q = 0, it is a arithmetic mean filter\\ \\
+\item For Q = 0, it is an arithmetic mean filter\\ \\
 \textbf{This filter can not simultaneously reduce salt and pepper noise}
 \end{itemize}
 
 \begin{equation}
-	\hat{f}(x,y)= \frac{\sum\limits_{(s,t)\in S_{xy}} g(s,t)^{Q+1}}{\sum\limits_{(s,t)\in S_{xy}} g(s,t)^Q}
+	\hat{f}(x,y)= \frac{\sum\limits_{(r,c)\in S_{xy}} g(r,c)^{Q+1}}{\sum\limits_{(r,c)\in S_{xy}} g(r,c)^Q}
 \end{equation}
 
-\subsubsection{Order-Statistic Filters \buch{p.325}}
+\subsubsection{Order-Statistic Filters \buch{p.330}}
 
 The output of these filters depends on the \textbf{order of the pixel} values. \\
 
 \textbf{Median filter}\\
 Quite popular, since they result in good noise suppression, without much smoothing \\
 \begin{equation}
-	\hat{f}(x,y)=\underset{(s,t) \in S_{xy}}{\text{median}}\{g(s,t) \}
+	\hat{f}(x,y)=\underset{(r,c) \in S_{xy}}{\text{median}}\{g(r,c) \}
 \end{equation}
 
 \textbf{Max filter}\\
-This filter picks the maximum of the neighborhood, also it reduce the pepper noise.
+This filter picks the maximum of the neighborhood, also it reduces the pepper noise.
 \begin{equation}
-	\hat{f}(x,y)=\underset{(s,t) \in S_{xy}}{\text{max}}\{g(s,t) \}
+	\hat{f}(x,y)=\underset{(r,c) \in S_{xy}}{\text{max}}\{g(r,c) \}
 \end{equation}
 
 \textbf{Min filter}\\
-This filter picks the minimum of the neighborhood, also it reduce the salt noise.
+This filter picks the minimum of the neighborhood, also it reduces the salt noise.
 \begin{equation}
-	\hat{f}(x,y)=\underset{(s,t) \in S_{xy}}{\text{min}}\{g(s,t) \}
+	\hat{f}(x,y)=\underset{(r,c) \in S_{xy}}{\text{min}}\{g(r,c) \}
 \end{equation}
 
 \textbf{Midpoint filter}\\
 The midpoint filter simply computes the midpoint between the maximum and the minimum values in the neighborhood. \\
 It works best for randomly distributed noise, like Gaussian or uniform noise.
 \begin{equation}
-	\hat{f}(x,y)=\frac{1}{2} \left[ \underset{(s,t) \in S_{xy}}{\text{max}}\{g(s,t) \} + \underset{(s,t) \in S_{xy}}{\text{min}}\{g(s,t) \}\right]
+	\hat{f}(x,y)=\frac{1}{2} \left[ \underset{(r,c) \in S_{xy}}{\text{max}}\{g(r,c) \} + \underset{(r,c) \in S_{xy}}{\text{min}}\{g(r,c) \}\right]
 \end{equation}
 
-\textbf{Alpha-trimmed filter}\\
-It is robust against outliers and it is good against "normal" noise.\\ 
+\textbf{Alpha-trimmed mean filter}\\
+It is robust against outliers and it is good against "normal" noise.\\
 
-Suppose that we delete the $d/2$ lowest and $d/2$ highest intensity values of $g(s,t)$ in the neighborhood $S_{xy}$. Let $g_r(s,t)$ represent the remaining $mn-d$ pixels.
+Suppose that we delete the $d/2$ lowest and $d/2$ highest intensity values of $g(r,c)$ in the neighborhood $S_{xy}$. Let $g_R(r,c)$ represent the remaining $mn-d$ pixels.
 \begin{itemize}
 	\item $d$ can range from 0 to $mn-1$
-	\item When $d=0$, then it is a arithmetic mean filter
+	\item When $d=0$, then it is an arithmetic mean filter
 	\item When $d=mn-1$, then the filter becomes a median filter
 \end{itemize}
 \begin{equation}
-	\hat{f}(x,y)=\frac{1}{mn-d} \sum\limits_{(s,t)\in S_{xy}} g_r(s,t)
+	\hat{f}(x,y)=\frac{1}{mn-d} \sum\limits_{(r,c)\in S_{xy}} g_r(r,c)
 \end{equation}
 
-\subsubsection{Adaptive Filter \buch{p.330}}
+\subsubsection{Adaptive Filter \buch{p.333}}
 \textbf{Adaptive local noise reduction filter}\\
 Change the filter, depending on the contents of $S_{xy}$
 \begin{itemize}
-	\item The local mean $m_L$ and the local variance $\sigma_{L}^2$ can be used as compact descriptors of $S_{xy}$
-	\item The ratio of the variances can in theory never be lager then 1 $\Rightarrow \quad\sigma_{\eta}^2 \le \sigma_{L}^2$
+	\item The local mean $\overline{z}_{S_{xy}}$ and the local variance $\sigma_{S_{xy}}^2$ can be used as compact descriptors of $S_{xy}$
+	\item The ratio of the variances can in theory never be larger then 1 $\Rightarrow \quad\sigma_{\eta}^2 \le \sigma_{S_{xy}}^2$
 	\item In practice, since the noise variance $\sigma_{\eta}^2$ needs to be estimated, this must be enforced.\\
-	$\Rightarrow$ If $\sigma_{\eta}^2 > \sigma_{L}^2$, set ratio $\frac{\sigma_{\eta}^2}{\sigma_{L}^2}$ to 1
+	$\Rightarrow$ If $\sigma_{\eta}^2 > \sigma_{S_{xy}}^2$, set ratio $\frac{\sigma_{\eta}^2}{\sigma_{S_{xy}}^2}$ to 1
 \end{itemize}
 \begin{equation}
-	\hat{f}(x,y)=g(x,y) - \frac{\sigma_{\eta}^2}{\sigma_{L}^2} \left[g(x,y)-m_L \right]
+	\hat{f}(x,y)=g(x,y) - \frac{\sigma_{\eta}^2}{\sigma_{S_{xy}}^2} \left[g(x,y)-\overline{z}_{S_{xy}} \right]
 \end{equation}
 
 
-\textbf{Adaptive median filter \buch{p.332}}\\
-%TODO: add adaptive meidan filter
+\textbf{Adaptive median filter}
+\begin{itemize}
+	\item Can handle salt-and-pepper noise with higher spatial densities than the "normal" median filter
+	\item Additionally, it seeks to preserve detail while simultaneously smoothing non-impulse noise
+	\item Unlike other adaptive filters, it changes the size of $S_{xy}$ during filtering, depending on certain conditions
+\end{itemize}
+\begin{multicols}{2}
+Notation:
+\begin{itemize}
+	\item $z_{min}$ = minimum intensity value in $S_{xy}$
+	\item $z_{max}$ = maximum intensity value in $S_{xy}$
+	\item $z_{med}$ = median of intensity values in $S_{xy}$
+	\item $z_{xy}$ = intensity at coordinates $(x,y)$
+	\item $S_{max}$ = maximum allowed size of $S_{xy}$
+\end{itemize}
+\vfill\null
+\columnbreak
+Level A:\\
+If $z_{min} < z_{med} < z_{max}$, go to Level B\\
+Else, increase the size of $S_{xy}$\\
+If $S_{xy} \leq S_{max}$, repeat level A\\
+Else, output $z_{med}$ or $z_{xy}$.\\
 
+Level B:\\
+If $z_{min} < z_{xy} < z_{max}$, output $z_{xy}$\\
+Else output $z_{med}$\\
+\end{multicols}
+If the output on the last line of level A is $z_{xy}$ instead of $z_{med}$, it produces a slightly less blurred result, but can fail to detect salt (pepper) noise embedded in a constant background having the same value as pepper (salt) noise.
 
-\subsection{Restoration in the presence of noise only - frequency domain filtering for periodic noise \buch{p.335}}
-Noise appears as concentrated bursts of energy in the Fourier transform, at locations corresponding to the frequencies of the periodic interference.
+\subsection{Restoration in the presence of noise only - frequency domain filtering for periodic noise \buch{p.340}}
+Periodic noise appears as concentrated bursts of energy in the Fourier transform, at locations corresponding to the frequencies of the periodic interference.
 
-\subsubsection{Bandreject, Bandpass Filters \buch{p.337}}
+\subsubsection{Bandreject, Bandpass Filters}
 see \ref{subsubsec:FilteringFrequency_BandrejectFilters} Bandreject and Bandpass Filters, on page \pageref{subsubsec:FilteringFrequency_BandrejectFilters}.
 
-\subsubsection{Notch Filter \buch{p.337}}
+\subsubsection{Notch Filter \buch{p.341}}
 see \ref{subsubsec:FilteringFrequency_NotchFilters} Notch Filters, on page \pageref{subsubsec:FilteringFrequency_NotchFilters}.
 
-\subsubsection{Optimum Notch Filtering \buch{p.338}}
+\subsubsection{Optimum Notch Filtering \buch{p.345}}
 Danger: losing too much image information. \\
 Concept: subtract a \textit{weighted} portion of $\eta(x,y)$ from $g(x,y)$ to obtain an estimate of $f(x,y)$:
 \begin{equation}
@@ -212,34 +242,34 @@ Concept: subtract a \textit{weighted} portion of $\eta(x,y)$ from $g(x,y)$ to ob
 \end{equation}
 The weighting or modulation function $w(x,y)$ can be selected so that the resulting variance of $\hat{f}(x,y)$ is minimized over a specified neighborhood of every point $(x,y)$. This results in
 \begin{equation}
-	w(x,y) = \frac{\overline{g(x,y) \eta(x,y)} - \overline{g}(x,y)\overline{\eta}(x,y)}{\overline{\eta^2}(x,y) - \overline{\eta}^2(x,y)}
+	w(x,y) = \frac{\overline{g(x,y)} \overline{\eta(x,y)} - \overline{g}(x,y)\overline{\eta}(x,y)}{\overline{\eta^2}(x,y) - \overline{\eta}^2(x,y)}
 \end{equation}
 As $w(x,y)$ can be assumed to be constant in a neighborhood, it can be computed for \textit{one} point in each non-overlapping neighborhood and used to process all points contained in that neighborhood.
 
-	
-\subsection{Linear, Position-Invariant Degradations}
+
+\subsection{Linear, Position-Invariant Degradations \buch{p.348}}
 	\[
 		g(x,y) = H[f(x,y)] + \eta(x,y) \quad
 		\Leftrightarrow \quad
 		G(u,v) = H(u,v)F(u,v) + N(u,v)
 	\]
-	
-\subsubsection{Estimating the degradation function \buch{p.346}}
+
+\subsubsection{Estimating the degradation function \buch{p.352}}
 \textbf{By image observation}
 	\begin{itemize}
 		\item Gather information from the image itself
-		\item High contrast part of image is restored by hand and then degradtion function is estimated $\Rightarrow$ labor intensive
+		\item High contrast part of image is restored by hand and then degradation function is estimated $\Rightarrow$ labor intensive
 	\end{itemize}
 \textbf{By experminentaion}
 	\begin{itemize}
 		\item Image acquisition system can be used to estimate the degradation function\\
-		$\Rightarrow$ Obtain the impulse response of the degradiation by imaging an impulse (small dot of light)
+		$\Rightarrow$ Obtain the impulse response of the degradation by imaging an impulse (small dot of light)
 	\end{itemize}
 
-\textbf{By modeling}\\
+\textbf{By modeling}
 	\begin{itemize}
 		\item Preferred way, since general insights into degradation process can be found and it can be fully automated
-		\item The Mathematical model comes for example from the physics of atmospheric turbulence. 
+		\item The Mathematical model comes for example from the physics of atmospheric turbulence.
 			\begin{equation}
 				H(u,v) = e^{-k(u^2+v^2)^{\frac{5}{6}}}
 			\end{equation}
@@ -253,25 +283,25 @@ To create a \textbf{motion blurring}:
 	\end{equation}
 
 	\begin{center}
-		motion in x-dim. : $x_0(t) = \frac{a \cdot t}{T} \qquad \qquad$ 
+		motion in x-dim. : $x_0(t) = \frac{a \cdot t}{T} \qquad \qquad$
 		motion in y-dim. : $y_0(t) = \frac{b \cdot t}{T}$
 	\end{center}
 
-\subsection{Inverse filtering \buch{p.351}}
+\subsection{Inverse filtering \buch{p.356}}
 
 \begin{itemize}
 	\item Clearly, even though we might know $H(u,v)$ perfectly, the noise makes it impossible to recover $f(x,y)$
 	\item Furthermonre, if H(u,v) is close to zero, $\frac{N(u,v)}{H(u,v)}$ will dominate the result, rendering it useless.
-	\item One trick is to focus on $H(u,v)$ near the origin, where it tends to be lager. $\Rightarrow$ Use of lowpass
+	\item One trick is to focus on $H(u,v)$ near the origin, where it tends to be larger. $\Rightarrow$ Use of lowpass
 \end{itemize}
 
 \begin{equation}
-	\hat{F}(x,y)= F(u,v) + \frac{N(u,v)}{H(u,v)}
+	\hat{F}(u,v)= F(u,v) + \frac{N(u,v)}{H(u,v)}
 \end{equation}
 
 
-\subsection{Minimum Mean Square Error Filtering (Wiener) \buch{p.352}}
-The goal is a minimum mean square error estimate. Image and noise are considered random variables. The goal is to deal with the degradation and 
+\subsection{Minimum Mean Square Error Filtering (Wiener) \buch{p.358}}
+The goal is a minimum mean square error estimate. Image and noise are considered random variables. The goal is to deal with the degradation and
 \begin{equation}
 	e^2 = E\{(f- \hat{f})^2 \} \qquad \hat{f} \text{ is the estimate}
 \end{equation}
@@ -286,13 +316,13 @@ The goal is a minimum mean square error estimate. Image and noise are considered
 \end{equation}\\
 
 The parameter $K$ is evalueted iteratevely, often using humans to judge the result. The function $H(u,v)$ is known.
- Wiener filter are optimal in the mean square error in the statistic sense, which means on average over an ensemble of image.
+ Wiener filtersare optimal in the mean square error in the statistic sense, which means on average over an ensemble of image.
 
-\subsection{Constrained least squares filtering \buch{p.357}}
-While the Wiener filter is powerful, the power spectral densities of the noise and the image need to be know, or a fixed ratio must be a good approximation. With the contrained least squares filter, only the noise mean and variance need to be known.
+\subsection{Constrained least squares filtering \buch{p.363}}
+While the Wiener filter is powerful, the power spectral densities of the noise and the image need to be known, or a fixed ratio must be a good approximation. With the constrained least squares filter, only the noise mean and variance need to be known.
 
 The goal is to find the smoothest image, witch satisfies the original equation, in some meaningful form.
- 
+
 \begin{equation}
 	\hat{F}(u,v) = \left[ \frac{H^*(u,v)}{|H(u,v)|^2 + \gamma |P(u,v)|^2} \right] G(u,v)
 	\label{eq:ConstrainedFilter}
@@ -306,12 +336,12 @@ The goal is to find the smoothest image, witch satisfies the original equation, 
 \textbf{To automatically adjust the $\gamma$ use the Eq.~\ref{eq:error}}
 
 \begin{equation}
-	||\mathbf{r}||^{2} = \mathbf{r}^{T}\mathbf{r} \quad \textrm{with} \quad\mathbf{r} = \mathbf{g}-\mathbf{H} \mathbf{\hat{f}}	
+	||\mathbf{r}||^{2} = \mathbf{r}^{T}\mathbf{r} \quad \textrm{with} \quad\mathbf{r} = \mathbf{g}-\mathbf{H} \mathbf{\hat{f}}
 	\label{eq:rCalculate}
 \end{equation}
 
 \begin{equation}
-	||\bm\eta||^2= MN[\sigma_{\eta}^2 + m_{\eta}^2]	
+	||\bm\eta||^2= MN[\sigma_{\eta}^2 + m_{\eta}^2]
 \end{equation}
 
 \begin{equation}
@@ -329,11 +359,11 @@ The goal is to find the smoothest image, witch satisfies the original equation, 
 		R(u,v) = G(u,v) - H(u,v)\hat{F}(u,v)
 	\end{equation}
 	\begin{equation}
-		||\mathbf{r}||^2 = \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} r^{2}(x,y) \quad \textrm{where } r(x,y) \textrm{ is inverse Transform of } R(u,v) 
+		||\mathbf{r}||^2 = \sum\limits_{x=0}^{M-1} \sum\limits_{y=0}^{N-1} r^{2}(x,y) \quad \textrm{where } r(x,y) \textrm{ is inverse Transform of } R(u,v)
 		\label{eq:rCalculateFreq}
 	\end{equation}
 
-\subsection{Geometric mean filter \buch{p.361}}
+\subsection{Geometric mean filter \buch{p.367}}
 The form of the Wiener filter can be generalized to the so called geometric mean filter.
 
 \begin{equation}
@@ -345,7 +375,7 @@ The form of the Wiener filter can be generalized to the so called geometric mean
 	\item $\alpha = 1$, this is simply the inverse filter
 	\item $\alpha=0$ and $\beta=1$, this is the Wiener filter
 	\item $\alpha=0$ and $0 < \beta < 1$, this is the parametric Wiener filter
-	\item $\alpha=0.5$ and $\beta=1$, this is the geometic mean of the inverse filter and the Wiener filter, also called spectrum equalization filter
+	\item $\alpha=0.5$ and $\beta=1$, this is the geometric mean of the inverse filter and the Wiener filter, also called spectrum equalization filter
 \end{itemize}
 
-\subsection{Image Reconstruction from Projections \buch{p.362}}
+\subsection{Image Reconstruction from Projections \buch{p.368}}

@@ -1,16 +1,16 @@
-\section{Filtering in the frequency domain \buch{p.199}}
-\subsection{Countinous Fourier Transform \buch{p.205}}
-\subsection{Sampling \buch{p.211}}
+\section{Filtering in the frequency domain \buch{p.203}}
+\subsection{Continuous Fourier Transform \buch{p.210}}
+\subsection{Sampling \buch{p.215}}
 Multiplication of the function with an impulse train
 \begin{equation}
 \tilde{f}(t) = f(t) s_{\Delta T}(t) = \sum_{n=-\infty}^{\infty}f(t)\sigma (t-n \Delta T)
 \end{equation}
-The fourier transform of it
+The Fourier transform of it
 \begin{equation}
 \tilde{F}(\mu) = F(\mu) \star S(\mu) = \frac{1}{\Delta T} \sum_{n=-\infty}^{\infty}F\left(\mu - \frac{n}{\Delta T}\right)
 \end{equation}
 
-\subsection{The discrete Fourier transform of one variable \buch{p.220}}
+\subsection{The discrete Fourier transform of one variable \buch{p.225}}
 The Fourier transform of sampled data is continuous and infinitely periodic with period $1/\Delta T$
 \begin{equation}
 \tilde{F}(\mu)= \sum_{n=-\infty}^{\infty} f_n \cdot e^{-j 2 \pi  \mu n \Delta T}
@@ -27,7 +27,7 @@ This results in
 \begin{equation}
 F_m = \sum_{n=0}^{M-1} f_n \cdot e^{-j 2 \pi m n / M} \quad m = 0,1,2,\dots,M-1
 \end{equation}
- 
+
 The \emph{inverse discrete Fourier transform} is used to recover the sample set ${f_n}$
 \begin{equation}
 f_n = \frac{1}{M} \sum_{m=0}^{M-1}F_m e^{j 2 \pi m n / M} \quad n = 0,1,2,\dots,M-1
@@ -38,8 +38,8 @@ f_n = \frac{1}{M} \sum_{m=0}^{M-1}F_m e^{j 2 \pi m n / M} \quad n = 0,1,2,\dots,
 \item The DFT pair is applicable to \emph{any} finite set of uniformly discrete samples
 \item DFT and IDFT are periodic with period M
 \end{itemize}
- 
-\subsubsection{Sampling and Frequency Intervals \buch{p.223}}
+
+\subsubsection{Sampling and Frequency Intervals \buch{p.228}}
 If $f(x)$ consists of $M$ samples, taken $\Delta T$ units apart, the duration $T$ of the record is
 \begin{equation}
 	T = M \Delta T
@@ -50,15 +50,15 @@ The corresponding spacing in the discrete frequency domain $\Delta u$ is
 \end{equation}
 The frequency range spanned by the $M$ components of the DFT is
 \begin{equation}
-	\Omega = M \Delta u = \frac{1}{\Delta T}
-\end{equation} 
+	R = M \Delta u = \frac{1}{\Delta T}
+\end{equation}
 
-\subsection{2D Countinous FT \buch{p.205}} 
-\subsection{The 2D Impulse \buch{p.225}}
+\subsection{2D Continuous FT \buch{p.230}}
+\subsection{The 2D Impulse \buch{p.230}}
 The discrete 2D impulse is defined as
 \begin{equation}
-\delta(x,y) = 
-\begin{cases} 1 & \text{if $x=y=0$,}
+\delta(t,z) =
+\begin{cases} 1 & \text{if $t=z=0$,}
 \\
 0 &\text{otherwise}
 \end{cases}
@@ -69,23 +69,23 @@ with the sifting property
 \sum_{x=-\infty}^{\infty}\sum_{y=-\infty}^{\infty}f(x,y) \delta(x,y) = f(0,0)
 \end{equation}
 
-\subsection{2D Sampling Theorem}
+\subsection{2D Sampling Theorem \buch{p.231}}
 A continuous, band-limited function $f(t,z)$ can be recovered with no error if the sampling intervals are\\
  \begin{minipage}{0.4\textwidth}
    \[
    \Delta T < \dfrac{1}{2 u_{max}}
    \]
- \end{minipage} 
+ \end{minipage}
 and
   \begin{minipage}{0.4\textwidth}
     \[
     \Delta Z < \dfrac{1}{2 v_{max}}
     \]
-  \end{minipage} 
-  
-  
+  \end{minipage}
 
-\subsection{2D DFT and IDFT \buch{p.235}}
+
+
+\subsection{2D DFT and IDFT \buch{p.240}}
 
 \subsubsection{2D DFT}
 \begin{equation}
@@ -104,41 +104,41 @@ and
 
 \subsubsection{Properties}
 \begin{itemize}
-\item Separation between samples in the frequency domain are inversely proportional to the spacing between spatial samples and the number of samples
+\item Separation between samples in the frequency domain are inversely proportional both to the spacing between spatial samples and the number of samples
 $\Delta u = \frac{1}{M \Delta T} \quad \Delta v = \frac{1}{N \Delta Z}$
 \item Infinitely periodic
-\item Symmetry properties \buch{p.242}, see Table \ref{tab:Symmetry_2D_DFT} (Appendix)
-\item Summary of properties \buch{p.253}, see Table \ref{tab:Properties_2D_DFT} and \ref{tab:DFT_Pairs} (Appendix)
+\item Symmetry properties \buch{p.246}, see Table \ref{tab:Symmetry_2D_DFT} (Appendix)
+\item Summary of properties \buch{p.257}, see Table \ref{tab:Properties_2D_DFT} and \ref{tab:DFT_Pairs} (Appendix)
 \end{itemize}
 
-\subsubsection{Periodicity \buch{237}}
+\subsubsection{Periodicity \buch{241}}
   Visualization is simplified if we shift the data so that F(0,0) at (M/2,N/2) with
     \begin{equation}
       f(x,y)(-1)^{x+y} \Leftrightarrow F(u-M/2, v-N/2)
     \end{equation}
-    
-\subsubsection{"DC"}
+
+\subsubsection{"DC" \buch{250}}
   \begin{equation}
     |F(0,0)| = MN|\bar{f}(x,y)|
   \end{equation}
 
-\subsubsection{2-D Convolution \buch{p.249}}
+\subsubsection{2-D Convolution \buch{p.253}}
 The 2-D Convolution Theorem is given by:
 \begin{align}
 	f(x,y) \bigstar h(x,y) \Leftrightarrow F(u,v)H(u,v)
 \end{align}
 
-It is necessairy to zero-pad the images $f(x,y)$ of size $A \times B$ and $h(x,y)$ of size $C \times D$ as follows:
+It is necessary to zero-pad the images $f(x,y)$ of size $A \times B$ and $h(x,y)$ of size $C \times D$ as follows:
 
 \begin{equation}
-	f_p(x,y) = 
-		\begin{cases} 
+	f_p(x,y) =
+		\begin{cases}
 			f(x,y) & 0 \leq x \leq A-1 \text{  and  } 0 \leq y \leq B-1 \\
 			0 & A \leq x \leq P \text{  or  } B \leq y \leq Q
 		\end{cases}
 \end{equation}
 \begin{equation}
-	h_p(x,y) = 
+	h_p(x,y) =
 		\begin{cases}
 			h(x,y) & 0 \leq x \leq C-1 \text{  and  } 0 \leq y \leq D-1 \\
 			0 & C \leq x \leq P \text{  or  } D \leq y \leq Q
@@ -152,7 +152,7 @@ with
 \end{align}
 resulting in padded images of size $P \times Q$
 
-\subsection{Basics of Filtering in the Frequency Domains}
+\subsection{Basics of Filtering in the Frequency Domains \buch{260}}
   Generally, filtering in the frequency domain is obtained by
   \begin{equation}
   g(x,y) = \Im^{-1} \left[ H(u,v) F(u,v) \right]
@@ -160,28 +160,28 @@ resulting in padded images of size $P \times Q$
   if filter $H(u,v)$ is real \& symmetric
   \begin{equation}
   g(x,y) = \Im^{-1} \left[ H(u,v) \cdot R(u,v) + j H(u,v) \cdot I(u,v)\right]
-  \end{equation}  
-  $\Rightarrow$ Filter that affect real and imaginary parts equally have no effect on the phase $\rightarrow$ \textbf{zero-phase-shift} filters 
+  \end{equation}
+  $\Rightarrow$ Filter that affect real and imaginary parts equally have no effect on the phase $\rightarrow$ \textbf{zero-phase-shift} filters
 
-\subsubsection{Summary of Steps for Filtering in the Frequency Domain \buch{p.263}}
-  
+\subsubsection{Summary of Steps for Filtering in the Frequency Domain \buch{p.266}}
+
 \begin{enumerate}
 	\item Given an input image $f(x,y)$ of size $M \times N$, obtain the padding parameters $P$ and $Q$ from Eq. \ref{equ:2D_Conv_Padding}. Typically, we select $P=2M$ and $Q=2N$.
 	\item Form a padded image, $f_p(x,y)$, of size $P \times Q$ by appending the necessary number of zeros to $f(x,y)$.
 	\item Multiply $f_p(x,y)$ by $(-1)^{x+y}$ to center its transform.
 	\item Compute the DFT, $F(u,v)$, of the image from step 3.
-	\item Generate a real, symmetric filter function, $H(u,v)$, of size $P \times Q$ with center at coordinates $(P/2,Q/2)$. Form the product $G(u,v) = H(u,v) F(u,v)$ using array multiplication.
+	\item Generate a real, symmetric filter function, $H(u,v)$, of size $P \times Q$ with center at coordinates $(P/2,Q/2)$. Form the product $G(u,v) = H(u,v) F(u,v)$ using elementwise multiplication.
 	\item Obtain the processed image, $g_p(x,y) = \left\lbrace \text{real} \left[ \Im^{-1} \left[ G(u,v) \right] \right] \right\rbrace (-1)^{x+y}$, where the real part is selected in order to ignore parasitic complex components resulting from computational inaccuracies, and the subscript $p$ indicates that we are dealing with padded arrays.
 	\item Obtain the final processed result, $g(x,y)$, by extracting the $M \times N$ region from the top, left quadrant of $g_p(x,y)$.
 \end{enumerate}
 
-\subsection{Image smoothing using frequency domain filters \buch{p.269}}
-\subsubsection{Ideal Lowpass Filters}
+\subsection{Image smoothing using frequency domain filters \buch{p.272}}
+\subsubsection{Ideal lowpass filters \buch{p.273}}
 \begin{equation}
-	H(u,v)  = 
+	H(u,v)  =
 		\begin{cases}
 			1 & \text{  if } D(u,v) \leq D_0 \\
-			0 & \text{  if } D(u,v) > D_0 \\ 
+			0 & \text{  if } D(u,v) > D_0 \\
 		\end{cases}
 \end{equation}
 where $D_0$ is a positive constant and $D(u,v)$ is the distance between a point $(u,v)$ in the frequency domain and the center of the frequency rectangle; that is,
@@ -191,39 +191,39 @@ where $D_0$ is a positive constant and $D(u,v)$ is the distance between a point 
 \end{equation}
 ILPFs have a \textbf{huge ringing problem} and are not frequently used.
 
-\subsubsection{Butterworth Lowpass Filters}
-The transfer function of a Butterworth lowpass filter (BLPF) of order $n$, and with cutoff frequency at a distance $D_0$ from the origin, is defined as
-\begin{equation}
-	H(u,v) = \frac{1}{1 + \left[ D(u,v) / D_0 \right]^{2n}}
-\end{equation}
-The BLPF of order 1 has no ringing, but ringing can become significant in filters of higher order. Usually only BLPFs with $n \leq 4$ are used.
-
-\subsubsection{Gaussian Lowpass Filters}
+\subsubsection{Gaussian lowpass filters \buch{p.277}}
 A Gaussian lowpass filter (GLPF) of two dimensions is given by
 \begin{equation}
 	H(u,v) = e^{-D^2(u,v)/2D_0^2}
 \end{equation}
 where $D_0$ is the cutoff frequency. When $D(u,v)=D_0$, the GLPF is down to $0.607$ of its maximum value. The GLPF will have \textbf{no ringing}.
 
-\subsection{Image sharpening using frequency domain filters \buch{p.280}}
+\subsubsection{Butterworth lowpass filters \buch{p.278}}
+The transfer function of a Butterworth lowpass filter (BLPF) of order $n$, with cutoff frequency at a distance $D_0$ from the origin, is defined as
+\begin{equation}
+	H(u,v) = \frac{1}{1 + \left[ D(u,v) / D_0 \right]^{2n}}
+\end{equation}
+The BLPF of order 1 has no ringing, but ringing can become significant in filters of higher order. Usually only BLPFs with $n \leq 4$ are used.
+
+\subsection{Image sharpening using frequency domain filters \buch{p.284}}
 A highpass filter is obtained from a given lowpass filter by
 \begin{equation}
 	H_{HP}(u,v) = 1 - H_{LP}(u,v)
 \end{equation}
 
-\subsubsection{Ideal Highpass Filters}
-A ideal highpass filter (IHPF) is defined as
+\subsubsection{Ideal highpass filters}
+An ideal highpass filter (IHPF) is defined as
 \begin{equation}
-	H(u,v) = 
+	H(u,v) =
 		\begin{cases}
 			0 & \text{  if } D(u,v) \leq D_0 \\
 			1 & \text{  if } D(u,v) > D_0
 		\end{cases}
 \end{equation}
-where $D_0$ is the cutoff frequency and $D(u,v)$ is given by Eq. \ref{equ:Freq_Filter_D_uv}. Like the ILPF, the IHPF creates a large ringing.
+where $D_0$ is the cutoff frequency and $D(u,v)$ is given by Eq. \ref{equ:Freq_Filter_D_uv}. Like the ILPF, the IHPF creates large ringing.
 
 \subsubsection{Butterworth Highpass Filters}
-A 2-D Butterworth highpass filter (HBPF) of order $n$ and cutoff frequency $D_0$ is defined as 
+A 2-D Butterworth highpass filter (HBPF) of order $n$ and cutoff frequency $D_0$ is defined as
 \begin{equation}
 	H(u,v) = \frac{1}{1 + \left[ D_0 / D(u,v) \right]^{2n}}
 \end{equation}
@@ -234,7 +234,7 @@ The transfer function of the Gaussian highpass filter (GHPF) with cutoff frequen
 	H(u,v) = 1 - e^{-D^2(u,v)/2D_0^2}
 \end{equation}
 
-\subsubsection{The Laplacian in the Frequency Domain \buch{p.286}}
+\subsubsection{The Laplacian in the frequency domain \buch{p.289}}
 The Laplacian can be implemented in the frequency domain using the filter
 \begin{equation}
 	H(u,v) = -4 \pi^2 D^2(u,v)
@@ -242,13 +242,13 @@ The Laplacian can be implemented in the frequency domain using the filter
 \end{equation}
 The Laplacian image is obtained as
 \begin{equation}
-	\nabla^2 f(x,y) = \Im^{-1} \left\lbrace H(u,v)F(u,v) \right\rbrace 
+	\nabla^2 f(x,y) = \Im^{-1} \left\lbrace H(u,v)F(u,v) \right\rbrace
 	\label{equ:laplacian_freq_backtransform}
 \end{equation}
 
 The enhanced image $g(x,y) = f(x,y) + c \nabla^2f(x,y)$ with $c=-1$ can be achieved by
 \begin{equation}
-	g(x,y) = \Im^{-1} \left\lbrace \left[ 1 + 4 \pi^2 D^2(u,v) \right] F(u,v) \right\rbrace 
+	g(x,y) = \Im^{-1} \left\lbrace \left[ 1 + 4 \pi^2 D^2(u,v) \right] F(u,v) \right\rbrace
 \end{equation}
 
 Usually, $f(x,y)$ is normalized to the range $\left[0,1\right]$ and $\nabla^2 f(x,y)$ is divided by its maximum value, which brings it to the approximate range $\left[-1,1\right]$. The normalizing factor in the frequency domain is not easily computed, so the preferred frequency domain implementation is using the equation
@@ -257,14 +257,14 @@ Usually, $f(x,y)$ is normalized to the range $\left[0,1\right]$ and $\nabla^2 f(
 	\end{equation}
 with $\nabla^2f(x,y)$ computed using Eq.  \ref{equ:laplacian_freq_backtransform}.
 
-\subsubsection{Unsharp Masking, Highboost Filtering, and High-Frequency-Emphasis Filtering \buch{p.288}}
+\subsubsection{Unsharp Masking, High-boost Filtering, and High-Frequency-Emphasis Filtering \buch{p.291}}
 A high-frequency-emphasis filter is achieved by
 \begin{equation}
-	g(x,y) = \Im^{-1} \left\lbrace \left[ k_1 + k_2 \cdot H_{HP}(u,v) \right] F(u,v) \right\rbrace 
+	g(x,y) = \Im^{-1} \left\lbrace \left[ k_1 + k_2 \cdot H_{HP}(u,v) \right] F(u,v) \right\rbrace
 \end{equation}
-where $k_1 \geq 0$ gives control of the offset from the origin and $k_2 \geq 0$ controlls the contribution of high frequencies.
+where $k_1 \geq 0$ gives control of the offset from the origin and $k_2 > 0$ controls the contribution of high frequencies.
 
-\subsubsection{Homomorphic Filtering \buch{p.290}}
+\subsubsection{Homomorphic Filtering \buch{p.293}}
 \begin{minipage}{9cm}
 	Homomorphic filtering is used to separate illumination and reflectance components. This is achieved by using the natural logarithm $\ln$ before applying the DFT.
 \end{minipage}
@@ -279,36 +279,37 @@ A modified version of a Gaussian highpass,
 allows to attenuate the low frequencies (illumination) with $\gamma_L < 1$ and amplify the high frequencies (reflectance) with $\gamma_H > 1$.
 
 \newpage
-\subsection{Selective Filtering \buch{p.294}}
+\subsection{Selective Filtering \buch{p.296}}
 
-\subsubsection{Bandreject and Bandpass Filters} \label{subsubsec:FilteringFrequency_BandrejectFilters}
+\subsubsection{Bandreject and Bandpass Filters \buch{p.297}} \label{subsubsec:FilteringFrequency_BandrejectFilters}
 Bandreject filters are given by the following equations,
 
 \begin{table}[htbp]
 	\centering
 	\begin{tabular}{|ccc|}
 		\hline
-		\textbf{Ideal} & \textbf{Butterworth} & \textbf{Gaussian} \\ \hline
-		$H(u,v) = 
+		\textbf{Ideal} (IBRF) & \textbf{Gaussian} (GBRF) & \textbf{Butterworth} (BBRF) \\ \hline
+		$H(u,v) =
 			\begin{cases}
-				0 & \text{  if } D_0-\frac{W}{2} \leq D \leq D_0 + \frac{W}{2} \\
+				0 & \text{  if } C_0-\frac{W}{2} \leq D(u,v) \leq C_0 + \frac{W}{2} \\
 				1 & \text{  otherwise}
 			\end{cases} $
-		& $H(u,v) = \frac{1}{1 + \left[ \frac{DW}{D^2 - D_0^2} \right]^{2n}}$
-		& $H(u,v) = 1-e^{-\left[\frac{D^2-D_0^2}{DW}\right]^2}$ \\
+		& $H(u,v) = 1-e^{-\left[\frac{D^2(u,v)-C_0^2}{D(u,v)W}\right]^2}$
+		& $H(u,v) = \frac{1}{1 + \left[ \frac{D(u,v)W}{D^2(u,v) - C_0^2} \right]^{2n}}$ \\
 		\hline
 	\end{tabular}
 \end{table}
 
-where $D_0$ is the radial center of the band, $W$ is the width of the band, and $D(u,v)$ is given by Eq. \ref{equ:Freq_Filter_D_uv}. \\
+where $C_0$ is the radial center of the band, $W$ is the width of the band, and $D(u,v)$ is given by Eq. \ref{equ:Freq_Filter_D_uv}. \\
 
 A bandpass filter is obtained by
 \begin{equation}
 	H_{BP}(u,v) = 1 - H_{BR}(u,v)
 \end{equation}
 
-\subsubsection{Notch Filters}  \label{subsubsec:FilteringFrequency_NotchFilters}
-A notch filter rejects (or passes) frequencies in a predefined neighborhood about the center of the frequency rectangle. Notch reject filters are constructed as products of highpass filters whose centers have been translated to the centers of the notches. The general form is
+\subsubsection{Notch Filters \buch{p.299}}  \label{subsubsec:FilteringFrequency_NotchFilters}
+A notch filter rejects (or passes) frequencies in a predefined neighborhood of the frequency rectangle. Zero-phase-shift filters must be symmetric about the center of the frequency rectangle. Notch reject filters are constructed as products of highpass filters whose centers have been translated to the centers of the notches.\\
+The general form is
 \begin{equation}
 	H_{NR}(u,v) = \prod_{k=1}^{Q} H_k(u,v) H_{-k}(u,v)
 \end{equation}
@@ -318,5 +319,3 @@ A notch pass filter is obtained from a notch reject filter by
 \begin{equation}
 	H_{NP}(u,v) = 1 - H_{NR}(u,v)
 \end{equation}
-
-\subsection{Implementation \buch{p.298}}
